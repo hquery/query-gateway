@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class QueryExecutorTest < Test::Unit::TestCase
+class QueryExecutorTest < ActiveSupport::TestCase
   def setup
     Mongoid.master.drop_collection('query_results')
   end

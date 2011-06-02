@@ -10,9 +10,7 @@ class QueryExecutor
   
   def execute
     db =  Mongoid.master
-    mf = build_map_function
-    puts mf
-    results = db[PATIENTS_COLELCTION].map_reduce(mf , @reduce_js , raw: true, out: {inline: 1})
+    results = db[PATIENTS_COLELCTION].map_reduce(build_map_function , @reduce_js , raw: true, out: {inline: 1})
     results["_id"] = @job_id
     db[RESULTS_COLLECTION].save(results)
   end
