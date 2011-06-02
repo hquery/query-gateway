@@ -1,5 +1,5 @@
 require 'query_job'
-class QueriesController < ApplicationController
+class QueuesController < ApplicationController
   
  
   def index
@@ -7,10 +7,10 @@ class QueriesController < ApplicationController
   end
 
   def create
-    map =params[:map]
-    reduce = params[:reduce]
+    map =params[:map].read
+    reduce = params[:reduce].read
     job = QueryJob.submit(map,reduce)
-     redirect_til_done(job.id)
+    redirect_til_done(job.id)
   end
 
 
@@ -29,7 +29,7 @@ class QueriesController < ApplicationController
 
    private 
    def redirect_til_done(job_id)
-      response.headers["Retry-After"] = 120
+      response.headers["Retry-After"] = "120"
       redirect_to :action => 'show', :id => job_id, :status=>303
    end
 end
