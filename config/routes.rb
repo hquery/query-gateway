@@ -1,4 +1,12 @@
 QueryGateway::Application.routes.draw do
+  
+  
+  resources :queues do
+
+  end
+  
+  root :to => 'queue#index'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

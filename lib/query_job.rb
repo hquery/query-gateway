@@ -1,4 +1,5 @@
 require 'mongo'
+
 class QueryJob < Struct.new(:map, :reduce, :options)
  
   PATIENTS_COLELCTION = "patients"
@@ -6,7 +7,7 @@ class QueryJob < Struct.new(:map, :reduce, :options)
  
   def perform
    db =  Mongoid.master
-   results = db[PATIENTS_COLELCTION].map_reduce(map,reduce,options.merge(raw: true))
+   results = db[PATIENTS_COLELCTION].map_reduce(map,reduce,options.merge({:raw=>true}))
    results["_id"] = @job_id
    db[RESULTS_COLLECTION].save(results)
   end
@@ -18,7 +19,7 @@ class QueryJob < Struct.new(:map, :reduce, :options)
  
  
   def self.submit(map, reduce, query_options = {})
-    return Delayed::Job.enqueue(QueryJob.new(map,reduce,query_options), :run_at=>endpoint.next_poll.seconds.from_now)
+    return Delayed::Job.enqueue(QueryJob.new(map,reduce,query_options), :run_at=>2.from_now)
   end
 
 
@@ -32,12 +33,12 @@ class QueryJob < Struct.new(:map, :reduce, :options)
   end
   
   def self.job_status(job_id)
-     job = Delayed::Job.find(job_id)
+     job = Delayed::Job.find(BSON::ObjectId.from_string(job_id))
      if(job)
        return :running if (job.locked_at && job.failed_at.nil?)
        return :queued if( job.locked_at.nil? && job.locked_by.nil? && job.run_at >= Delayed::Job.db_time_now)
        return :failed if(job.failed_at )
-     elsif Mongoid.master[RESULTS_COLLECTION].find(job_id)
+     elsif Mongoid.master[RESULTS_COLLECTION].find_one("{_id : #{job_id}}")
        return :completed
      end
      return :not_found
