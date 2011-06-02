@@ -6,10 +6,8 @@ class QueryJob < Struct.new(:map, :reduce, :options)
   RESULTS_COLLECTION = "query_results"
  
   def perform
-   db =  Mongoid.master
-   results = db[PATIENTS_COLELCTION].map_reduce(map,reduce,options.merge({:raw=>true}))
-   results["_id"] = @job_id
-   db[RESULTS_COLLECTION].save(results)
+   qe = QueryExecutor.new(map,reduce,@job_id)
+   qe.execute
   end
 
   # need to get the id of the job we are running as
@@ -33,12 +31,14 @@ class QueryJob < Struct.new(:map, :reduce, :options)
   end
   
   def self.job_status(job_id)
-     job = Delayed::Job.find(BSON::ObjectId.from_string(job_id))
-     if(job)
+    jid = BSON::ObjectId.from_string(job_id)
+    job_exists = Delayed::Job.exists?(:conditions =>{"_id"=>jid})
+     if(job_exists)
+       job = Delayed::Job..find(job_id)
        return :running if (job.locked_at && job.failed_at.nil?)
        return :queued if( job.locked_at.nil? && job.locked_by.nil? && job.run_at >= Delayed::Job.db_time_now)
        return :failed if(job.failed_at )
-     elsif Mongoid.master[RESULTS_COLLECTION].find_one("{_id : #{job_id}}")
+     elsif Mongoid.master[RESULTS_COLLECTION].find_one({"_id"=>jid},{:fields => "_id"})
        return :completed
      end
      return :not_found

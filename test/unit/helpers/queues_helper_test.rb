@@ -1,4 +1,4 @@
 require 'test_helper'
 
-class QueriesHelperTest < ActionView::TestCase
+class QueuesHelperTest < ActionView::TestCase
 end
