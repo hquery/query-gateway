@@ -6,10 +6,8 @@ class QueryJob < Struct.new(:map, :reduce, :options)
   RESULTS_COLLECTION = "query_results"
  
   def perform
-   db =  Mongoid.master
-   results = db[PATIENTS_COLELCTION].map_reduce(map,reduce,options.merge({:raw=>true}))
-   results["_id"] = @job_id
-   db[RESULTS_COLLECTION].save(results)
+   qe = QueryExecutor.new(map,reduce,@job_id)
+   qe.execute
   end
 
   # need to get the id of the job we are running as
