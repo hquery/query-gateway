@@ -11,8 +11,12 @@ class QueryExecutor
   def execute
     db =  Mongoid.master
     results = db[PATIENTS_COLELCTION].map_reduce(build_map_function , @reduce_js , raw: true, out: {inline: 1})
-    results["_id"] = @job_id
-    db[RESULTS_COLLECTION].save(results)
+    result_document = {}
+    result_document["_id"] = @job_id
+    results['results'].each do |result|
+      result_document[result['_id']] = result['value']
+    end
+    db[RESULTS_COLLECTION].save(result_document)
   end
   
   private
