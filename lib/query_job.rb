@@ -6,7 +6,7 @@ class QueryJob < Struct.new(:map, :reduce, :options)
  
   def perform
    db =  Mongoid.master
-   results = db[PATIENTS_COLELCTION].map_reduce(map,reduce,options.merge{:raw=>true})
+   results = db[PATIENTS_COLELCTION].map_reduce(map,reduce,options.merge(raw: true))
    results["_id"] = @job_id
    db[RESULTS_COLLECTION].save(results)
   end
