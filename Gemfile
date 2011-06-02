@@ -14,6 +14,9 @@ gem 'therubyracer'
 gem "mongoid", "~> 2.0"
 gem "bson_ext", "~> 1.3", :platforms => :mri
 
+gem 'delayed_job'
+gem 'delayed_job_mongoid'
+
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
