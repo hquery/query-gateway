@@ -46,7 +46,7 @@ class QueryJob < Struct.new(:map, :reduce, :options)
   
   
   def self.job_results(job_id)
-     return Mongoid.master[RESULTS_COLLECTION].find(job_id)
+     return Mongoid.master[RESULTS_COLLECTION].find( {"_id" => BSON::ObjectId.from_string(job_id)})
   end
   
 end

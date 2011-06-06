@@ -31,7 +31,7 @@ class QueuesController < ApplicationController
 
    private 
    def redirect_til_done(job_id)
-      response.headers["retry_after"] = "120"
+      response.headers["retry_after"] = "10"
       redirect_to :action => 'show', :id => job_id, :status=>303
    end
 end
