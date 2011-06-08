@@ -2,7 +2,9 @@ QueryGateway::Application.routes.draw do
   
   
   resources :queues do
-
+      member do
+        get :job_status
+      end
   end
   
   root :to => 'queue#index'
