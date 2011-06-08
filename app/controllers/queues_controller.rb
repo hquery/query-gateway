@@ -18,12 +18,16 @@ class QueuesController < ApplicationController
     job_id = params[:id]
     case  QueryJob.job_status(job_id)
     when :failed
+      logger.info "FAILED"
       render :text=>QueryJob.getJob(job_id).last_error, :status=>500
     when :completed
+      logger.info "COMPLETED"
       render :json=>QueryJob.job_results(job_id)
     when :not_found
+      logger.info "NOT FOUND"
       render :text=>"Job not Found", :status=>404
     else
+      logger.info "REDIRECT"
       redirect_til_done(job_id)
     end
 
