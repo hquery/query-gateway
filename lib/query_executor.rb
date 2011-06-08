@@ -16,6 +16,7 @@ class QueryExecutor
     results['results'].each do |result|
       result_document[result['_id']] = result['value']
     end
+
     db[RESULTS_COLLECTION].save(result_document)
   end
   
