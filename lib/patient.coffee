@@ -19,8 +19,17 @@ class Encounter
   type: -> createCodedValues @json['codes']
   freeTextType: -> @json['description']
 
+###*
+@class Representation of a patient
+###
 class Patient
+  ###*
+  @constructs
+  ###
   constructor: (@json) ->
+  ###*
+  @returns {String} containing M or F representing the gender of the patient
+  ###
   gender: -> @json['gender']
   given: -> @json['first']
   family: -> @json['last']
