@@ -10,4 +10,8 @@ class MongoLogger
     end
     
     
+    def job_log(jid)
+      
+      entries =  @mongo_db[LOG_COLLECTION].find({:job_id=>jid}).to_a
+    end
 end

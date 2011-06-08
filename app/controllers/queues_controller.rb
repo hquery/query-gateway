@@ -10,12 +10,15 @@ class QueuesController < ApplicationController
     map =params[:map].read
     reduce = params[:reduce].read
     job = QueryJob.submit(map,reduce)
+    logger.info("JOB ID #{job.id}")
     redirect_til_done(job.id)
   end
 
 
   def show
+    logger.info(params)
     job_id = params[:id]
+    logger.info("JOB ID #{job_id}")
     case  QueryJob.job_status(job_id)
     when :failed
       logger.info "FAILED"
@@ -32,10 +35,27 @@ class QueuesController < ApplicationController
     end
 
   end
+  
+  
+  
+  def job_status
+     @job_id = params[:id]
+     @status = QueryJob.job_status(@job_id)
+     if @status == :not_found
+       render :text=>"Job not Found", :status=>404
+       return
+     end
+     @job = @status != :completed ? QueryJob.get_job(@job_id) : nil
+     
+     render :json=>{:logs => QueryJob.job_logs(@job_id),
+      :status =>@status}  
+     
+  end
 
    private 
-   def redirect_til_done(job_id)
+   def redirect_til_done(job_id, js=nil)
       response.headers["retry_after"] = "10"
+      response.headers["job_status"] = js if js
       redirect_to :action => 'show', :id => job_id, :status=>303
    end
 end
