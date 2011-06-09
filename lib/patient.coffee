@@ -16,7 +16,15 @@ class CodedValue
   @constructs
   ###
   constructor: (@code, @codeSystemName) ->
+
+  ###*
+  @returns {String} the code
+  ###
   code: -> @code
+
+  ###*
+  @returns {String} the code system name
+  ###
   codeSystemName: -> @codeSystemName
 
 ###*
@@ -84,9 +92,15 @@ class Patient
   given: -> @json['first']
   family: -> @json['last']
 
+  ###*
+  @returns {Date} containing the patient's birthdate
+  ###
   birthtime: ->
     dateFromUtcSeconds @json['birthdate']
 
+  ###*
+  @returns {Array} A list of {@link Encounter} objects
+  ###
   encounters: ->
     for encounter in @json['encounters']
       new Encounter encounter
