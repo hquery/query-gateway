@@ -11,7 +11,10 @@ class QueryExecutor
   
   def execute
     db =  Mongoid.master
-    results = db[PATIENTS_COLELCTION].map_reduce(build_map_function , @reduce_js , raw: true, :query => @filter, out: {inline: 1})
+    
+    # convert filter here
+    
+    results = db[PATIENTS_COLELCTION].map_reduce(build_map_function , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
     result_document = {}
     result_document["_id"] = @job_id
     results['results'].each do |result|
