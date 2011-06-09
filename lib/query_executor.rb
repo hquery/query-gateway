@@ -1,4 +1,9 @@
+require 'query_utilities'
+
 class QueryExecutor
+  
+  include QueryUtilities
+  
   PATIENTS_COLELCTION = "records"
   RESULTS_COLLECTION = "query_results"
   
@@ -12,7 +17,8 @@ class QueryExecutor
   def execute
     db =  Mongoid.master
     
-    # convert filter here
+    # convert the filter hash to a mongo query style hash.  Currently we are passing in a mongo style query hash so this is a no-op
+    filter = convert_filter_to_mongo_query filter
     
     results = db[PATIENTS_COLELCTION].map_reduce(build_map_function , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
     result_document = {}
