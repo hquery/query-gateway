@@ -1,12 +1,14 @@
 require 'mongo'
 require 'mongo_logger'
-class QueryJob < Struct.new(:map, :reduce, :options)
+class QueryJob < Struct.new(:map, :reduce, :filter)
   
   PATIENTS_COLELCTION = "patients"
   RESULTS_COLLECTION = "query_results"
   @@logger = nil
+  
+  # run the job using the query executor
   def perform
-   qe = QueryExecutor.new(map,reduce,@job_id)
+   qe = QueryExecutor.new(map,reduce,@job_id,filter)
    qe.execute
   end
 
@@ -58,8 +60,8 @@ class QueryJob < Struct.new(:map, :reduce, :options)
      @@logger ||= MongoLogger.new
   end
   
-  def self.submit(map, reduce, query_options = {})
-    return Delayed::Job.enqueue(QueryJob.new(map,reduce,query_options), :run_at=>2.from_now)
+  def self.submit(map, reduce, filter = {})
+    return Delayed::Job.enqueue(QueryJob.new(map,reduce,filter), :run_at=>2.from_now)
   end
 
 
