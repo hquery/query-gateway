@@ -1,15 +1,18 @@
 require 'query_job'
+require 'query_utilities'
 class QueuesController < ApplicationController
   
+  include QueryUtilities
  
   def index
     @jobs = QueryJob.all_jobs
   end
 
   def create
-    map =params[:map].read
+    map=params[:map].read
     reduce = params[:reduce].read
-    job = QueryJob.submit(map,reduce)
+    filter = read_filter params[:filter].read
+    job = QueryJob.submit(map,reduce,filter)
 
     redirect_til_done(job.id)
   end
@@ -20,12 +23,16 @@ class QueuesController < ApplicationController
     job_id = params[:id]
     case  QueryJob.job_status(job_id)
     when :failed
+      logger.info "FAILED"
       render :text=>QueryJob.getJob(job_id).last_error, :status=>500
     when :completed
+      logger.info "COMPLETED"
       render :json=>QueryJob.job_results(job_id)
     when :not_found
+      logger.info "NOT FOUND"
       render :text=>"Job not Found", :status=>404
     else
+      logger.info "REDIRECT"
       redirect_til_done(job_id)
     end
 
@@ -52,5 +59,13 @@ class QueuesController < ApplicationController
       response.headers["retry_after"] = "10"
       response.headers["job_status"] = js if js
       redirect_to :action => 'show', :id => job_id, :status=>303
+   end
+   
+   def read_filter(filter) 
+     begin
+       parse_json_to_hash(filter)
+     rescue
+       raise "bad filter format: " + filter
+     end
    end
 end
