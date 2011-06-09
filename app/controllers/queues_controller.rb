@@ -10,7 +10,7 @@ class QueuesController < ApplicationController
     map =params[:map].read
     reduce = params[:reduce].read
     job = QueryJob.submit(map,reduce)
-    logger.info("JOB ID #{job.id}")
+
     redirect_til_done(job.id)
   end
 
@@ -18,7 +18,6 @@ class QueuesController < ApplicationController
   def show
     logger.info(params)
     job_id = params[:id]
-    logger.info("JOB ID #{job_id}")
     case  QueryJob.job_status(job_id)
     when :failed
       render :text=>QueryJob.getJob(job_id).last_error, :status=>500
