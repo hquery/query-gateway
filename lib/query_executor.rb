@@ -32,10 +32,16 @@ class QueryExecutor
   
   private
   def build_map_function
-    patient_coffee = File.read(Rails.root + 'lib/patient.coffee')
-    patient_api = CoffeeScript.compile(patient_coffee, bare: true)
+    #  load up the coffee scripts and create the js api
+    api = ""
+    Dir.glob(Rails.root + 'lib/coffee/*.coffee') do |f|
+       patient_coffee = File.read(f)
+       api += CoffeeScript.compile(patient_coffee, bare: true)
+    end  
+    
+
     "function() {
-      #{patient_api}
+      #{api}
       #{@map_js}
       
       var patient = new Patient(this);
