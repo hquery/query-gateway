@@ -23,12 +23,12 @@ QueryGateway::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   # add support for Pry debugging
-  silence_warnings do
-    begin
-      require 'pry'
-      IRB = Pry
-    rescue LoadError
-    end
-  end
+#  silence_warnings do
+#    begin
+#      require 'pry'
+#      IRB = Pry
+#    rescue LoadError
+#    end
+#  end
 
 end

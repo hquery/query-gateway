@@ -16,7 +16,7 @@ gem "bson_ext", "~> 1.3", :platforms => :mri
 
 gem 'delayed_job'
 gem 'delayed_job_mongoid'
-gem 'pry'
+#gem 'pry'
 
 group :test do
   # Pretty printed test output
