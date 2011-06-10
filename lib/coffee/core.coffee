@@ -30,7 +30,7 @@ class CodedValue
 
 
 ###*
-@class Address
+@class an Address for a person or organization 
 ###
 class Address
   constructor: (@json) ->
@@ -57,20 +57,21 @@ class Address
 
 
 ###*
-@class Telecom
+@class an object that describes a means to contact an entity.  This is used to represent 
+phone numbers, email addresses,  instant messaging accounts ....  
 ###
 class Telecom
   constructor: (@json) ->
   ###*
-  @returns {String} the type of telecom entry
+  @returns {String} the type of telecom entry, phone, sms, email ....
   ###  
   type: -> @json['type']
   ###*
-  @returns {String} the value of the entry
+  @returns {String} the value of the entry -  the actual phone number , email address , ....
   ###  
   value: -> @json['value']
   ###*
-  @returns {String} the use of the entry
+  @returns {String} the use of the entry. Is it a home, office, .... type of contact
   ###  
   use: -> @json['use']
   ###*
@@ -80,7 +81,7 @@ class Telecom
 
 
 ###*
-@class Person
+@class an object that describes a person.  includes a persons name, addresses, and contact information
 ###
 class Person
   constructor: (@json) ->
@@ -107,13 +108,13 @@ class Person
 
 
 ###*
-@class Actor
+@class an actor is either a person or an organization
 ###
 class Actor
   constructor: (@json) ->
 
 ###*
-@class Organization
+@class an organization
 ###
 class Organization
   constructor: (@json) ->
