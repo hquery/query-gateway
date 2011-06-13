@@ -13,7 +13,7 @@ class QueuesController < ApplicationController
     reduce = params[:reduce].read
     filter = read_filter params[:filter].read
     job = QueryJob.submit(map,reduce,filter)
-    logger.info("JOB ID #{job.id}")
+
     redirect_til_done(job.id)
   end
 
@@ -21,7 +21,6 @@ class QueuesController < ApplicationController
   def show
     logger.info(params)
     job_id = params[:id]
-    logger.info("JOB ID #{job_id}")
     case  QueryJob.job_status(job_id)
     when :failed
       logger.info "FAILED"

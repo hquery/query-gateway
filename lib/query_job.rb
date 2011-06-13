@@ -18,7 +18,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
    @job_id = job.id
     msg_options = { :status=>:running}
     begin
-      msg_options[:worker]=Delayed::Worker.name 
+      msg_options[:worker]=job.locked_by
     rescue
     end
    logger.add(job,"job running",msg_options)
@@ -27,7 +27,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
  
   # need to get the id of the job we are running as
   def failure(job,*args)
-    logger.add(job,"Job failed",{:worker=>Delayed::Worker.name, :error=>job.last_error, :status=>:failed, :failed_at=>job.failed_at})
+    logger.add(job,"Job failed",{:worker=>job.locked_by, :error=>job.last_error, :status=>:failed, :failed_at=>job.failed_at})
   end
   
   # need to get the id of the job we are running as
@@ -37,18 +37,18 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
   
 
   def error(job,*args)
-      logger.add(job,"Job Error",{:worker=>Delayed::Worker.name, :error=>job.last_error, :status=>:error})
+      logger.add(job,"Job Error",{:worker=>job.locked_by, :error=>job.last_error, :status=>:error})
   end
   
   def after(job,*args)
     # see if it was rescheduled after an error
-     if(Mongoid.master[RESULTS_COLLECTION].find_one({"_id"=>job.id},{:fields => "_id"}))
-      logger.add(job,"Job Rescheduled",{:worker=>Delayed::Worker.name, :status=>:queued})
+     if(!Mongoid.master[RESULTS_COLLECTION].find_one({"_id"=>job.id},{:fields => "_id"}))
+      logger.add(job,"Job Rescheduled",{ :status=>:queued})
     end
   end
 
   def success(job,*args)
-     logger.add(job,"Job successful",{:worker=>Delayed::Worker.name, :status=>:successful})
+     logger.add(job,"Job successful",{:worker=>job.locked_by, :status=>:successful})
   end
   
   
