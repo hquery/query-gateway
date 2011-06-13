@@ -14,6 +14,8 @@ gem 'therubyracer'
 gem "mongoid", "~> 2.0"
 gem "bson_ext", "~> 1.3", :platforms => :mri
 
+gem 'quality-measure-engine', :git => 'http://github.com/pophealth/quality-measure-engine.git', :branch => 'develop'
+
 gem 'delayed_job'
 gem 'delayed_job_mongoid'
 #gem 'pry'

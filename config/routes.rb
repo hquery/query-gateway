@@ -1,6 +1,8 @@
 QueryGateway::Application.routes.draw do
   
   
+  post "records/create"
+
   resources :queues do
       member do
         get :job_status
