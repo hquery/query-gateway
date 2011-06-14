@@ -120,6 +120,34 @@ class Organization
   constructor: (@json) ->
 
 ###*
+@class
+###
+class CodedEntry
+  ###*
+  @param {Object} A hash representing the coded entry
+  @constructor
+  ###
+  constructor: (@json) ->
+
+  ###*
+  Date and time at which the coded entry took place
+  @returns {Date}
+  ###
+  date: -> dateFromUtcSeconds: @json['time']
+
+  ###*
+  An Array of CodedValues which describe what kind of coded entry took place
+  @returns {Array}
+  ###
+  type: -> createCodedValues @json['codes']
+
+  ###*
+  A free text description of the type of coded entry
+  @returns {String}
+  ###
+  freeTextType: -> @json['description']
+
+###*
 @private
 ###
 createCodedValues = (jsonCodes) ->
