@@ -30,18 +30,20 @@ class QueryExecutor
     db[RESULTS_COLLECTION].save(result_document)
   end
   
-  private
-  def build_map_function
-    #  load up the coffee scripts and create the js api
+  def self.patient_api_javascript
     api = ""
     Dir.glob(Rails.root + 'lib/coffee/*.coffee') do |f|
        patient_coffee = File.read(f)
        api += CoffeeScript.compile(patient_coffee, bare: true)
-    end  
+    end
     
-
+    api
+  end
+  
+  private
+  def build_map_function
     "function() {
-      #{api}
+      #{QueryExecutor.patient_api_javascript}
       #{@map_js}
       
       var patient = new Patient(this);

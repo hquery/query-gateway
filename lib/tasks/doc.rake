@@ -1,10 +1,6 @@
 namespace :doc do
   task :generate_js do
-    api = ""
-    Dir.glob(Rails.root + 'lib/coffee/*.coffee') do |f|
-       patient_coffee = File.read(f)
-       api += CoffeeScript.compile(patient_coffee, bare: true)
-    end
+    api = QueryExecutor.patient_api_javascript
     
     Dir.mkdir(Rails.root + 'tmp') unless Dir.exists?(Rails.root + 'tmp')
     

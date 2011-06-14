@@ -86,9 +86,9 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
     job_exists = Delayed::Job.exists?(:conditions =>{"_id"=>jid})
      if(job_exists)
        job = Delayed::Job.find(job_id)
-       return :running if (job.locked_at && job.failed_at.nil?)
+       return :failed if(!job.failed_at.nil? )
        return :queued if( job.locked_at.nil? && job.locked_by.nil? )
-       return :failed if( !job.failed_at.nil? )
+       return :running if (job.locked_at)
      elsif Mongoid.master[RESULTS_COLLECTION].find_one({"_id"=>jid},{:fields => "_id"})
        return :completed
      end
