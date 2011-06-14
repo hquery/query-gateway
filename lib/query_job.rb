@@ -67,7 +67,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
 
   def self.find_job(job_id)
 
-      Delayed::Job.find({"_id"=>BSON::ObjectId.from_string(job_id)})
+      Delayed::Job.find(job_id)
   end
 
 
@@ -87,8 +87,8 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
      if(job_exists)
        job = Delayed::Job.find(job_id)
        return :running if (job.locked_at && job.failed_at.nil?)
-       return :queued if( job.locked_at.nil? && job.locked_by.nil? && job.run_at >= Delayed::Job.db_time_now)
-       return :failed if(job.failed_at.nil? )
+       return :queued if( job.locked_at.nil? && job.locked_by.nil? )
+       return :failed if( !job.failed_at.nil? )
      elsif Mongoid.master[RESULTS_COLLECTION].find_one({"_id"=>jid},{:fields => "_id"})
        return :completed
      end

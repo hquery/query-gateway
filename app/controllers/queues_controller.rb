@@ -24,7 +24,7 @@ class QueuesController < ApplicationController
     case  QueryJob.job_status(job_id)
     when :failed
       logger.info "FAILED"
-      render :text=>QueryJob.getJob(job_id).last_error, :status=>500
+      render :text=>QueryJob.find_job(job_id).last_error, :status=>500
     when :completed
       logger.info "COMPLETED"
       render :json=>QueryJob.job_results(job_id)
@@ -47,7 +47,7 @@ class QueuesController < ApplicationController
        render :text=>"Job not Found", :status=>404
        return
      end
-     @job = @status != :completed ? QueryJob.get_job(@job_id) : nil
+     @job = @status != :completed ? QueryJob.find_job(@job_id) : nil
      
      render :json=>{:logs => QueryJob.job_logs(@job_id),
       :status =>@status}  
