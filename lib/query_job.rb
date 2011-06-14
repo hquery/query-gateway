@@ -67,7 +67,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
 
   def self.find_job(job_id)
 
-      Delayed::Job.find({"_id"=>BSON::ObjectId.from_string(job_id)})
+      Delayed::Job.find(job_id)
   end
 
 

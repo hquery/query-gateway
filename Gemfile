@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0.rc1'
+gem 'rails', '3.1.0.rc4'
 
 # Asset template engines
 gem 'sass'
@@ -23,4 +23,5 @@ gem 'delayed_job_mongoid'
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+  gem 'cover_me', '>= 1.0.0.rc6'
 end
