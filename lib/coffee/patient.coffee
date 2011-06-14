@@ -45,3 +45,10 @@ class Patient
   conditions: ->
     for condition in @json['conditions']
       new Condition condition
+
+  ###*
+  @returns {Array} A list of {@link Procedure} objects
+  ###
+  procedures: ->
+    for procedure in @json['procedures']
+      new Procedure procedure

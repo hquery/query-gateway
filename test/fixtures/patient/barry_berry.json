@@ -25,7 +25,11 @@ var barry = { "first" : "Barry",
           "105539002" ] },
       "time" : 1263168508,
       "description" : "Tobacco Non-user" } ],
-  "procedures" : [],
+  "procedures" : [
+    { "codes" : { "CPT" : [ 
+        "44388" ] },
+    "time" : 1073238725,
+    "description" : "Colonscopy" } ],
   "results" : [],
   "medications" : [ 
     { "codes" : { "RxNorm" : [ 
