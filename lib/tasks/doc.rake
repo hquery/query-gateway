@@ -1,3 +1,5 @@
+require 'query_executor'
+
 namespace :doc do
   task :generate_js do
     api = QueryExecutor.patient_api_javascript
