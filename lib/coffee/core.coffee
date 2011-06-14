@@ -112,6 +112,13 @@ class Person
 ###
 class Actor
   constructor: (@json) ->
+  person: ->
+    if @json['person'] 
+      new Person @json['person']
+  organization: ->
+    if @json['organization']
+      new Organization @json['organization']
+      
 
 ###*
 @class an organization
@@ -119,6 +126,22 @@ class Actor
 class Organization
   constructor: (@json) ->
 
+
+
+class DateRange
+  constructor: (@json) ->
+  hi: -> 
+    if @json['hi'] 
+      dateFromUtcSeconds @json['hi'] 
+  low: ->   dateFromUtcSeconds @json['low'] 
+    
+class Informant
+  constructor: (@json) ->
+  contacts: ->
+    for contact in @json['contacts'] 
+      new Person contact
+  organization: -> new Organization @json['organization']    
+    
 ###*
 @private
 ###
