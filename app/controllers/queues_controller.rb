@@ -11,7 +11,7 @@ class QueuesController < ApplicationController
   def create
     map=params[:map].read
     reduce = params[:reduce].read
-    filter = read_filter params[:filter].read
+    filter = read_filter params[:filter].read if params[:filter]
     job = QueryJob.submit(map,reduce,filter)
 
     redirect_til_done(job.id)
