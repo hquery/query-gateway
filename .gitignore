@@ -5,3 +5,5 @@ tmp/
 .sass-cache/
 .DS_Store
 doc/patient-api
+coverage.data
+coverage/
