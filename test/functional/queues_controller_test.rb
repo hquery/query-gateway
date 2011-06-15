@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'net/http'
 
 class QueuesControllerTest < ActionController::TestCase
   # test "the truth" do
@@ -15,18 +16,44 @@ class QueuesControllerTest < ActionController::TestCase
      reduce = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_reduce.js'), 'application/javascript')
      {:map => map, :reduce => reduce}
   end
-  
+  def create_job_params_with_filter
+    params = create_job_params
+    params[:filter] = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/filter.json'), 'application/json')
+    params
+  end
+  def create_job_params_with_bad_filter
+    params = create_job_params
+    params[:filter] = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/bad_filter.json'), 'application/json')
+    params
+  end
+    
   def clear_jobs
      Delayed::Job.destroy_all
   end
   
-  test "POST should add a new job" do
+  test "POST should add a new job without filter" do
     assert Delayed::Job.all.count == 0 
     post :create, create_job_params
     assert_response 303
     assert Delayed::Job.all.count == 1
   end
+  
+  test "POST should add a new job with filter" do
+    assert Delayed::Job.all.count == 0 
+    post :create, create_job_params_with_filter
+    assert_response 303
+    assert Delayed::Job.all.count == 1
+  end
 
+  test "POST should fail with bad filter" do
+    assert Delayed::Job.all.count == 0 
+    begin
+      post :create, create_job_params_with_bad_filter
+      assert false
+    rescue
+      assert true
+    end
+  end
 
   test "GET /show show return a 404 when the job does not exist" do
     clear_jobs
