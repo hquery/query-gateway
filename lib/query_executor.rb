@@ -32,7 +32,12 @@ class QueryExecutor
   
   def self.patient_api_javascript
     api = ""
-    Dir.glob(Rails.root + 'lib/coffee/*.coffee') do |f|
+    
+    # Use this to enforce load order
+    files = ['core', 'encounter', 'condition', 'procedure',
+             'medication', 'patient']
+
+    files.map {|name| Rails.root + "lib/coffee/#{name}.coffee"}.each do |f|
        patient_coffee = File.read(f)
        api += CoffeeScript.compile(patient_coffee, bare: true)
     end
