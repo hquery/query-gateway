@@ -35,7 +35,7 @@ class QueryExecutor
     
     # Use this to enforce load order
     files = ['core', 'encounter', 'condition', 'procedure',
-             'medication', 'patient']
+             'medication', 'result', 'patient']
 
     files.map {|name| Rails.root + "lib/coffee/#{name}.coffee"}.each do |f|
        patient_coffee = File.read(f)

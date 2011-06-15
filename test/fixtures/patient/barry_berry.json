@@ -24,7 +24,8 @@ var barry = { "first" : "Barry",
     { "codes" : { "SNOMED-CT" : [ 
           "105539002" ] },
       "time" : 1263168508,
-      "description" : "Tobacco Non-user" } ],
+      "description" : "Tobacco Non-user",
+      "status": "completed" } ],
   "procedures" : [
     { "codes" : { "CPT" : [ 
         "44388" ] },

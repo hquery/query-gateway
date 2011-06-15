@@ -52,3 +52,18 @@ class Patient
   procedures: ->
     for procedure in @json['procedures']
       new Procedure procedure
+      
+  ###*
+  @returns {Array} A list of {@link Result} objects
+  ###
+  results: ->
+    for result in @json['results']
+      new Result result
+
+  ###*
+  @returns {Array} A list of {@link Result} objects
+  ###
+  vitalSigns: ->
+    for vital in @json['vital_signs']
+      new Result vital
+      
