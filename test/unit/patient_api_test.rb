@@ -27,9 +27,10 @@ class PatientApiTest < ActiveSupport::TestCase
   end
   
   def test_vital_signs
-    assert_equal 1, @context.eval('patient.vitalSigns().length')
+    assert_equal 2, @context.eval('patient.vitalSigns().length')
     assert_equal '105539002', @context.eval('patient.vitalSigns()[0].type()[0].code()')
     assert_equal 'SNOMED-CT', @context.eval('patient.vitalSigns()[0].type()[0].codeSystemName()')
     assert_equal 'completed', @context.eval('patient.vitalSigns()[0].status()')
+    assert_equal 132, @context.eval('patient.vitalSigns()[1].value()["scalar"]')
   end
 end
