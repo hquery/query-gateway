@@ -4,10 +4,6 @@ class QueuesController < ApplicationController
   
   include QueryUtilities
  
-  def index
-    @jobs = QueryJob.all_jobs
-  end
-
   def create
     map=params[:map].read
     reduce = params[:reduce].read

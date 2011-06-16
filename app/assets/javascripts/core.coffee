@@ -11,21 +11,21 @@ dateFromUtcSeconds = (utcSeconds) ->
 ###
 class CodedValue
   ###*
-  @param {String} code value of the code
-  @param {String} codeSystemName name of the code system that the code belongs to
+  @param {String} c value of the code
+  @param {String} csn name of the code system that the code belongs to
   @constructs
   ###
-  constructor: (@code, @codeSystemName) ->
+  constructor: (@c, @csn) ->
 
   ###*
   @returns {String} the code
   ###
-  code: -> @code
+  code: -> @c
 
   ###*
   @returns {String} the code system name
   ###
-  codeSystemName: -> @codeSystemName
+  codeSystemName: -> @csn
 
 
 
@@ -169,6 +169,12 @@ class CodedEntry
   @returns {String}
   ###
   freeTextType: -> @json['description']
+  
+  ###*
+  Unique identifier for this coded entry
+  @returns {String}
+  ###
+  id: -> @json['id']
 
 ###*
 @private

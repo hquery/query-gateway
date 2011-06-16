@@ -24,8 +24,19 @@ var barry = { "first" : "Barry",
     { "codes" : { "SNOMED-CT" : [ 
           "105539002" ] },
       "time" : 1263168508,
-      "description" : "Tobacco Non-user" } ],
-  "procedures" : [],
+      "description" : "Tobacco Non-user",
+      "status": "completed" },
+    { "codes" : { "SNOMED-CT" : [ 
+          "314443004" ] },
+      "time" : 1263168508,
+      "description" : "Systolic BP",
+      "status": "completed",
+      "value": {"scalar": 132, "units": "mm[Hg]"} } ],
+  "procedures" : [
+    { "codes" : { "CPT" : [ 
+        "44388" ] },
+    "time" : 1073238725,
+    "description" : "Colonscopy" } ],
   "results" : [],
   "medications" : [ 
     { "codes" : { "RxNorm" : [ 

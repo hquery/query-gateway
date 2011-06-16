@@ -3,6 +3,7 @@
 # =require condition.coffee
 # =require encounter.coffee
 # =require procedure.coffee
+# =require result.coffee
 ###*
 @class Representation of a patient
 ###
@@ -50,3 +51,25 @@ class Patient
   conditions: ->
     for condition in @json['conditions']
       new Condition condition
+
+  ###*
+  @returns {Array} A list of {@link Procedure} objects
+  ###
+  procedures: ->
+    for procedure in @json['procedures']
+      new Procedure procedure
+      
+  ###*
+  @returns {Array} A list of {@link Result} objects
+  ###
+  results: ->
+    for result in @json['results']
+      new Result result
+
+  ###*
+  @returns {Array} A list of {@link Result} objects
+  ###
+  vitalSigns: ->
+    for vital in @json['vital_signs']
+      new Result vital
+      
