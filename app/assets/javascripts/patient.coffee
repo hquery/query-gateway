@@ -1,3 +1,8 @@
+# =require core.coffee
+# =require medication.coffee
+# =require condition.coffee
+# =require encounter.coffee
+# =require procedure.coffee
 ###*
 @class Representation of a patient
 ###

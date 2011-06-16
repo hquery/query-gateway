@@ -1,5 +1,6 @@
 require 'query_utilities'
-
+require 'sprockets'
+require 'tilt'
 class QueryExecutor
   
   include QueryUtilities
@@ -12,6 +13,8 @@ class QueryExecutor
     @reduce_js = reduce_js
     @job_id = job_id
     @filter = filter
+  
+    
   end
   
   def execute
@@ -31,13 +34,9 @@ class QueryExecutor
   end
   
   def self.patient_api_javascript
-    api = ""
-    Dir.glob(Rails.root + 'lib/coffee/*.coffee') do |f|
-       patient_coffee = File.read(f)
-       api += CoffeeScript.compile(patient_coffee, bare: true)
-    end
-    
-    api
+    Tilt::CoffeeScriptTemplate.default_bare=true 
+    Rails.application.assets.find_asset("patient.coffee")
+
   end
   
   private

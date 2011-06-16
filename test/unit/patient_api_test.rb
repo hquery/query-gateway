@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PatientApiTest < ActiveSupport::TestCase
   def setup
-    patient_api = QueryExecutor.patient_api_javascript
+    patient_api = QueryExecutor.patient_api_javascript.to_s
     fixture_json = File.read('test/fixtures/patient/barry_berry.json')
     initialize_patient = 'var patient = new Patient(barry);'
     @context = ExecJS.compile(patient_api + "\n" + fixture_json + "\n" + initialize_patient)

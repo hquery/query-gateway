@@ -179,3 +179,5 @@ createCodedValues = (jsonCodes) ->
     for code in codes
       codedValues.push new CodedValue code, codeSystem
   codedValues
+
+

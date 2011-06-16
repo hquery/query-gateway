@@ -1,3 +1,4 @@
+# =require core.coffee
 ###*
 This represents all interventional, surgical, diagnostic, or therapeutic procedures or 
 treatments pertinent to the patient.
