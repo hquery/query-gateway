@@ -22,7 +22,6 @@ class QueryExecutor
     
     # convert the filter hash to a mongo query style hash.  Currently we are passing in a mongo style query hash so this is a no-op
     filter = convert_filter_to_mongo_query filter
-    
     results = db[PATIENTS_COLELCTION].map_reduce(build_map_function , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
     result_document = {}
     result_document["_id"] = @job_id
@@ -35,16 +34,17 @@ class QueryExecutor
   
   def self.patient_api_javascript
     Tilt::CoffeeScriptTemplate.default_bare=true 
-    Rails.application.assets.find_asset("patient.coffee")
+    Rails.application.assets.find_asset("patient")
   end
   
   private
   def build_map_function
     "function() {
+      this.hQuery || (this.hQuery = {});
+      var hQuery = this.hQuery;
       #{QueryExecutor.patient_api_javascript}
       #{@map_js}
-      
-      var patient = new Patient(this);
+      var patient = new hQuery.Patient(this);
       map(patient);
     };"
     
