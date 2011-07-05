@@ -21,7 +21,7 @@ gem 'quality-measure-engine', :git => 'http://github.com/pophealth/quality-measu
 gem 'delayed_job'
 gem 'delayed_job_mongoid'
 
-gem "hquery-patient-api", :git=>'file:///Users/bobd/projects/hquery-patientapi/'
+gem "hquery-patient-api", :git=>'git://barrel.mitre.org/hquery/hquery-patientapi.git'
 
 
 #gem 'pry'
