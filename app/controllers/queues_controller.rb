@@ -1,4 +1,5 @@
 require 'query_job'
+require 'job_stats'
 require 'query_utilities'
 class QueuesController < ApplicationController
   
@@ -49,6 +50,11 @@ class QueuesController < ApplicationController
       :status =>@status}  
      
   end
+  
+  def server_status
+    render :json => JobStats.stats  
+  end
+  
 
    private 
    def redirect_til_done(job_id, js=nil)

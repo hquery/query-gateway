@@ -23,7 +23,6 @@ gem 'delayed_job_mongoid'
 
 gem "hquery-patient-api", :git=>'git://barrel.mitre.org/hquery/hquery-patientapi.git'
 
-
 #gem 'pry'
 
 group :test do

@@ -2,7 +2,7 @@ QueryGateway::Application.routes.draw do
   
   
   post "records/create"
-
+  get "queues/server_status"
   resources :queues do
       member do
         get :job_status

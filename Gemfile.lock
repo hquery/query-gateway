@@ -1,6 +1,6 @@
 GIT
   remote: git://barrel.mitre.org/hquery/hquery-patientapi.git
-  revision: 5e20b9479e0ad59598b4ca232ba62dbba89b9970
+  revision: ca9e13123b30bdf467bfe9f26d0c9172780a2522
   specs:
     hquery-patient-api (0.1.0)
 
