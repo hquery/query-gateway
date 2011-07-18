@@ -3,7 +3,7 @@ module Importer
     def initialize
       @entry_xpath = "//cda:observation[cda:templateId/@root='2.16.840.1.113883.3.88.11.83.15.1'] | //cda:observation[cda:templateId/@root='2.16.840.1.113883.3.88.11.83.15']"
       @code_xpath = "./cda:code"
-      @status_xpath = nil
+      @status_xpath = "./cda:statusCode"
       @description_xpath = "./cda:code/cda:originalText/cda:reference[@value] | ./cda:text/cda:reference[@value] "
       @check_for_usable = true               # Pilot tools will set this to false
       @id_map = {}
@@ -24,7 +24,7 @@ module Importer
         extract_codes(entry_element, result)
         extract_dates(entry_element, result)
         extract_value(entry_element, result)
-        #extract_status(entry_element, result)
+        extract_status(entry_element, result)
         extract_description(entry_element, result, id_map)
         extract_interpretation(entry_element, result)
         if @check_for_usable
@@ -42,6 +42,13 @@ module Importer
       if interpretation_element
         result.interpretation_code = interpretation_element['code']
         result.interpretation_code_system_name = QME::Importer::CodeSystemHelper.code_system_for(interpretation_element['codeSystem'])
+      end
+    end
+    
+    def extract_status(parent_element, result)
+      status_code_element = parent_element.at_xpath(@status_xpath)
+      if status_code_element
+        result.status = status_code_element['code']
       end
     end
   end

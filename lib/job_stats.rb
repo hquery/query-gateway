@@ -5,6 +5,7 @@ class JobStats
   end
     
   def self.stats
+    
     begin
       Mongoid.master.stats
     rescue
