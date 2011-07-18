@@ -44,4 +44,19 @@ class QueryJobTest < ActiveSupport::TestCase
   end
   
   
+  
+  def test_cancel_job
+    Delayed::Worker.delay_jobs=true
+    job = create_job
+    job_id = job.id
+    assert_equal Delayed::Job.count() , 1
+    QueryJob.cancel_job(job_id.to_s)
+    assert_equal Delayed::Job.count() , 0
+    
+    assert_equal :canceled,  QueryJob.job_status(job_id.to_s)
+
+    
+  end
+  
+  
 end

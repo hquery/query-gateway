@@ -5,6 +5,12 @@ class QueuesController < ApplicationController
   
   include QueryUtilities
  
+ 
+  def index
+    @jobs = QueryJob.all_jobs
+  end
+ 
+ 
   def create
     map=params[:map].read
     reduce = params[:reduce].read
@@ -16,7 +22,7 @@ class QueuesController < ApplicationController
 
 
   def show
-    logger.info(params)
+   
     job_id = params[:id]
     case  QueryJob.job_status(job_id)
     when :failed
@@ -28,6 +34,9 @@ class QueuesController < ApplicationController
     when :not_found
       logger.info "NOT FOUND"
       render :text=>"Job not Found", :status=>404
+    when :canceled
+      logger.info "Canceled"
+      render :text=>"Job Canceled", :status=>404
     else
       logger.info "REDIRECT"
       redirect_til_done(job_id)
@@ -37,6 +46,13 @@ class QueuesController < ApplicationController
   
   
   
+  def destroy
+     job_id = params[:id]
+     QueryJob.cancel_job(job_id)
+     render :text=>"Job Canceled"
+  end
+  
+  
   def job_status
      @job_id = params[:id]
      @status = QueryJob.job_status(@job_id)
@@ -44,12 +60,14 @@ class QueuesController < ApplicationController
        render :text=>"Job not Found", :status=>404
        return
      end
-     @job = @status != :completed ? QueryJob.find_job(@job_id) : nil
+     @job = [:completed, :canceled].index(@status) != nil ? QueryJob.find_job(@job_id) : nil
      
      render :json=>{:logs => QueryJob.job_logs(@job_id),
       :status =>@status}  
      
   end
+  
+  
   
   def server_status
     render :json => JobStats.stats  

@@ -1,5 +1,28 @@
-<script>
-$(document).ready(function(){
-  debugger;
-});
-</script>
+<table>
+  <thead> 
+    <tr> 
+      <th>ID</th> 
+      <th>Attempts</th> 
+      <th>priority</th> 
+      <th>run at</th> 
+      <th>created at</th> 
+      <th>updated at</th> 
+      <th>locked by</th> 
+      <th>locked  at</th> 
+    </tr> 
+  </thead>
+  <tbody>
+    <% @jobs.each do |job| %>
+    <tr>
+      <td><%= job.id %></td>
+      <td><%= job.attempts  %> </td>
+      <td><%= job.priority  %>  </td>
+      <td><%= job.run_at  %>  </td>
+      <td><%= job.created_at  %>  </td>
+      <td><%= job.updated_at  %>  </td>
+      <td><%= job.locked_by  %>  </td>
+      <td><%= job.locked_at  %>  </td>
+    </tr>
+    <% end %>
+  </tbody>	
+</table>
