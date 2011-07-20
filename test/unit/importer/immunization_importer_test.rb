@@ -16,5 +16,7 @@ class ImmunizationImporterTest < ActiveSupport::TestCase
     
     immunization = patient[:immunizations][3]
     assert_equal true, immunization.refusal
+    assert_equal 'FirstName', immunization.performer['person']['given']
+    assert_equal '100 Bureau Drive', immunization.performer['person']['addresses'].first['streetAddress']
   end
 end

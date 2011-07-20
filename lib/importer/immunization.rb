@@ -12,6 +12,10 @@ module Importer
       immunization_hash['medicationInformation'] = {'codedProducts' => codes}
       immunization_hash['administeredDate'] = as_point_in_time
       
+      if performer
+        immunization_hash['performer'] = performer
+      end
+      
       immunization_hash
     end
   end

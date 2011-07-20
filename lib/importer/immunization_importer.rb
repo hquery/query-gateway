@@ -1,5 +1,7 @@
 module Importer
   class ImmunizationImporter < QME::Importer::SectionImporter
+    include CoreImporter
+    
     def initialize
       @entry_xpath = "//cda:section[cda:templateId/@root='2.16.840.1.113883.3.88.11.83.117']/cda:entry/cda:substanceAdministration"
       @code_xpath = "./cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code"
@@ -24,6 +26,7 @@ module Importer
         extract_dates(entry_element, immunization)
         extract_description(entry_element, immunization, id_map)
         extract_refusal(entry_element, immunization)
+        extract_performer(entry_element, immunization)
         if @check_for_usable
           immunization_list << immunization if immunization.usable?
         else
@@ -39,6 +42,11 @@ module Importer
       unless negation_indicator.nil?
         immunization.refusal = negation_indicator.eql?('true')
       end
+    end
+    
+    def extract_performer(parent_element, immunization)
+      performer_element = parent_element.at_xpath("./cda:performer")
+      immunization.performer = import_actor(performer_element) if performer_element
     end
   end
 end
