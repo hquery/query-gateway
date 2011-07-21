@@ -21,3 +21,10 @@ def dump_jobs
   Delayed::Job.destroy_all
 end
 
+def create_job
+  
+   mf = File.read('test/fixtures/map_reduce/simple_map.js')
+   rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
+   job = QueryJob.submit(mf,rf)
+   return job
+end

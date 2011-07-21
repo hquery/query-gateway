@@ -1,6 +1,7 @@
 # This file is used to load enhancements to the Quality Measure Engine for full C32
 # importing
 
+require 'importer/core_importer'
 require 'importer/result'
 require 'importer/result_importer'
 require 'importer/immunization'

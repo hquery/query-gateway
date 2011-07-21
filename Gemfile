@@ -31,4 +31,5 @@ group :test do
   gem 'cover_me', '>= 1.0.0.rc6'
   gem 'mocha'
   gem 'factory_girl'
+  gem 'awesome_print', :require => 'ap'
 end

@@ -1688,8 +1688,19 @@
               <performer>
                 <assignedEntity>
                   <id/>
-                  <addr/>
-                  <telecom/>
+                  <addr use="HP">
+                    <streetAddressLine>100 Bureau Drive</streetAddressLine>
+                    <city>Gaithersburg</city>
+                    <state>MD</state>
+                    <postalCode>20899</postalCode>
+                  </addr>
+                  <telecom use="HP" value="tel:1-301-555-5555"/>
+                  <assignedPerson>
+                    <name>
+                      <given>FirstName</given>
+                      <family>LastName</family>
+                    </name>
+                  </assignedPerson>
                 </assignedEntity>
               </performer>
               <entryRelationship typeCode="SUBJ">

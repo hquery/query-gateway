@@ -70,8 +70,16 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
   end
 
 
+  def self.cancel_job(job_id)
+    job = find_job(job_id)
+    if job && job.locked_by.nil?
+      job.destroy
+      logger.add(job,"Job Canceled",{status: :canceled})
+    end
+  end
+  
   def self.job_logs(job_id)
-      logger.job_log(BSON::ObjectId.from_string(job_id))
+    logger.job_log(BSON::ObjectId.from_string(job_id))
   end
 
   
@@ -86,6 +94,11 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
        return :running if (job.locked_at)
      elsif Mongoid.master[RESULTS_COLLECTION].find_one({"_id"=>jid},{:fields => "_id"})
        return :completed
+     else
+       jlog = job_logs(job_id)
+       if jlog.size >0 && jlog.last['status'] == :canceled
+         return :canceled
+       end
      end
      return :not_found
   end
