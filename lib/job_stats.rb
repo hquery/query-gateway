@@ -5,7 +5,6 @@ class JobStats
   end
     
   def self.stats
-    
     begin
       Mongoid.master.stats
     rescue
@@ -31,6 +30,7 @@ class JobStats
         }
         else if(obj.status == "rescheduled"){
           prev.retries++; 
+          prev.retried = true
         }  
         else if(obj.status == 'running') {
           if( prev.last_runtime == null || prev.last_runtime < obj.time ){
@@ -43,7 +43,7 @@ class JobStats
    
    events.each{ |e|
      failed += 1 if(!e['failed'].nil?)
-     retired +=1 if( e['retried'])
+     retried +=1 if( e['retried'] and e['failed'].nil?)
       
      if e['finished'] 
         successful += 1

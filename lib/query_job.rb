@@ -32,7 +32,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
   
   # need to get the id of the job we are running as
   def enqueue(job,*args)
-     logger.add(job,"Job enqueued", {:status=>:queued, :job=>job.attributes})
+    logger.add(job,"Job enqueued", {:status=>:queued, :job=>job.attributes})
   end
   
 
@@ -66,7 +66,6 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
 
 
   def self.find_job(job_id)
-
       Delayed::Job.find(job_id)
   end
 
@@ -75,10 +74,6 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
       logger.job_log(BSON::ObjectId.from_string(job_id))
   end
 
-  
-  def self.all_jobs()
-      Delayed::Job.all
-  end
   
   def self.job_status(job_id)
 
