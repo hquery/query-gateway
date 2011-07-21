@@ -82,6 +82,9 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
     logger.job_log(BSON::ObjectId.from_string(job_id))
   end
 
+  def self.all_jobs()
+      Delayed::Job.all
+  end
   
   def self.job_status(job_id)
 
