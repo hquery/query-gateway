@@ -28,3 +28,5 @@ def create_job
    job = QueryJob.submit(mf,rf)
    return job
 end
+
+require 'mocha'

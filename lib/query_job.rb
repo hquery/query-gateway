@@ -21,7 +21,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
       msg_options[:worker]=job.locked_by
     rescue
     end
-   logger.add(job,"job running",msg_options)
+   logger.add(job,"Job running",msg_options)
   end
  
  
@@ -43,7 +43,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
   def after(job,*args)
     # see if it was rescheduled after an error
      if(!Mongoid.master[RESULTS_COLLECTION].find_one({"_id"=>job.id},{:fields => "_id"}))
-      logger.add(job,"Job Rescheduled",{ :status=>:queued})
+      logger.add(job,"Job rescheduled",{ :status=>:queued})
     end
   end
 

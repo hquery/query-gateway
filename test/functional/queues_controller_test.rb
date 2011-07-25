@@ -120,4 +120,12 @@ class QueuesControllerTest < ActionController::TestCase
 
   end
   
+  test "GET / should return all jobs" do
+    get :index
+    jobs = assigns[:jobs]
+    assert_not_nil jobs
+    assert_equal Delayed::Job.all.count, jobs.count
+    assert_response :success
+  end
+  
 end

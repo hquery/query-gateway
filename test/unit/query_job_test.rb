@@ -104,10 +104,66 @@ class QueryJobTest < ActiveSupport::TestCase
     assert_equal count+1, job_log.count
     
   end
+
+  test "before logs running event properly" do
+    mf = File.read('test/fixtures/map_reduce/simple_map.js')
+    rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
+    job = QueryJob.new(mf,rf,nil)
+
+    running_job = Factory(:running_job)
+
+    logger = MongoLogger.new
+    count = logger.job_log(running_job.id).count
+
+    job.before(running_job)
+    
+    logger = MongoLogger.new
+    job_log = logger.job_log running_job.id
+
+    assert_equal :running, job_log.last['status']
+    assert_equal 'lock', job_log.last['worker']
+    assert_equal 'Job running', job_log.last['message']
+    assert_equal count+1, job_log.count
+    
+  end
+
+  test "after logs rescheduled event properly" do
+    mf = File.read('test/fixtures/map_reduce/simple_map.js')
+    rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
+    job = QueryJob.new(mf,rf,nil)
+
+    running_job = Factory(:running_job)
+
+    logger = MongoLogger.new
+    count = logger.job_log(running_job.id).count
+
+    job.after(running_job)
+    
+    logger = MongoLogger.new
+    job_log = logger.job_log running_job.id
+
+    assert_equal :queued, job_log.last['status']
+    assert_equal "Job rescheduled", job_log.last['message']
+    assert_equal count+1, job_log.count
+    
+  end
   
+  test "perform calls query executor" do
+    mf = File.read('test/fixtures/map_reduce/simple_map.js')
+    rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
+    job = QueryJob.new(mf,rf,nil)
+    
+    running_job = Factory(:running_job)
+    job.before(running_job)
+    
+    # TODO: aq - expects is not working properly with mocha and rails 3.1.0.rc4... passes even though not called
+    QueryExecutor.any_instance.expects(:execute).once.returns(false)
+    
+    job.perform
+  end
+
   
-  
-  def test_cancel_job
+  test "test cancel job" do
     Delayed::Worker.delay_jobs=true
     job = create_job
     job_id = job.id
@@ -116,8 +172,6 @@ class QueryJobTest < ActiveSupport::TestCase
     assert_equal Delayed::Job.count() , 0
     
     assert_equal :canceled,  QueryJob.job_status(job_id.to_s)
-
-    
   end
   
   
