@@ -2,10 +2,10 @@ require 'mongo'
 require 'mongo_logger'
 class QueryJob < Struct.new(:map, :reduce, :filter)
   
-  PATIENTS_COLELCTION = "patients"
+  FINISHED_COLLECTION = "finished_jobs"
   RESULTS_COLLECTION = "query_results"
-  @@logger = nil
   
+  @@logger = nil
   # run the job using the query executor
   def perform
    qe = QueryExecutor.new(map,reduce,@job_id,filter)
@@ -28,6 +28,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
   # need to get the id of the job we are running as
   def failure(job,*args)
     logger.add(job,"Job failed",{:worker=>job.locked_by, :error=>job.last_error, :status=>:failed, :failed_at=>job.failed_at})
+    
   end
   
   # need to get the id of the job we are running as
@@ -102,7 +103,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter)
        return :completed
      else
        jlog = job_logs(job_id)
-       if jlog.size >0 && jlog.last['status'] == :canceled
+       if jlog && jlog['current_status'] == :canceled
          return :canceled
        end
      end

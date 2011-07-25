@@ -6,12 +6,24 @@ class MongoLogger
     
    
     def add(job,message,extra={})
-       @mongo_db[LOG_COLLECTION].insert(extra.merge({"job_id"=>job.id, "message"=>message, :time=>Time.new}))
+       time = Time.now
+       jlog = get_job_log(job.id)
+       jlog['current_status']=extra[:status]
+       jlog['last_update'] = time
+
+       jlog['messages'] << extra.merge({"job_id"=>job.id, "message"=>message, "time"=>time})
+       @mongo_db[LOG_COLLECTION].save(jlog, {safe: true})
     end
     
     
     def job_log(jid)
-      entries =  @mongo_db[LOG_COLLECTION].find({:job_id=>jid},{:sort=>[[:time,:ascending]]}).to_a
+       @mongo_db[LOG_COLLECTION].find_one({:job_id=>jid})
     end
     
+    
+    private 
+    
+    def get_job_log(jid)
+      jlog =  @mongo_db[LOG_COLLECTION].find_one({job_id: jid}) || {"job_id" => jid, "messages" => []}     
+    end
 end
