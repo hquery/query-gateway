@@ -18,10 +18,11 @@ gem "bson_ext", "~> 1.3", :platforms => :mri
 gem 'quality-measure-engine', :git => 'http://github.com/pophealth/quality-measure-engine.git', :branch => 'develop'
 
 
-gem 'delayed_job'
-gem 'delayed_job_mongoid'
+gem 'delayed_job_mongoid', :git=>'https://github.com/collectiveidea/delayed_job_mongoid.git'
 
 gem "hquery-patient-api", :git=>'git://barrel.mitre.org/hquery/hquery-patientapi.git'
+
+gem 'coderay'
 
 #gem 'pry'
 
@@ -30,6 +31,6 @@ group :test do
   gem 'turn', :require => false
   gem 'cover_me', '>= 1.0.0.rc6'
   gem 'mocha'
-  gem 'factory_girl'
+  gem 'factory_girl', '1.3.3'
   gem 'awesome_print', :require => 'ap'
 end
