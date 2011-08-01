@@ -61,6 +61,7 @@ class QueuesControllerTest < ActionController::TestCase
     job = QueryJob.submit("function(){}","function(){}") 
     job.failed_at = Time.now
     job.save
+    job.payload_object.failure(job)
     get :show, {id: job.id.to_s}
     assert_response 500
 
@@ -76,6 +77,7 @@ class QueuesControllerTest < ActionController::TestCase
   
   test "GET /show show return a 200 if the job is completed" do
     job = QueryJob.submit("function(){}","function(){}") 
+    job.payload_object.success(job)
     Mongoid.master[QueryExecutor::RESULTS_COLLECTION].save({_id: job.id, value: {}})
     job_id = job.id.to_s
     job.destroy
@@ -101,19 +103,21 @@ class QueuesControllerTest < ActionController::TestCase
     Factory(:successful_job).destroy
     Factory(:failed_job).destroy
     Factory(:running_job)
+    Factory(:running_job)
     Factory(:rescheduled_job)
     Factory(:queued_job)
     
     get :server_status
 
     assert_equal "application/json; charset=utf-8", @response.header['Content-Type']
-
+    puts @response.body
     stats = JSON.parse(@response.body)
-    assert_equal 1, stats['successful']
+    
     assert_equal 1, stats['failed']
     assert_equal 2, stats['running']
-    assert_equal 1, stats['retried']
+    assert_equal 1, stats['rescheduled']
     assert_equal 1, stats['queued']
+    assert_equal 1, stats['success']
     assert_equal 30, stats['avg_runtime'].ceil
 
     assert_response :success
