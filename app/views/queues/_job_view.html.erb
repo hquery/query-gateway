@@ -1,0 +1,83 @@
+<table id="<%= status %>_table" class="status_table">
+  <thead> 
+    <tr> 
+      <th>ID</th> 
+      <th>Attempts</th> 
+      
+       <% if [:queued, :rescheduled ].index(status.to_sym) %>
+         <th>priority</th> 
+         <th>run at</th>
+        <% end %>
+        <% if status.to_sym == :running%>
+          <th>priority</th> 
+          <th>run at</th>
+          <th>locked by</th> 
+          <th>locked  at</th>
+         <% end %>
+      <% if [:failed, :error ].index(status.to_sym) %>
+         <th>Last Error</th> 
+      <%  end %>      
+      <th>created at</th> 
+      <th>updated at</th> 
+   
+    </tr> 
+  </thead>
+  <tbody>
+    
+<% job_logs.each do |job_log| 
+  job = job_log.job
+  payload = YAML.load(job["handler"])
+  %>
+  <tr>
+    <td><%= job_log.job_id %></td>
+    <td><%= job["attempts"]  %> </td>
+    
+   <% if :running == status.to_sym %>
+      <td><%= job["priority"] %>  </td>
+      <td><%= job["run_at"]  %></td>
+      <td><%= job["locked_by"]  %>  </td>
+      <td><%= job["locked_at"]  %>  </td>
+    <% end %>
+    <% if [ :queued, :rescheduled ].index(status.to_sym) %>
+       <td><%= job["priority"] %>  </td>
+       <td><%= job["run_at"]  %></td>
+     <% end %>
+    <% if [:failed, :error ].index(status.to_sym) %>
+       <td><%= job["last_error"]  %></td>
+    <% end %>
+    <td><%= job["created_at"]   %>  </td>
+    <td><%= job["updated_at"]   %>  </td>
+  </tr>
+  <tr>
+  <td colspan="100%">
+      <div> 
+        Map Function 
+        <div>
+        <%=   format_javascript(payload.map).html_safe %>
+        </div>
+      </div>
+      
+      <div> Reduce Function 
+        <div>
+         <%=  format_javascript(payload.reduce).html_safe %>
+         </div>
+      </div>
+      
+      <div> Filter
+        <div>
+         <%=  format_javascript(payload.filter).html_safe %>
+         </div>
+      </div>
+      
+      <h4>Log Messages</h4>
+      <ul>
+        <% job_log.messages.each do |message| %>
+          <li><span><%= message["status"]%></span> <span><%= message["time"]%></span> <span><%= message["message"]%></span> <span><%= message["worker"]%></span></li>
+        <% end %>
+       </ul>   
+
+  </td>
+  </tr>
+  <% end %>
+  </tbody>	
+</table>

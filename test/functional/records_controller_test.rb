@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class RecordsControllerTest < ActionController::TestCase
+  
+  setup do
+    dump_database
+  end
+  
   test "should POST a C32 to create" do
     c32 = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test', 'fixtures', 'TobaccoUser0028.xml'), 'application/xml')
     post :create, {:content => c32}

@@ -2,11 +2,10 @@ require 'test_helper'
 require 'net/http'
 
 class QueuesControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-  def setup
-    Delayed::Job.destroy_all
+
+  setup do
+    dump_jobs
+    dump_database
     Delayed::Worker.delay_jobs=true
   end
   
@@ -27,10 +26,6 @@ class QueuesControllerTest < ActionController::TestCase
     params
   end
     
-  def clear_jobs
-     Delayed::Job.destroy_all
-  end
-  
   test "POST should add a new job without filter" do
     assert Delayed::Job.all.count == 0 
     post :create, create_job_params
@@ -56,7 +51,6 @@ class QueuesControllerTest < ActionController::TestCase
   end
 
   test "GET /show show return a 404 when the job does not exist" do
-    clear_jobs
     assert Delayed::Job.all.count == 0 
     get :show, {id: "4de8efb1b59a904045000008"}
     assert_response 404
@@ -64,7 +58,6 @@ class QueuesControllerTest < ActionController::TestCase
   end
   
   test "GET /show show return a 500 error if the job failed" do
-    clear_jobs
     job = QueryJob.submit("function(){}","function(){}") 
     job.failed_at = Time.now
     job.save
@@ -74,7 +67,6 @@ class QueuesControllerTest < ActionController::TestCase
   end
   
   test "GET /show show return a 303 response if the job is running or queued" do
-    clear_jobs
     job = QueryJob.submit("function(){}","function(){}") 
     get :show, {id: job.id.to_s}
     assert_response 303
@@ -83,29 +75,48 @@ class QueuesControllerTest < ActionController::TestCase
   
   
   test "GET /show show return a 200 if the job is completed" do
-    clear_jobs
     job = QueryJob.submit("function(){}","function(){}") 
     Mongoid.master[QueryExecutor::RESULTS_COLLECTION].save({_id: job.id, value: {}})
     job_id = job.id.to_s
     job.destroy
     get :show, {id: job.id.to_s}
-    assert_response 200
+    assert_response :success
 
   end
   
   test "GET /job_status should retrieve a running jobs status if the job existed" do
-    clear_jobs
     job = QueryJob.submit("function(){}","function(){}")
     get :job_status, {id: job.id.to_s}
-    assert_response 200
-
+    assert_response :success
   end
   
   test "GET /job_status should respond with a 404 if the job has not existed" do
-    clear_jobs
-
     get :job_status, {id: "4de8efb1b59a904045000008"}
     assert_response 404
+  end
+
+  test "GET /server_status should render json for job status" do
+    
+    # add one of each job type (successful and failed jobs should be destroyed, events remain)
+    Factory(:successful_job).destroy
+    Factory(:failed_job).destroy
+    Factory(:running_job)
+    Factory(:rescheduled_job)
+    Factory(:queued_job)
+    
+    get :server_status
+
+    assert_equal "application/json; charset=utf-8", @response.header['Content-Type']
+
+    stats = JSON.parse(@response.body)
+    assert_equal 1, stats['successful']
+    assert_equal 1, stats['failed']
+    assert_equal 2, stats['running']
+    assert_equal 1, stats['retried']
+    assert_equal 1, stats['queued']
+    assert_equal 30, stats['avg_runtime'].ceil
+
+    assert_response :success
 
   end
   
