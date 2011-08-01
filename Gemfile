@@ -25,12 +25,13 @@ gem "hquery-patient-api", :git=>'git://barrel.mitre.org/hquery/hquery-patientapi
 gem 'coderay'
 
 #gem 'pry'
+gem 'bluecloth'
 
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
   gem 'cover_me', '>= 1.0.0.rc6'
-  gem 'mocha'
   gem 'factory_girl', '1.3.3'
   gem 'awesome_print', :require => 'ap'
+  gem 'mocha', :require => false
 end

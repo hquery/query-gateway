@@ -12,7 +12,6 @@ Factory.define :job_logs, :class => JobLog do |u|
 end
 
 
-
 Factory.define :queued_event, :parent => :job_logs do |u| 
   u.status :queued
   u.last_update 60.seconds.ago.time

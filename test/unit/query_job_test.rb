@@ -69,20 +69,57 @@ class QueryJobTest < ActiveSupport::TestCase
     assert_equal count+1, job_log.messages.count
     
   end
+
+  test "before logs running event properly" do
+    Delayed::Worker.delay_jobs=true
+    job = create_job
+    job.payload_object.before(job)
+    job_log = JobLog.first(:conditions => {job_id: job.id.to_s})
+    assert_equal :running, job_log.status
+    
+  end
+
+  # test "after logs rescheduled event properly" do
+  #   mf = File.read('test/fixtures/map_reduce/simple_map.js')
+  #   rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
+  #   job = QueryJob.new(mf,rf,nil)
+  # 
+  #   running_job = Factory(:running_job)
+  # 
+  #   logger = MongoLogger.new
+  #   count = logger.job_log(running_job.id).count
+  # 
+  #   job.after(running_job)
+  #   
+  #   logger = MongoLogger.new
+  #   job_log = logger.job_log running_job.id
+  # 
+  #   assert_equal :queued, job_log.last['status']
+  #   assert_equal "Job rescheduled", job_log.last['message']
+  #   assert_equal count+1, job_log.count
+  #   
+  # end
+  # 
+  test "Job executes correctly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/map_reduce/simple_map.js')
+    rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
+    job = QueryJob.submit(mf,rf,nil)   
+    job.invoke_job
+    results = QueryJob.job_results(job.id.to_s)
+    assert_equal results["M"], 231
+    assert_equal results["F"], 275
+  end
+
   
-  
-  
-  def test_cancel_job
+  test "test cancel job" do
     Delayed::Worker.delay_jobs=true
     job = create_job
     job_id = job.id
     assert_equal Delayed::Job.count() , 1
     QueryJob.cancel_job(job_id.to_s)
-    assert_equal Delayed::Job.count() , 0
-    
+    assert_equal Delayed::Job.count() , 0 
     assert_equal :canceled,  QueryJob.job_status(job_id.to_s)
-
-    
   end
   
   

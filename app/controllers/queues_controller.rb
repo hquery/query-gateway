@@ -6,7 +6,6 @@ class QueuesController < ApplicationController
   include QueryUtilities
  
   def index
-
   end
  
   def create
@@ -36,6 +35,7 @@ class QueuesController < ApplicationController
 
   end
   
+  
   def destroy
      job_id = params[:id]
      QueryJob.cancel_job(job_id)
@@ -54,16 +54,20 @@ class QueuesController < ApplicationController
      render :json=>{:logs => jlog.messages, :status =>jlog.status}    
   end
 
+
   def server_status
     render :json => JobStats.stats  
   end
   
-  private 
+  
+private 
+  
    def redirect_til_done(job_id, js=nil)
       response.headers["retry_after"] = "10"
       response.headers["job_status"] = js if js
       redirect_to :action => 'show', :id => job_id, :status=>303
    end
+   
    
    def read_filter(filter) 
      begin

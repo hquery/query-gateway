@@ -9,15 +9,19 @@ class FactoryHash < Hash
       self[method_name]
     end
   end
+ 
   def save!
     Mongoid.master[@collection] << self
   end
+ 
   def destroy
     Mongoid.master[@collection].remove({:_id => id})
   end
+ 
   def id
     self[:_id]
   end
+  
   def collection(name)
     @collection = name
   end
