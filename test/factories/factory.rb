@@ -17,6 +17,7 @@ Factory.define :queued_event, :parent => :job_logs do |u|
   u.last_update 60.seconds.ago.time
   u.after_create do |log|
       log.messages << {status:"queued", time:60.seconds.ago.time}
+      log.save
   end
 end
 
@@ -25,6 +26,7 @@ Factory.define :running_event, :parent => :queued_event do |u|
   u.last_update 45.seconds.ago.time
   u.after_create do |log|
       log.messages << {status:"running", time:45.seconds.ago.time}
+      log.save
   end
 end
 
@@ -33,6 +35,7 @@ Factory.define :successful_event, :parent => :running_event do |u|
   u.last_update 30.seconds.ago.time
   u.after_create do |log|
       log.messages << {status:"success", time:30.seconds.ago.time}
+      log.save
   end
 end
 
@@ -41,6 +44,7 @@ Factory.define :error_event, :parent => :running_event do |u|
   u.last_update 60.seconds.ago.time
   u.after_create do |log|
       log.messages << {status:"error", time:60.seconds.ago.time}
+      log.save
   end
 end
 
@@ -49,6 +53,7 @@ Factory.define :rescheduled_event, :parent => :error_event do |u|
   u.last_update 15.seconds.ago.time
   u.after_create do |log|
       log.messages << {status:"rescheduled", time:15.seconds.ago.time}
+      log.save
   end
 end
 
@@ -58,6 +63,7 @@ Factory.define :failed_event, :parent => :running_event do |u|
   u.last_update 10.seconds.ago.time
   u.after_create do |log|
       log.messages << {status:"failed", time:10.seconds.ago.time}
+      log.save
   end
 end
 

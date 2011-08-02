@@ -49,6 +49,7 @@ class JobStats
 
     
   def self.stats
+    # check to see if we have a working connection to mongo
     begin
       Mongoid.master.stats
     rescue

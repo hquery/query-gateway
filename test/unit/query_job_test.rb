@@ -79,27 +79,8 @@ class QueryJobTest < ActiveSupport::TestCase
     
   end
 
-  # test "after logs rescheduled event properly" do
-  #   mf = File.read('test/fixtures/map_reduce/simple_map.js')
-  #   rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
-  #   job = QueryJob.new(mf,rf,nil)
-  # 
-  #   running_job = Factory(:running_job)
-  # 
-  #   logger = MongoLogger.new
-  #   count = logger.job_log(running_job.id).count
-  # 
-  #   job.after(running_job)
-  #   
-  #   logger = MongoLogger.new
-  #   job_log = logger.job_log running_job.id
-  # 
-  #   assert_equal :queued, job_log.last['status']
-  #   assert_equal "Job rescheduled", job_log.last['message']
-  #   assert_equal count+1, job_log.count
-  #   
-  # end
-  # 
+
+  
   test "Job executes correctly" do
     Delayed::Worker.delay_jobs=true
     mf = File.read('test/fixtures/map_reduce/simple_map.js')

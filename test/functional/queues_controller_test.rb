@@ -124,28 +124,28 @@ class QueuesControllerTest < ActionController::TestCase
 
   test "GET /server_status should render json for job status" do
     
-    # # add one of each job type (successful and failed jobs should be destroyed, events remain)
-    #   Factory(:successful_job).destroy
-    #   Factory(:failed_job).destroy
-    #   Factory(:running_job)
-    #   Factory(:running_job)
-    #   Factory(:rescheduled_job)
-    #   Factory(:queued_job)
-    #   
-    #   get :server_status
-    # 
-    #   assert_equal "application/json; charset=utf-8", @response.header['Content-Type']
-    #   puts @response.body
-    #   stats = JSON.parse(@response.body)
-    #   
-    #   assert_equal 1, stats['failed']
-    #   assert_equal 2, stats['running']
-    #   assert_equal 1, stats['rescheduled']
-    #   assert_equal 1, stats['queued']
-    #   assert_equal 1, stats['success']
-    #   assert_equal 30, stats['avg_runtime'].ceil
-    # 
-    #   assert_response :success
+    # add one of each job type (successful and failed jobs should be destroyed, events remain)
+      Factory(:successful_job)
+      Factory(:failed_job)
+      Factory(:running_job)
+      Factory(:running_job)
+      Factory(:rescheduled_job)
+      Factory(:queued_job)
+      
+      get :server_status
+    
+      assert_equal "application/json; charset=utf-8", @response.header['Content-Type']
+      puts @response.body
+      stats = JSON.parse(@response.body)
+      
+      assert_equal 1, stats['failed']
+      assert_equal 2, stats['running']
+      assert_equal 1, stats['rescheduled']
+      assert_equal 1, stats['queued']
+      assert_equal 1, stats['success']
+      assert_equal 30, (stats['avg_runtime'] / 1000).to_i
+    
+      assert_response :success
 
   end
   
