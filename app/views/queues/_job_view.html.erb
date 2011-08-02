@@ -21,7 +21,7 @@
       <%  end %>      
       <th>created at</th> 
       <th>updated at</th> 
-   
+      <th></th>
     </tr> 
   </thead>
   <tbody>
@@ -45,27 +45,29 @@
        <td><%= job["run_at"]  %></td>
      <% end %>
     <% if [:failed, :error ].index(status.to_sym) %>
-       <td><%= job["last_error"]  %></td>
+       <td><%= truncate(job["last_error"] ) %></td>
     <% end %>
     <td><%= job["created_at"]   %>  </td>
     <td><%= job["updated_at"]   %>  </td>
+    <td><div class="arrow"></div></td>
+    
   </tr>
   <tr>
   <td colspan="100%">
       <div> 
-        Map Function 
+        <h4> Map Function </h4>
         <div>
         <%=   format_javascript(payload.map).html_safe %>
         </div>
       </div>
       
-      <div> Reduce Function 
+      <div> <h4>Reduce Function </h4>
         <div>
          <%=  format_javascript(payload.reduce).html_safe %>
          </div>
       </div>
       
-      <div> Filter
+      <div><h4>Filter</h4>
         <div>
          <%=  format_javascript(payload.filter).html_safe %>
          </div>
@@ -77,7 +79,15 @@
           <li><span><%= message["status"]%></span> <span><%= message["time"]%></span> <span><%= message["message"]%></span> <span><%= message["worker"]%></span></li>
         <% end %>
        </ul>   
-
+       
+       <% if job["last_error"] %>
+      <div> 
+        <h4>Last Error</h4> 
+         <div>
+           <%= job["last_error"] %>
+         </div>
+      </div>
+      <% end %>
   </td>
   </tr>
   <% end %>
