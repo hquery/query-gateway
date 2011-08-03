@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'factory_girl'
+require 'mocha'
 
 Factory.find_definitions
 
@@ -29,4 +30,3 @@ def create_job
    return job
 end
 
-require 'mocha'

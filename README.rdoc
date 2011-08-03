@@ -1,0 +1,22 @@
+= hQuery
+
+The query gateway is a web based application that provides the back end for executing queries. 
+
+The query gateway which exposes a query API, accepts queries, runs those queries against the patient data,
+and returns the results of the query back to the query composer.
+
+= Environments
+
+hQuery will run properly on OSX and various distributions of Linux
+
+hQuery will also run on Windows, however, there are some minor limitations to functionality and performance.
+
+= Dependencies
+
+* Ruby = 1.9.2
+* Rails 3.1
+* MongoDB >= 1.8.1
+
+= End-to-end Install Instructions
+ See the query composer for installation instructions for both the composer and gateway
+   http://github
