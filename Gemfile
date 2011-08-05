@@ -18,10 +18,11 @@ gem "bson_ext", "~> 1.3", :platforms => :mri
 gem 'quality-measure-engine', :git => 'http://github.com/pophealth/quality-measure-engine.git', :branch => 'develop'
 
 
-gem 'delayed_job'
-gem 'delayed_job_mongoid'
+gem 'delayed_job_mongoid', :git=>'https://github.com/collectiveidea/delayed_job_mongoid.git'
 
 gem "hquery-patient-api", :git=>'git://barrel.mitre.org/hquery/hquery-patientapi.git'
+
+gem 'coderay'
 
 #gem 'pry'
 gem 'bluecloth'

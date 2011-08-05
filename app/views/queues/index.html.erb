@@ -1,28 +1,39 @@
-<table>
-  <thead> 
-    <tr> 
-      <th>ID</th> 
-      <th>Attempts</th> 
-      <th>priority</th> 
-      <th>run at</th> 
-      <th>created at</th> 
-      <th>updated at</th> 
-      <th>locked by</th> 
-      <th>locked  at</th> 
-    </tr> 
-  </thead>
-  <tbody>
-    <% @jobs.each do |job| %>
-    <tr>
-      <td><%= job.id %></td>
-      <td><%= job.attempts  %> </td>
-      <td><%= job.priority  %>  </td>
-      <td><%= job.run_at  %>  </td>
-      <td><%= job.created_at  %>  </td>
-      <td><%= job.updated_at  %>  </td>
-      <td><%= job.locked_by  %>  </td>
-      <td><%= job.locked_at  %>  </td>
-    </tr>
-    <% end %>
-  </tbody>	
-</table>
+ <% 
+ stati =  [:running,:queued, :rescheduled, :canceled, :success, :failed, :error] 
+ %>
+ <style type="text/css">
+    <%= code_ray_style %>
+ </style>
+ <style type="text/css">
+      body { font-family:Arial, Helvetica, Sans-Serif; font-size:0.8em;}.status_table  { border-collapse:collapse;}
+      .status_table h4 { margin:0px; padding:0px;}
+      .status_table img { float:right;}
+      .status_table ul { margin:10px 0 10px 40px; padding:0px;}
+      .status_table th { background:#7CB8E2 url('/assets/header_bkg.png') repeat-x scroll center left; color:#fff; padding:7px 15px; text-align:left;}
+      .status_table td { background:#C7DDEE none repeat-x scroll center left; color:#000; padding:7px 15px; }
+      .status_table tr.odd td { background:#fff url('/assets/row_bkg.png') repeat-x scroll center left; cursor:pointer; }
+      .status_table div.arrow { background:transparent url('/assets/arrows.png') no-repeat scroll 0px -16px; width:16px; height:16px; display:block; float:right;}
+      .status_table div.up { background-position:0px 0px;}
+  </style>
+  
+  <script type="text/javascript">  
+      $(document).ready(function(){
+       
+          $(".status_table tr:odd").addClass("odd");
+          $(".status_table tr:not(.odd)").hide();
+          $(".status_table tr:first-child").show();
+          
+          $(".status_table tr.odd").click(function(){
+              $(this).next("tr").toggle();
+              $(this).find(".arrow").toggleClass("up");
+          });
+       
+          //$("#report").jExpand();
+      });
+  </script>
+  
+
+   <% stati.each do |status| %>
+       <%= render :partial=>"queues/job_view" , locals:{job_logs: JobLog.all(conditions:{status:status}), status:status} %>
+    <% end %> 
+   

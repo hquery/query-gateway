@@ -5,45 +5,35 @@ class QueuesController < ApplicationController
   
   include QueryUtilities
  
- 
   def index
-    @jobs = QueryJob.all_jobs
   end
- 
  
   def create
     map=params[:map].read
     reduce = params[:reduce].read
     filter = read_filter params[:filter].read if params[:filter]
     job = QueryJob.submit(map,reduce,filter)
-
     redirect_til_done(job.id)
   end
 
-
   def show
-   
     job_id = params[:id]
-    case  QueryJob.job_status(job_id)
+    jlog = JobLog.first({conditions:{job_id: job_id}})
+    status= (jlog) ? jlog.status.to_sym : :not_found
+    case status
     when :failed
-      logger.info "FAILED"
       render :text=>QueryJob.find_job(job_id).last_error, :status=>500
-    when :completed
-      logger.info "COMPLETED"
+    when :success
       render :json=>QueryJob.job_results(job_id)
     when :not_found
-      logger.info "NOT FOUND"
       render :text=>"Job not Found", :status=>404
     when :canceled
-      logger.info "Canceled"
       render :text=>"Job Canceled", :status=>404
     else
-      logger.info "REDIRECT"
       redirect_til_done(job_id)
     end
 
   end
-  
   
   
   def destroy
@@ -54,32 +44,30 @@ class QueuesController < ApplicationController
   
   
   def job_status
-     @job_id = params[:id]
-     @status = QueryJob.job_status(@job_id)
-     if @status == :not_found
+     job_id = params[:id]
+     jlog = JobLog.first({conditions:{job_id: job_id}})
+     status= (jlog) ? jlog.status : :not_found
+     if status == :not_found
        render :text=>"Job not Found", :status=>404
        return
      end
-     @job = [:completed, :canceled].index(@status) != nil ? QueryJob.find_job(@job_id) : nil
-     
-     render :json=>{:logs => QueryJob.job_logs(@job_id),
-      :status =>@status}  
-     
+     render :json=>{:logs => jlog.messages, :status =>jlog.status}    
   end
-  
-  
-  
+
+
   def server_status
     render :json => JobStats.stats  
   end
   
-
-   private 
+  
+private 
+  
    def redirect_til_done(job_id, js=nil)
       response.headers["retry_after"] = "10"
       response.headers["job_status"] = js if js
       redirect_to :action => 'show', :id => job_id, :status=>303
    end
+   
    
    def read_filter(filter) 
      begin

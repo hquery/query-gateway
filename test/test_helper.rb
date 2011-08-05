@@ -12,10 +12,10 @@ class ActiveSupport::TestCase
 end
 
 def dump_database
-  db = Mongoid::Config.master
-  db['system.js'].remove({}) if db['system.js']
-  db['job_log_events'].remove({}) if db['job_log_events']
-  db['query_results'].remove({}) if db['query_results']
+  db = Mongoid.master
+  db.collection('system.js').remove({}) if db['system.js']
+  db.collection('job_logs').remove({}) if db['job_log_events']
+  db.collection('query_results').remove({}) if db['query_results']
 end
 
 def dump_jobs
@@ -23,10 +23,8 @@ def dump_jobs
 end
 
 def create_job
-  
    mf = File.read('test/fixtures/map_reduce/simple_map.js')
    rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
    job = QueryJob.submit(mf,rf)
    return job
 end
-

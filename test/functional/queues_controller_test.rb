@@ -61,6 +61,7 @@ class QueuesControllerTest < ActionController::TestCase
     job = QueryJob.submit("function(){}","function(){}") 
     job.failed_at = Time.now
     job.save
+    job.payload_object.failure(job)
     get :show, {id: job.id.to_s}
     assert_response 500
 
@@ -76,11 +77,26 @@ class QueuesControllerTest < ActionController::TestCase
   
   test "GET /show show return a 200 if the job is completed" do
     job = QueryJob.submit("function(){}","function(){}") 
+    job.payload_object.success(job)
     Mongoid.master[QueryExecutor::RESULTS_COLLECTION].save({_id: job.id, value: {}})
     job_id = job.id.to_s
     job.destroy
     get :show, {id: job.id.to_s}
     assert_response :success
+
+  end
+  
+  
+  test "GET /show should return a 404 if the job is canceled" do
+
+    assert Delayed::Job.all.count == 0 
+    job = QueryJob.submit("function(){}","function(){}")
+    assert Delayed::Job.all.count == 1
+    job_id = job.id.to_s
+    QueryJob.cancel_job(job_id)
+    get :show, {id: job_id}
+    assert_response 404
+    assert Delayed::Job.all.count == 0
 
   end
   
@@ -94,38 +110,51 @@ class QueuesControllerTest < ActionController::TestCase
     get :job_status, {id: "4de8efb1b59a904045000008"}
     assert_response 404
   end
+  
+  
+  test "DELETE should delete a job" do
+    assert Delayed::Job.all.count == 0 
+    job = QueryJob.submit("function(){}","function(){}")
+    assert Delayed::Job.all.count == 1 
+    delete :destroy, {id: job.id.to_s}
+    assert_response 200
+    assert Delayed::Job.all.count == 0 
+  end
+  
 
   test "GET /server_status should render json for job status" do
     
     # add one of each job type (successful and failed jobs should be destroyed, events remain)
-    Factory(:successful_job).destroy
-    Factory(:failed_job).destroy
-    Factory(:running_job)
-    Factory(:rescheduled_job)
-    Factory(:queued_job)
+      Factory(:successful_job)
+      Factory(:failed_job)
+      Factory(:running_job)
+      Factory(:running_job)
+      Factory(:rescheduled_job)
+      Factory(:queued_job)
+      
+      get :server_status
     
-    get :server_status
-
-    assert_equal "application/json; charset=utf-8", @response.header['Content-Type']
-
-    stats = JSON.parse(@response.body)
-    assert_equal 1, stats['successful']
-    assert_equal 1, stats['failed']
-    assert_equal 2, stats['running']
-    assert_equal 1, stats['retried']
-    assert_equal 1, stats['queued']
-    assert_equal 30, stats['avg_runtime'].ceil
-
-    assert_response :success
+      assert_equal "application/json; charset=utf-8", @response.header['Content-Type']
+      puts @response.body
+      stats = JSON.parse(@response.body)
+      
+      assert_equal 1, stats['failed']
+      assert_equal 2, stats['running']
+      assert_equal 1, stats['rescheduled']
+      assert_equal 1, stats['queued']
+      assert_equal 1, stats['success']
+      assert_equal 30, (stats['avg_runtime'] / 1000).to_i
+    
+      assert_response :success
 
   end
   
-  test "GET / should return all jobs" do
-    get :index
-    jobs = assigns[:jobs]
-    assert_not_nil jobs
-    assert_equal Delayed::Job.all.count, jobs.count
-    assert_response :success
-  end
+  # test "GET / should return all jobs" do
+  #    get :index
+  #    jobs = assigns[:jobs]
+  #    assert_not_nil jobs
+  #    assert_equal Delayed::Job.all.count, jobs.count
+  #    assert_response :success
+  #  end
   
 end
