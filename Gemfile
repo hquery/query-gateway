@@ -1,14 +1,14 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0.rc4'
+gem 'rails', '3.1.0.rc5'
 
-# Asset template engines
-gem 'sass'
-gem 'coffee-script'
-gem 'uglifier'
+group :assets do
+  gem 'sass-rails', "~> 3.1.0.rc"
+  gem 'coffee-rails', "~> 3.1.0.rc"
+  gem 'uglifier'
+end
 
 gem 'jquery-rails'
-gem 'sprockets', '= 2.0.0.beta.10' 
 
 gem 'therubyracer'
 
@@ -25,6 +25,10 @@ gem 'coderay'
 
 #gem 'pry'
 gem 'bluecloth'
+
+# needed but not specified by macaddr
+# macaddr comes in from quality-measure-engine -> resque-status -> uuid -> macaddr (feels like Maven)
+gem 'systemu'
 
 group :test do
   # Pretty printed test output
