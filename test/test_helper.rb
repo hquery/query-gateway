@@ -28,3 +28,9 @@ def create_job
    job = QueryJob.submit(mf,rf)
    return job
 end
+
+def create_job_params
+   map = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_map.js'), 'application/javascript')
+   reduce = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_reduce.js'), 'application/javascript')
+   {:map => map, :reduce => reduce}
+end

@@ -9,17 +9,12 @@ class QueuesControllerTest < ActionController::TestCase
     Delayed::Worker.delay_jobs=true
   end
   
-  
-  def create_job_params
-     map = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_map.js'), 'application/javascript')
-     reduce = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_reduce.js'), 'application/javascript')
-     {:map => map, :reduce => reduce}
-  end
   def create_job_params_with_filter
     params = create_job_params
     params[:filter] = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/filter.json'), 'application/json')
     params
   end
+  
   def create_job_params_with_bad_filter
     params = create_job_params
     params[:filter] = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/bad_filter.json'), 'application/json')

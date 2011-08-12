@@ -1,6 +1,8 @@
 QueryGateway::Application.routes.draw do
   
   
+  resources :queries
+
   get "hdata/index"
 
   get "hdata/root"
