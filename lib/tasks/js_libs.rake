@@ -16,4 +16,9 @@ namespace :js do
     end 
   end
   
+  desc 'Remove the contents of the Mongo system.js collection'
+  task :clean do
+    Mongoid.master['system.js'].remove()
+  end
+  
 end
