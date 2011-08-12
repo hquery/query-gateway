@@ -1,6 +1,10 @@
 QueryGateway::Application.routes.draw do
   
   
+  get "hdata/index"
+
+  get "hdata/root"
+
   post 'records/create'
   post 'library_functions', :to => "library_functions#create"
   get 'queues/server_status'
