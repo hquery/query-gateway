@@ -22,7 +22,10 @@ class QueryExecutor
     
     # convert the filter hash to a mongo query style hash.  Currently we are passing in a mongo style query hash so this is a no-op
     filter = convert_filter_to_mongo_query filter
-    results = db[PATIENTS_COLELCTION].map_reduce(build_map_function , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
+    exts = db['system.js'].find().to_a.collect do |ext|
+      "#{ext['_id']}();\n"
+    end
+    results = db[PATIENTS_COLELCTION].map_reduce(build_map_function(exts) , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
     result_document = {}
     result_document["_id"] = @job_id
     results['results'].each do |result|
@@ -38,10 +41,11 @@ class QueryExecutor
   end
   
   private
-  def build_map_function
+  def build_map_function(exts)
     "function() {
       this.hQuery || (this.hQuery = {});
       var hQuery = this.hQuery;
+      #{exts.join}
       #{QueryExecutor.patient_api_javascript}
       #{@map_js}
       var patient = new hQuery.Patient(this);
