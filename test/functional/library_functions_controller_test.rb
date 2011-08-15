@@ -15,8 +15,8 @@ class LibraryFunctionsControllerTest < ActionController::TestCase
     assert_response :success
     
     db = Mongoid::Config.master
-    assert_equal 'hquery_user_functions', db['system.js'].find({}).first['_id']
-    assert_not_nil db['system.js'].find({}).first['value']['f'+composer_id]['f'+user_id]['sum']
+    assert_not_nil db['system.js'].find_one({'_id' => 'hquery_user_functions'})
+    assert_not_nil db['system.js'].find_one({'_id' => 'hquery_user_functions'})['value']['f'+composer_id]['f'+user_id]['sum']
     
   end
 
@@ -36,11 +36,11 @@ class LibraryFunctionsControllerTest < ActionController::TestCase
     assert_response :success
     
     db = Mongoid::Config.master
-    assert_equal 'hquery_user_functions', db['system.js'].find({}).first['_id']
+    assert_not_nil db['system.js'].find_one({'_id' => 'hquery_user_functions'})
     # make sure we have not blown away the existing data
-    assert_not_nil db['system.js'].find({}).first['value']['foobar']
+    assert_not_nil db['system.js'].find_one({'_id' => 'hquery_user_functions'})['value']['foobar']
     # make sure the new stuff is there as well
-    assert_not_nil db['system.js'].find({}).first['value']['f'+composer_id]['f'+user_id]['sum']
+    assert_not_nil db['system.js'].find_one({'_id' => 'hquery_user_functions'})['value']['f'+composer_id]['f'+user_id]['sum']
     
   end
 

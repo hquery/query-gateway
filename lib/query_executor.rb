@@ -5,7 +5,7 @@ class QueryExecutor
   
   include QueryUtilities
   
-  PATIENTS_COLELCTION = "records"
+  PATIENTS_COLLECTION = "records"
   RESULTS_COLLECTION = "query_results"
   
   def initialize(map_js, reduce_js, job_id, filter={})
@@ -23,9 +23,13 @@ class QueryExecutor
     # convert the filter hash to a mongo query style hash.  Currently we are passing in a mongo style query hash so this is a no-op
     filter = convert_filter_to_mongo_query filter
     exts = db['system.js'].find().to_a.collect do |ext|
-      "#{ext['_id']}();\n"
+      if (ext['value'].class == BSON::Code)
+        "#{ext['_id']}();\n"
+      else
+        ""
+      end
     end
-    results = db[PATIENTS_COLELCTION].map_reduce(build_map_function(exts) , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
+    results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts) , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
     result_document = {}
     result_document["_id"] = @job_id
     results['results'].each do |result|
