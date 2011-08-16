@@ -13,7 +13,8 @@ end
 
 def dump_database
   db = Mongoid.master
-  db.collection('system.js').remove({}) if db['system.js']
+  QueryUtilities.clean_js_libs
+  QueryUtilities.load_js_libs
   db.collection('job_logs').remove({}) if db['job_log_events']
   db.collection('query_results').remove({}) if db['query_results']
   db.collection('queries').remove({}) if db['queries']
