@@ -10,98 +10,95 @@ class QueryJobTest < ActiveSupport::TestCase
   
   test "job submission should execute properly" do
     Delayed::Worker.delay_jobs=true
-    job = create_job
-    assert_equal 1, Mongoid.master['job_logs'].find({}).count
-    assert_equal :queued, Mongoid.master['job_logs'].find({}).first['status']
+    query = create_query
+    query.job
+    assert_equal 1, Mongoid.master['queries'].find({}).count
+    assert_equal :queued, Mongoid.master['queries'].find({}).first['status']
   end
   
   
   test "job status should report property" do
-     Delayed::Worker.delay_jobs=true
-     job = create_job
-     payload = job.payload_object
-     job_id = job.id
-     assert_equal QueryJob.job_status(job_id.to_s), :queued
-     
-     payload.before(job)
-     assert_equal QueryJob.job_status(job_id.to_s), :running
-     
-     payload.failure(job)
-     assert_equal QueryJob.job_status(job_id.to_s), :failed
-     
-     Mongoid.master[QueryExecutor::RESULTS_COLLECTION].save({_id: job.id, value: {}})
-     assert_equal QueryJob.job_status(job_id.to_s), :failed
-     
-     payload.success(job) 
-     assert_equal QueryJob.job_status(job_id.to_s), :success
-     
-     job.destroy()
-     JobLog.first({conditions: {job_id:job_id.to_s}}).destroy()
-     Mongoid.master[QueryExecutor::RESULTS_COLLECTION].remove()
-     assert_equal QueryJob.job_status(job_id.to_s), :not_found
+    Delayed::Worker.delay_jobs=true
+    query = create_query
+    job = query.job
+    payload = job.payload_object
+    job_id = job.id
+    assert_equal Query.find(query.id).status, :queued
+
+    payload.before(job)
+    assert_equal Query.find(query.id).status, :running
+
+    payload.failure(job)
+    assert_equal Query.find(query.id).status, :failed
+
+    Mongoid.master[QueryExecutor::RESULTS_COLLECTION].save({_id: job.id, value: {}})
+    assert_equal Query.find(query.id).status, :failed
+
+    payload.success(job) 
+    assert_equal Query.find(query.id).status, :success
   end
   
   test "success logs event properly" do
     Delayed::Worker.delay_jobs=true
-    job = create_job
+    query = create_query
+    job = query.job
     job.payload_object.success(job)
-    job_log = JobLog.first(:conditions => {job_id: job.id.to_s})
-    assert_equal :success, job_log.status    
+    query = Query.find(query.id)
+    assert_equal :success, query.status
+    assert query.job_logs.where(message: 'Job successful')
   end
 
   test "error logs event properly" do
     Delayed::Worker.delay_jobs=true
-    job = create_job
-    count = JobLog.first(:conditions => {job_id: job.id.to_s}).messages.count
+    query = create_query
+    job = query.job
     job.payload_object.error(job)
-    job_log = JobLog.first(:conditions => {job_id: job.id.to_s})
-    assert_equal :error, job_log.status
-    
+    query.reload
+    assert_equal :error, query.status
   end
 
   test "failure logs event properly" do
     Delayed::Worker.delay_jobs=true
-    job = create_job
-    count = JobLog.first(:conditions => {job_id: job.id.to_s}).messages.count
+    query = create_query
+    job = query.job
+    query.reload
+    count = query.job_logs.count
     job.payload_object.failure(job)
-    job_log =JobLog.first(:conditions => {job_id: job.id.to_s})
-    assert_equal :failed, job_log.status
-    assert_equal count+1, job_log.messages.count
-    
+    query.reload
+    assert_equal :failed, query.status
+    assert_equal count + 1, query.job_logs.count
   end
 
   test "before logs running event properly" do
     Delayed::Worker.delay_jobs=true
-    job = create_job
+    query = create_query
+    job = query.job
     job.payload_object.before(job)
-    job_log = JobLog.first(:conditions => {job_id: job.id.to_s})
-    assert_equal :running, job_log.status
-    
+    query.reload
+    assert_equal :running, query.status
   end
 
-
-  
   test "Job executes correctly" do
     Delayed::Worker.delay_jobs=true
     mf = File.read('test/fixtures/map_reduce/simple_map.js')
     rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
-    job = QueryJob.submit(mf,rf,nil)   
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
     job.invoke_job
-    results = QueryJob.job_results(job.id.to_s)
+    results = QueryJob.job_results(query.id.to_s)
     assert_equal results["M"], 231
     assert_equal results["F"], 275
   end
 
-  
   test "test cancel job" do
     Delayed::Worker.delay_jobs=true
-    job = create_job
+    query = create_query
+    job = query.job
     job_id = job.id
     assert_equal Delayed::Job.count() , 1
     QueryJob.cancel_job(job_id.to_s)
-    assert_equal Delayed::Job.count() , 0 
-    assert_equal :canceled,  QueryJob.job_status(job_id.to_s)
+    assert_equal Delayed::Job.count() , 0
+    query.reload
+    assert_equal :canceled, query.status
   end
-  
-  
 end

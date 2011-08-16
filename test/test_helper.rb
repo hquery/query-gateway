@@ -16,21 +16,21 @@ def dump_database
   db.collection('system.js').remove({}) if db['system.js']
   db.collection('job_logs').remove({}) if db['job_log_events']
   db.collection('query_results').remove({}) if db['query_results']
+  db.collection('queries').remove({}) if db['queries']
 end
 
 def dump_jobs
   Delayed::Job.destroy_all
 end
 
-def create_job
-   mf = File.read('test/fixtures/map_reduce/simple_map.js')
-   rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
-   job = QueryJob.submit(mf,rf)
-   return job
+def create_query
+  mf = File.read('test/fixtures/map_reduce/simple_map.js')
+  rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
+  Query.create(map: mf, reduce: rf)
 end
 
 def create_job_params
-   map = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_map.js'), 'application/javascript')
-   reduce = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_reduce.js'), 'application/javascript')
-   {:map => map, :reduce => reduce}
+  map = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_map.js'), 'application/javascript')
+  reduce = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_reduce.js'), 'application/javascript')
+  {:map => map, :reduce => reduce}
 end

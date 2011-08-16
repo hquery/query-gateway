@@ -1,30 +1,29 @@
 require 'query_job'
 require 'job_stats'
-require 'query_utilities'
+
 class QueuesController < ApplicationController
-  
-  include QueryUtilities
  
   def index
   end
  
   def create
-    map=params[:map].read
-    reduce = params[:reduce].read
-    filter = read_filter params[:filter].read if params[:filter]
-    job = QueryJob.submit(map,reduce,filter)
-    redirect_til_done(job.id)
+    map = params[:map].try(:read)
+    reduce = params[:reduce].try(:read)
+    @query = Query.new(:map => map, :reduce => reduce)
+    if params[:filter]
+      @query.filter_from_json_string(params[:filter].read)
+    end
+    job = QueryJob.submit(map,reduce,filter, @query.id)
+    redirect_til_done(@query.id)
   end
 
   def show
-    job_id = params[:id]
-    jlog = JobLog.first({conditions:{job_id: job_id}})
-    status= (jlog) ? jlog.status.to_sym : :not_found
-    case status
+    @query = Query.find(params[:id])
+    case @query.status
     when :failed
-      render :text=>QueryJob.find_job(job_id).last_error, :status=>500
+      render :text=> QueryJob.find_job(job_id).last_error, :status=>500
     when :success
-      render :json=>QueryJob.job_results(job_id)
+      render :json=> QueryJob.job_results(job_id)
     when :not_found
       render :text=>"Job not Found", :status=>404
     when :canceled
@@ -34,7 +33,6 @@ class QueuesController < ApplicationController
     end
 
   end
-  
   
   def destroy
      job_id = params[:id]

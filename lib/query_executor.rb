@@ -1,42 +1,36 @@
-require 'query_utilities'
 require 'sprockets'
 require 'tilt'
+
 class QueryExecutor
-  
-  include QueryUtilities
-  
+
   PATIENTS_COLELCTION = "records"
   RESULTS_COLLECTION = "query_results"
-  
-  def initialize(map_js, reduce_js, job_id, filter={})
+
+  def initialize(map_js, reduce_js, query_id, filter={})
     @map_js = map_js
     @reduce_js = reduce_js
-    @job_id = job_id
+    @query_id = query_id
     @filter = filter
-  
-    
   end
-  
+
   def execute
-    db =  Mongoid.master
-    
-    # convert the filter hash to a mongo query style hash.  Currently we are passing in a mongo style query hash so this is a no-op
-    filter = convert_filter_to_mongo_query filter
+    db = Mongoid.master
+
     results = db[PATIENTS_COLELCTION].map_reduce(build_map_function , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
     result_document = {}
-    result_document["_id"] = @job_id
+    result_document["_id"] = @query_id
     results['results'].each do |result|
       result_document[result['_id']] = result['value']
     end
 
     db[RESULTS_COLLECTION].save(result_document)
   end
-  
+
   def self.patient_api_javascript
-    Tilt::CoffeeScriptTemplate.default_bare=true 
+    Tilt::CoffeeScriptTemplate.default_bare=true
     Rails.application.assets.find_asset("patient")
   end
-  
+
   private
   def build_map_function
     "function() {
@@ -47,6 +41,6 @@ class QueryExecutor
       var patient = new hQuery.Patient(this);
       map(patient);
     };"
-    
+
   end
 end

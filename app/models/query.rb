@@ -5,9 +5,18 @@ class Query
   field :map, :type => String
   field :reduce, :type => String
   field :filter, :type => Hash
+  field :status, :type => Symbol
+  
+  embeds_many :job_logs
   
   validates_presence_of :map
   validates_presence_of :reduce
+  
+  def status_change(new_status, message)
+    self.status = new_status
+    job_logs << JobLog.new(:message => message)
+    save!
+  end
   
   def has_been_updated?
     created_at != updated_at
@@ -17,5 +26,9 @@ class Query
     if json_string.present?
       self.filter = ActiveSupport::JSON.decode(json_string.strip)
     end
+  end
+  
+  def job
+    QueryJob.submit(self.map, self.reduce, self.filter, self.id)
   end
 end

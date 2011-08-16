@@ -13,25 +13,25 @@ class JobStatsTest < ActiveSupport::TestCase
     dump_jobs
     dump_database
 
-    (1..3).each do |i|
+    SUCCESSFUL_COUNT.times do
       job = Factory(:successful_job)
-      job.destroy
+      #job.destroy
     end
     
-    (1..2).each do |i|
+    FAILED_COUNT.times do
       job = Factory(:failed_job)
-      job.destroy
+      #job.destroy
     end
 
-    (1..4).each do |i|
+    RUNNING_COUNT.times do
       Factory(:running_job)
     end
 
-    (1..RESCHEDULED_COUNT).each do |i|
+    RESCHEDULED_COUNT.times do
       Factory(:rescheduled_job)
     end
     
-    (1..6).each do |i|
+    QUEUED_COUNT.times do
       Factory(:queued_job)
     end
   end
