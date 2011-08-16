@@ -6,6 +6,7 @@ class Query
   field :reduce, :type => String
   field :filter, :type => Hash
   field :status, :type => Symbol
+  field :delayed_job_id
   
   embeds_many :job_logs
   
@@ -29,6 +30,9 @@ class Query
   end
   
   def job
-    QueryJob.submit(self.map, self.reduce, self.filter, self.id)
+    dj = QueryJob.submit(self.map, self.reduce, self.filter, self.id)
+    self.delayed_job_id = dj.id
+    save!
+    dj
   end
 end

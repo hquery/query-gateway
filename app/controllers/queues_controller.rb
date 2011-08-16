@@ -13,65 +13,53 @@ class QueuesController < ApplicationController
     if params[:filter]
       @query.filter_from_json_string(params[:filter].read)
     end
-    job = QueryJob.submit(map,reduce,filter, @query.id)
+    @query.save!
+    job = @query.job
     redirect_til_done(@query.id)
   end
 
   def show
-    @query = Query.find(params[:id])
-    case @query.status
-    when :failed
-      render :text=> QueryJob.find_job(job_id).last_error, :status=>500
-    when :success
-      render :json=> QueryJob.job_results(job_id)
-    when :not_found
-      render :text=>"Job not Found", :status=>404
-    when :canceled
-      render :text=>"Job Canceled", :status=>404
-    else
-      redirect_til_done(job_id)
+    begin
+      @query = Query.find(params[:id])
+      case @query.status
+      when :failed
+        render :text => @query.job_logs.last.message, :status=>500
+      when :success
+        render :json => QueryJob.job_results(@query.id.to_s)
+      when :canceled
+        render :text => "Job Canceled", :status => 404
+      else
+        redirect_til_done(@query.id)
+      end
+    rescue Mongoid::Errors::DocumentNotFound
+      render :text => "Job not Found", :status => 404
     end
-
   end
-  
+
   def destroy
-     job_id = params[:id]
-     QueryJob.cancel_job(job_id)
-     render :text=>"Job Canceled"
-  end
-  
-  
-  def job_status
-     job_id = params[:id]
-     jlog = JobLog.first({conditions:{job_id: job_id}})
-     status= (jlog) ? jlog.status : :not_found
-     if status == :not_found
-       render :text=>"Job not Found", :status=>404
-       return
-     end
-     render :json=>{:logs => jlog.messages, :status =>jlog.status}    
+    @query = Query.find(params[:id])
+    QueryJob.cancel_job(@query.delayed_job_id.to_s)
+    render :text => "Job Canceled"
   end
 
+  def job_status
+    begin
+      @query = Query.find(params[:id])
+      render :json=> {:logs => @query.job_logs, :status => @query.status}
+    rescue Mongoid::Errors::DocumentNotFound
+      render :text => "Job not Found", :status => 404
+    end
+  end
 
   def server_status
-    render :json => JobStats.stats  
+    render :json => JobStats.stats
   end
+
+private
   
-  
-private 
-  
-   def redirect_til_done(job_id, js=nil)
-      response.headers["retry_after"] = "10"
-      response.headers["job_status"] = js if js
-      redirect_to :action => 'show', :id => job_id, :status=>303
-   end
-   
-   
-   def read_filter(filter) 
-     begin
-       parse_json_to_hash(filter)
-     rescue
-       raise "bad filter format: " + filter
-     end
-   end
+  def redirect_til_done(job_id, js=nil)
+    response.headers["retry_after"] = "10"
+    response.headers["job_status"] = js if js
+    redirect_to :action => 'show', :id => job_id, :status=>303
+  end
 end
