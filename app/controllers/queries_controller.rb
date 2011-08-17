@@ -1,8 +1,10 @@
 class QueriesController < ApplicationController
   def index
-    @queries = Query.desc(:updated_at)
-    respond_to do |format|
-      format.atom
+    if stale?(:last_modified => Query.last_query_update.utc)
+      @queries = Query.desc(:updated_at)
+      respond_to do |format|
+        format.atom
+      end
     end
   end
 
@@ -23,6 +25,8 @@ class QueriesController < ApplicationController
 
   def show
     @query = Query.find(params[:id])
-    render :json => @query
+    if stale?(:last_modified => @query.updated_at.utc)
+      render :json => @query
+    end
   end
 end
