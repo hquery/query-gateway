@@ -33,7 +33,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter, :query_id)
 
   def after(job,*args)
     # see if it was rescheduled after an error
-    if(!Mongoid.master[RESULTS_COLLECTION].find_one({"_id" => query_id}, {:fields => "_id"}))
+    if(! Query.find(query_id).result)
       query = Query.find(query_id)
       query.status_change(:rescheduled, "Job rescheduled")
     end
