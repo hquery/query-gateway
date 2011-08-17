@@ -21,4 +21,10 @@ class QueriesControllerTest < ActionController::TestCase
     post :create, job_params
     assert_response 400
   end
+  
+  test 'should show JSON for a successful job' do
+    query = Factory(:successful_job)
+    get :show, :id => query.id.to_s
+    assert_response :success
+  end
 end

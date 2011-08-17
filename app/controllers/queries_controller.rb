@@ -26,7 +26,12 @@ class QueriesController < ApplicationController
   def show
     @query = Query.find(params[:id])
     if stale?(:last_modified => @query.updated_at.utc)
-      render :json => @query
+      qh = @query.attributes
+      qh.delete('delayed_job_id')
+      if @query.result
+        qh['result_url'] = result_url(@query.result)
+      end
+      render :json => qh
     end
   end
 end
