@@ -31,7 +31,7 @@ class QueryJobTest < ActiveSupport::TestCase
     payload.failure(job)
     assert_equal Query.find(query.id).status, :failed
 
-    Mongoid.master[QueryExecutor::RESULTS_COLLECTION].save({_id: job.id, value: {}})
+    Result.collection.save({_id: job.id, value: {}})
     assert_equal Query.find(query.id).status, :failed
 
     payload.success(job) 
@@ -85,7 +85,7 @@ class QueryJobTest < ActiveSupport::TestCase
     query = Query.create(map: mf, reduce: rf)
     job = query.job
     job.invoke_job
-    results = QueryJob.job_results(query.id.to_s)
+    results = query.result
     assert_equal results["M"], 231
     assert_equal results["F"], 275
   end

@@ -46,3 +46,11 @@ Factory.define :failed_job, :class => Query do |q|
   q.status :failed
 end
 
+# ===========
+# = Results =
+# ===========
+
+Factory.define :gender_result, :class => Result do |r|
+  r.created_at Time.now
+
+end

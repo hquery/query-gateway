@@ -16,7 +16,7 @@ def dump_database
   QueryUtilities.clean_js_libs
   QueryUtilities.load_js_libs
   db.collection('job_logs').remove({}) if db['job_log_events']
-  db.collection('query_results').remove({}) if db['query_results']
+  db.collection('results').remove({}) if db['results']
   db.collection('queries').remove({}) if db['queries']
 end
 

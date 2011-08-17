@@ -9,6 +9,7 @@ class Query
   field :delayed_job_id
   
   embeds_many :job_logs
+  has_one :result
   
   validates_presence_of :map
   validates_presence_of :reduce
@@ -34,5 +35,14 @@ class Query
     self.delayed_job_id = dj.id
     save!
     dj
+  end
+  
+  def self.last_query_update
+    latest_query = desc(:updated_at).first
+    if latest_query
+      latest_query.updated_at
+    else
+      Time.new(2011, 8, 12) # hardcode to old date if there are no queries in the system
+    end
   end
 end

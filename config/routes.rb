@@ -1,10 +1,9 @@
 QueryGateway::Application.routes.draw do
-  
-  
+
+  resources :results, :only => [:index, :show]
   resources :queries
 
   get "hdata/index"
-
   get "hdata/root"
 
   post 'records/create'

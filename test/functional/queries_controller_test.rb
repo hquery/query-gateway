@@ -3,6 +3,8 @@ require 'test_helper'
 class QueriesControllerTest < ActionController::TestCase
   
   test "should get an atom feed at index" do
+    Factory(:successful_job)
+    Factory(:successful_job)
     get :index, :format => :atom
     assert_response :success
   end

@@ -7,7 +7,6 @@ class QueryExecutor
   include QueryUtilities
   
   PATIENTS_COLLECTION = "records"
-  RESULTS_COLLECTION = "query_results"
 
   def initialize(map_js, reduce_js, query_id, filter={})
     @map_js = map_js
@@ -27,13 +26,14 @@ class QueryExecutor
       end
     end
     results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts) , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
-    result_document = {}
-    result_document["_id"] = @query_id
-    results['results'].each do |result|
-      result_document[result['_id']] = result['value']
+    result = Result.new
+    result.query = Query.find(@query_id)
+    
+    results['results'].each do |rv|
+      result.write_attribute(rv['_id'].to_sym, rv['value'])
     end
-
-    db[RESULTS_COLLECTION].save(result_document)
+    
+    result.save!
   end
 
   def self.patient_api_javascript

@@ -65,7 +65,7 @@ class QueuesControllerTest < ActionController::TestCase
 
   test "GET /show show return a 200 if the job is completed" do
     job = Factory(:successful_job)
-    Mongoid.master[QueryExecutor::RESULTS_COLLECTION].save({_id: job.id, value: {}})
+    Result.collection.save({_id: job.id, value: {}})
     get :show, {id: job.id.to_s}
     assert_response :success
   end
