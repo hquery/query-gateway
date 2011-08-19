@@ -30,10 +30,21 @@ class QueryExecutor
     result.query = Query.find(@query_id)
     
     results['results'].each do |rv|
-      result.write_attribute(rv['_id'].to_sym, rv['value'])
+      key = stringify_key(rv['_id'])
+      result.write_attribute(key.to_sym, rv['value'])
     end
     
     result.save!
+  end
+  
+  def stringify_key(key)
+    if (key.is_a? BSON::OrderedHash)
+      key = key.values.join('_')
+    end
+    if (key.is_a? Array)
+      key = (key.map {|val| stringify_key(val)}).join('_')
+    end
+    key.to_s
   end
 
   def self.patient_api_javascript
