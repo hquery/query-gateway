@@ -39,14 +39,14 @@ class QueryExecutor
   
   def stringify_key(key)
     if (key.is_a? BSON::OrderedHash)
-      key = key.values.join('_')
+      key = (key.map {|val| stringify_key(val)}).join('_')
     end
     if (key.is_a? Array)
       key = (key.map {|val| stringify_key(val)}).join('_')
     end
     key.to_s
   end
-
+  
   def self.patient_api_javascript
     Tilt::CoffeeScriptTemplate.default_bare=true
     Rails.application.assets.find_asset("patient")
