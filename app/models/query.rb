@@ -1,3 +1,4 @@
+require 'query_job'
 class Query
   include Mongoid::Document
   include Mongoid::Timestamps

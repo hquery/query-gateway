@@ -17,6 +17,7 @@ class QueriesController < ApplicationController
     end
     if @query.save
       response.headers["Location"] = query_url(@query)
+      @query.job
       render :text => "Query Created", :status => 201
     else
       render :text => @query.errors.full_messages.join(','), :status => 400
