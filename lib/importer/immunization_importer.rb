@@ -6,6 +6,7 @@ module Importer
       @entry_xpath = "//cda:section[cda:templateId/@root='2.16.840.1.113883.3.88.11.83.117']/cda:entry/cda:substanceAdministration"
       @code_xpath = "./cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code"
       @description_xpath = "./cda:consumable/cda:manufacturedProduct/cda:manufacturedMaterial/cda:code/cda:originalText/cda:reference[@value]"
+      @refusal_resason_xpath = "./cda:entryRelationship[@typeCode='RSON']/cda:act[cda:templateId/@root='2.16.840.1.113883.10.20.1.27']/cda:code"
       @check_for_usable = true               # Pilot tools will set this to false
       @id_map = {}
     end
@@ -41,6 +42,13 @@ module Importer
       negation_indicator = parent_element['negationInd']
       unless negation_indicator.nil?
         immunization.refusal = negation_indicator.eql?('true')
+        if immunization.refusal
+          refusal_reason_element = parent_element.at_xpath(@refusal_resason_xpath)
+          if refusal_reason_element
+            immunization.refusal_reason = {'code' => refusal_reason_element['code'],
+                                           'codeSystem' => 'HL7 No Immunization Reason'}
+          end
+        end
       end
     end
     
