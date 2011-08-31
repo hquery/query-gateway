@@ -86,8 +86,8 @@ class QueryJobTest < ActiveSupport::TestCase
     job = query.job
     job.invoke_job
     results = query.result
-    assert_equal results["M"], 231
-    assert_equal results["F"], 275
+    assert_equal results["M"].to_i, 213
+    assert_equal results["F"].to_i, 287
   end
 
   test "test cancel job" do

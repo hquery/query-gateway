@@ -15,7 +15,7 @@ class QueryExecutorTest < ActiveSupport::TestCase
     qe.execute
 
     results = q.result
-    assert_equal 231, results['M']
+    assert_equal 213, results['M'].to_i
   end
 
   def test_execute_with_underscore
@@ -26,7 +26,7 @@ class QueryExecutorTest < ActiveSupport::TestCase
     qe.execute
 
     results = q.result
-    assert_equal 231, results['M']
+    assert_equal 213, results['M'].to_i
   end
 
   def test_execute_with_all_male_query
@@ -38,7 +38,7 @@ class QueryExecutorTest < ActiveSupport::TestCase
 
     results = q.result
 
-    assert_equal 231, results['M']
+    assert_equal 213, results['M'].to_i
     assert_equal nil, results['F']
   end
 
@@ -53,8 +53,8 @@ class QueryExecutorTest < ActiveSupport::TestCase
 
     results = q.result
 
-    assert_equal 62, results['M']
-    assert_equal 57, results['F']
+    assert_equal 57, results['M'].to_i
+    assert_equal 70, results['F'].to_i
   end
 
 end
