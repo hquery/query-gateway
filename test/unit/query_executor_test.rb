@@ -13,6 +13,7 @@ class QueryExecutorTest < ActiveSupport::TestCase
     q = Query.create(map: mf, reduce: rf)
     qe = QueryExecutor.new(mf, rf, q.id)
     qe.execute
+    q.reload
 
     results = q.result
     assert_equal 213, results['M'].to_i
@@ -24,6 +25,7 @@ class QueryExecutorTest < ActiveSupport::TestCase
     q = Query.create(map: mf, reduce: rf)
     qe = QueryExecutor.new(mf, rf, q.id)
     qe.execute
+    q.reload
 
     results = q.result
     assert_equal 213, results['M'].to_i
@@ -35,9 +37,9 @@ class QueryExecutorTest < ActiveSupport::TestCase
     q = Query.create(map: mf, reduce: rf)
     qe = QueryExecutor.new(mf, rf, q.id, {gender: "M"})
     qe.execute
+    q.reload
 
     results = q.result
-
     assert_equal 213, results['M'].to_i
     assert_equal nil, results['F']
   end
@@ -50,6 +52,7 @@ class QueryExecutorTest < ActiveSupport::TestCase
     # 739558907 = 18 years ago from June 8, 2011
     qe = QueryExecutor.new(mf, rf, q.id, {birthdate: {"$gt" => 739558907}})
     qe.execute
+    q.reload
 
     results = q.result
 

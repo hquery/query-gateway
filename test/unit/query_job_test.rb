@@ -85,6 +85,7 @@ class QueryJobTest < ActiveSupport::TestCase
     query = Query.create(map: mf, reduce: rf)
     job = query.job
     job.invoke_job
+    query.reload
     results = query.result
     assert_equal results["M"].to_i, 213
     assert_equal results["F"].to_i, 287
