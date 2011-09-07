@@ -12,7 +12,7 @@ class JobStats
 
   REDUCE = %{
     function reduce(k,v){
-      if(k == "success"){
+      if(k == "complete"){
         var t = 0;
         var count = 0;
         for(var i=0; i< v.length; i++){
@@ -41,7 +41,7 @@ class JobStats
       type = res["_id"]
       val = res["value"]
 
-      if(type == "success")
+      if(type == "complete")
         s[type] = val["count"]
         s["avg_runtime"] = val["avg"]
       else

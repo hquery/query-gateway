@@ -123,7 +123,7 @@ class QueuesControllerTest < ActionController::TestCase
     assert_equal 2, stats['running']
     assert_equal 1, stats['rescheduled']['count']
     assert_equal 1, stats['queued']['count']
-    assert_equal 1, stats['success']
+    assert_equal 1, stats['complete']
     assert_equal 30, (stats['avg_runtime'] / 1000).to_i
 
     assert_response :success

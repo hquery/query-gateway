@@ -25,7 +25,7 @@ Factory.define :successful_job, :class => Query do |q|
   q.job_logs [JobLog.new(:created_at => 60.seconds.ago.time, :message => 'Job queued'),
               JobLog.new(:created_at => 45.seconds.ago.time, :message => 'Job running'),
               JobLog.new(:created_at => 30.seconds.ago.time, :message => 'Job successful')]
-  q.status :success
+  q.status :complete
 end
 
 Factory.define :rescheduled_job,:class => Query do |q|

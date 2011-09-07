@@ -41,7 +41,7 @@ class QueryJob < Struct.new(:map, :reduce, :filter, :query_id)
 
   def success(job,*args)
     query = Query.find(query_id)
-    query.status_change(:success, "Job successful")
+    query.status_change(:complete, "Job successful")
   end
 
   def self.submit(map, reduce, filter = {}, query_id)

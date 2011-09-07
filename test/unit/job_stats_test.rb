@@ -44,7 +44,7 @@ class JobStatsTest < ActiveSupport::TestCase
 
   test "job stats should report properly" do
     stats = JobStats.stats
-    assert_equal SUCCESSFUL_COUNT, stats["success"]
+    assert_equal SUCCESSFUL_COUNT, stats["complete"]
     assert_equal FAILED_COUNT, stats["failed"]
     assert_equal RUNNING_COUNT , stats["running"]
     assert_equal RESCHEDULED_COUNT, stats["rescheduled"]

@@ -35,7 +35,7 @@ class QueryJobTest < ActiveSupport::TestCase
     assert_equal Query.find(query.id).status, :failed
 
     payload.success(job) 
-    assert_equal Query.find(query.id).status, :success
+    assert_equal Query.find(query.id).status, :complete
   end
   
   test "success logs event properly" do
@@ -44,7 +44,7 @@ class QueryJobTest < ActiveSupport::TestCase
     job = query.job
     job.payload_object.success(job)
     query = Query.find(query.id)
-    assert_equal :success, query.status
+    assert_equal :complete, query.status
     assert query.job_logs.where(message: 'Job successful')
   end
 

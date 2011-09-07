@@ -24,7 +24,7 @@ class QueuesController < ApplicationController
       case @query.status
       when :failed
         render :text => @query.job_logs.last.message, :status=>500
-      when :success
+      when :complete
         render :json => @query.result
       when :canceled
         render :text => "Job Canceled", :status => 404
