@@ -2,6 +2,7 @@
 # importing
 
 require 'importer/core_importer'
+require 'importer/extended_entry'
 require 'importer/result'
 require 'importer/result_importer'
 require 'importer/immunization'
