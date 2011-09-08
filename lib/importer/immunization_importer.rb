@@ -41,8 +41,8 @@ module Importer
     def extract_refusal(parent_element, immunization)
       negation_indicator = parent_element['negationInd']
       unless negation_indicator.nil?
-        immunization.refusal = negation_indicator.eql?('true')
-        if immunization.refusal
+        immunization.refusal_ind = negation_indicator.eql?('true')
+        if immunization.refusal_ind
           refusal_reason_element = parent_element.at_xpath(@refusal_resason_xpath)
           if refusal_reason_element
             immunization.refusal_reason = {'code' => refusal_reason_element['code'],

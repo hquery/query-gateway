@@ -5,7 +5,7 @@ class ImmunizationTest < ActiveSupport::TestCase
     immunization = Importer::Immunization.new
     immunization.time = 1234
     immunization.add_code(1234, 'CVX')
-    immunization.refusal = false
+    immunization.refusal_ind = false
     
     h = immunization.to_hash
     
@@ -17,7 +17,7 @@ class ImmunizationTest < ActiveSupport::TestCase
     immunization = Importer::Immunization.new
     immunization.time = 1234
     immunization.add_code(1234, 'CVX')
-    immunization.refusal = true
+    immunization.refusal_ind = true
     immunization.refusal_reason = {'code' => 'PATOBJ', 'codeSystem' => 'HL7 No Immunization Reason'}
     
     h = immunization.to_hash

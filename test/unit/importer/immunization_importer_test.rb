@@ -12,10 +12,10 @@ class ImmunizationImporterTest < ActiveSupport::TestCase
     assert immunization.codes['CVX'].include? '111'
     
     immunization = patient[:immunizations][1]
-    assert_equal false, immunization.refusal
+    assert_equal false, immunization.refusal_ind
     
     immunization = patient[:immunizations][3]
-    assert_equal true, immunization.refusal
+    assert_equal true, immunization.refusal_ind
     assert_equal 'PATOBJ', immunization.refusal_reason['code']
     assert_equal 'FirstName', immunization.performer['person']['given']
     assert_equal '100 Bureau Drive', immunization.performer['person']['addresses'].first['streetAddress']
