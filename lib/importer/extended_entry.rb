@@ -1,5 +1,10 @@
 module Importer
+  # Allows for the creation of extened C32 Entry Objects. This class will allow for
+  # the creation of attributes that are properly serialized when to_hash is called
+  # on them.
   class ExtendedEntry < QME::Importer::Entry
+    
+    # Macro for defining extended attributes
     def self.extended_attributes(*extended_attributes)
       @extended_attributes ||= []
       @extended_attributes = @extended_attributes.concat(extended_attributes)
@@ -7,11 +12,10 @@ module Importer
         attr_accessor extended_attribute
       end
     end
-    
-    def self.extended_attribute_list
-      @extended_attributes
-    end
-    
+
+    # Writes attributes out to a hash, with String keys that are in
+    # lower camel case. So an attribute called "bacon_lover" would
+    # become "baconLover"
     def to_hash
       entry_hash = super
       self.class.extended_attribute_list.each do |extended_attribute|
@@ -27,6 +31,12 @@ module Importer
       end
       
       entry_hash
+    end
+    
+    private
+    
+    def self.extended_attribute_list
+      @extended_attributes
     end
   end
 end
