@@ -5,8 +5,7 @@ class ResultTest < ActiveSupport::TestCase
     result = Importer::Result.new
     result.time = 1234
     result.add_code(1234, 'RxNorm')
-    result.interpretation_code = 'N'
-    result.interpretation_code_system_name = "HITSP C80 Observation Status"
+    result.interpretation = {'code' => 'N', 'codeSystem' => "HITSP C80 Observation Status"}
     
     h = result.to_hash
     

@@ -8,8 +8,8 @@ class ResultImporterTest < ActiveSupport::TestCase
     patient = pi.create_c32_hash(doc)
     
     result = patient[:results][0]
-    assert_equal 'N', result.interpretation_code
-    assert_equal 'HITSP C80 Observation Status', result.interpretation_code_system_name
+    assert_equal 'N', result.interpretation['code']
+    assert_equal 'HITSP C80 Observation Status', result.interpretation['codeSystem']
     assert_equal 'completed', result.status
   end
 end

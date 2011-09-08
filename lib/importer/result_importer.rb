@@ -40,8 +40,9 @@ module Importer
     def extract_interpretation(parent_element, result)
       interpretation_element = parent_element.at_xpath("./cda:interpretationCode")
       if interpretation_element
-        result.interpretation_code = interpretation_element['code']
-        result.interpretation_code_system_name = QME::Importer::CodeSystemHelper.code_system_for(interpretation_element['codeSystem'])
+        code = interpretation_element['code']
+        code_system = QME::Importer::CodeSystemHelper.code_system_for(interpretation_element['codeSystem'])
+        result.interpretation = {'code' => code, 'codeSystem' => code_system}
       end
     end
     
