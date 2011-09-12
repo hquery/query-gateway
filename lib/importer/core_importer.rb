@@ -62,5 +62,14 @@ module Importer
       
       code_hash
     end
+    
+    def extract_scalar(parent_element, scalar_xpath)
+      scalar_element = parent_element.at_xpath(scalar_xpath)
+      if scalar_element
+        {'unit' => scalar_element['unit'], 'value' => scalar_element['value'].to_i}
+      else
+        nil
+      end
+    end
   end
 end

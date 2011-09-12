@@ -11,5 +11,6 @@ class MedicationImporterTest < ActiveSupport::TestCase
     assert medication.codes['RxNorm'].include? '307782'
     assert_equal 6, medication.administration_timing['period']['value']
     assert_equal 'IPINHL', medication.route['code']
+    assert_equal 2, medication.dose['value']
   end
 end

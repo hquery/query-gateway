@@ -32,7 +32,9 @@ module Importer
         end
         
         extract_administration_timing(entry_element, medication)
-        extract_route(entry_element, medication)
+        
+        medication.route = extract_code(entry_element, "./cda:routeCode")
+        medication.dose = extract_scalar(entry_element, "./cda:doseQuantity")
         
         if @check_for_usable
           medication_list << medication if medication.usable?
@@ -52,19 +54,11 @@ module Importer
         if administration_timing_element['institutionSpecified']
           at['institutionSpecified'] = administration_timing_element['institutionSpecified'].to_boolean
         end
-        period_element = administration_timing_element.at_xpath("./cda:period")
-        if period_element
-          at['period'] = {'unit' => period_element['unit'], 'value' => period_element['value'].to_i}
-        end
+        at['period'] = extract_scalar(administration_timing_element, "./cda:period")
         if at.present?
           medication.administration_timing = at
         end
       end
-    end
-    
-    def extract_route(parent_element, medication)
-      code = extract_code(parent_element, "./cda:routeCode")
-      medication.route = code if code
     end
   end
 end
