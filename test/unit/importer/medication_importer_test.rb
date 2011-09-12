@@ -18,5 +18,6 @@ class MedicationImporterTest < ActiveSupport::TestCase
     assert_equal 10, medication.dose_restriction['denominator']['value']
     assert_equal '415215001', medication.product_form['code']
     assert_equal '334980009', medication.delivery_method['code']
+    assert_equal '73639000', medication.type_of_medication['code']
   end
 end
