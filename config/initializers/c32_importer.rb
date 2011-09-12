@@ -1,6 +1,8 @@
 # This file is used to load enhancements to the Quality Measure Engine for full C32
 # importing
 
+require 'ext/string' # freedom patch to String to allow boolean conversion
+
 require 'importer/core_importer'
 require 'importer/extended_entry'
 require 'importer/result'
