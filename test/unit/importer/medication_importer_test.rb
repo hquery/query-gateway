@@ -16,5 +16,7 @@ class MedicationImporterTest < ActiveSupport::TestCase
     assert_equal 'SNOMED-CT', medication.site['codeSystem']
     assert_equal 5, medication.dose_restriction['numerator']['value']
     assert_equal 10, medication.dose_restriction['denominator']['value']
+    assert_equal '415215001', medication.product_form['code']
+    assert_equal '334980009', medication.delivery_method['code']
   end
 end

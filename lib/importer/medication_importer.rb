@@ -38,6 +38,9 @@ module Importer
         medication.site = extract_code(entry_element, "./cda:approachSiteCode", 'SNOMED-CT')
 
         extract_dose_restriction(entry_element, medication)
+        
+        medication.product_form = extract_code(entry_element, "./cda:administrationUnitCode", 'NCI Thesaurus')
+        medication.delivery_method = extract_code(entry_element, "./cda:code", 'SNOMED-CT')
 
         if @check_for_usable
           medication_list << medication if medication.usable?
