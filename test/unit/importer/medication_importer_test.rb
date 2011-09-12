@@ -12,5 +12,9 @@ class MedicationImporterTest < ActiveSupport::TestCase
     assert_equal 6, medication.administration_timing['period']['value']
     assert_equal 'IPINHL', medication.route['code']
     assert_equal 2, medication.dose['value']
+    assert_equal '127945006', medication.site['code']
+    assert_equal 'SNOMED-CT', medication.site['codeSystem']
+    assert_equal 5, medication.dose_restriction['numerator']['value']
+    assert_equal 10, medication.dose_restriction['denominator']['value']
   end
 end

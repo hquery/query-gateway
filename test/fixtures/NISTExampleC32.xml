@@ -1029,7 +1029,12 @@
                 <!--IHE/PCC recommends that the routeCode be taken from the HL7 RouteOfAdministration code system. However, HITSP/C32, C83 and C80 recommend that for the U.S. Realm it be taken from the FDA RouteOfAdministration code system.-->
                 <translation/>
               </routeCode>
+              <approachSiteCode code="127945006" codeSystem="2.16.840.1.113883.6.96"/>
               <doseQuantity value="2"/>
+              <maxDoseQuantity>
+                <numerator value="5"/>
+                <denominator value="10"/>
+              </maxDoseQuantity>
               <administrationUnitCode code="415215001" codeSystem="2.16.840.1.113883.6.96" displayName="Puff"/>
               <consumable>
                 <manufacturedProduct>
