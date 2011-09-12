@@ -10,6 +10,6 @@ class MedicationImporterTest < ActiveSupport::TestCase
     medication = patient[:medications][0]
     assert medication.codes['RxNorm'].include? '307782'
     assert_equal 6, medication.administration_timing['period']['value']
-
+    assert_equal 'IPINHL', medication.route['code']
   end
 end

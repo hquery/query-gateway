@@ -47,5 +47,20 @@ module Importer
       # TODO: Implement when the Patient API has an implementation of
       # organization
     end
+    
+    def extract_code(parent_element, code_xpath, code_system=nil)
+      code_element = parent_element.at_xpath(code_xpath)
+      code_hash = nil
+      if code_element
+        code_hash = {'code' => code_element['code']}
+        if code_system
+          code_hash['codeSystem'] = code_system
+        else
+          code_hash['codeSystem'] = code_element['codeSystem']
+        end
+      end
+      
+      code_hash
+    end
   end
 end

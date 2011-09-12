@@ -32,6 +32,7 @@ module Importer
         end
         
         extract_administration_timing(entry_element, medication)
+        extract_route(entry_element, medication)
         
         if @check_for_usable
           medication_list << medication if medication.usable?
@@ -59,6 +60,11 @@ module Importer
           medication.administration_timing = at
         end
       end
+    end
+    
+    def extract_route(parent_element, medication)
+      code = extract_code(parent_element, "./cda:routeCode")
+      medication.route = code if code
     end
   end
 end
