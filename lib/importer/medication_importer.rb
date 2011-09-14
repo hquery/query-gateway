@@ -56,6 +56,8 @@ module Importer
         medication.vehicle = extract_code(entry_element,
                 "cda:participant/cda:participantRole[cda:code/@code='412307009' and cda:code/@codeSystem='2.16.840.1.113883.6.96']/cda:playingEntity/cda:code", 'SNOMED-CT')
 
+        extract_order_information(entry_element, medication)
+
         if @check_for_usable
           medication_list << medication if medication.usable?
         else
@@ -66,6 +68,22 @@ module Importer
     end
 
     private
+    
+    def extract_order_information(parent_element, medication)
+      order_elements = parent_element.xpath("./cda:entryRelationship[@typeCode='REFR']/cda:supply[@moodCode='INT']")
+      if order_elements
+        medication.order_information = []
+        order_elements.each do |order_element|
+          order_information = OrderInformation.new
+          
+          order_information.order_number = order_element.at_xpath('./cda:id').try(:[], 'root')
+          order_information.fills = order_element.at_xpath('./cda:repeatNumber').try(:[], 'value').try(:to_i)
+          order_information.quantity_ordered = extract_scalar(order_element, "./cda:quantity")
+          
+          medication.order_information << order_information
+        end
+      end
+    end
 
     def extract_administration_timing(parent_element, medication)
       administration_timing_element = parent_element.at_xpath("./cda:effectiveTime[2]")

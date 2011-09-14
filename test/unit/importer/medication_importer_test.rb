@@ -6,7 +6,7 @@ class MedicationImporterTest < ActiveSupport::TestCase
     doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
     pi = QME::Importer::PatientImporter.instance
     patient = pi.create_c32_hash(doc)
-    
+
     medication = patient[:medications][0]
     assert medication.codes['RxNorm'].include? '307782'
     assert_equal 6, medication.administration_timing['period']['value']
@@ -20,8 +20,12 @@ class MedicationImporterTest < ActiveSupport::TestCase
     assert_equal '334980009', medication.delivery_method['code']
     assert_equal '73639000', medication.type_of_medication['code']
     assert_equal 'DrugVehicleCode', medication.vehicle['code']
-    
+
     medication = patient[:medications][3]
     assert_equal 'VA/KPproblemList', medication.indication['code']
+    assert_equal 1, medication.order_information.size
+    assert_equal 1, medication.order_information.first.fills
+    assert_equal 1, medication.order_information.first.quantity_ordered['value']
+    assert_equal 'tablet', medication.order_information.first.quantity_ordered['unit']
   end
 end
