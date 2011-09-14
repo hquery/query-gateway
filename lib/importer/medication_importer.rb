@@ -43,6 +43,8 @@ module Importer
         medication.delivery_method = extract_code(entry_element, "./cda:code", 'SNOMED-CT')
         medication.type_of_medication = extract_code(entry_element,
             "./cda:entryRelationship[@typeCode='SUBJ']/cda:observation[cda:templateId/@root='2.16.840.1.113883.3.88.11.83.8.1']/cda:code", 'SNOMED-CT')
+        medication.indication = extract_code(entry_element, 
+            "./cda:entryRelationship[@typeCode='RSON']/cda:observation[cda:templateId/@root='2.16.840.1.113883.10.20.1.28']/cda:code", 'SNOMED-CT')
 
         if @check_for_usable
           medication_list << medication if medication.usable?
