@@ -21,6 +21,7 @@ module Importer
     def import_person(person_element)
       person_hash = {}
       name_element = person_element.at_xpath("./cda:name")
+      person_hash['name'] = name_element.try(:text)
       person_hash['given'] = name_element.at_xpath("./cda:given").try(:text)
       person_hash['last'] = name_element.at_xpath("./cda:family").try(:text)
       person_hash
