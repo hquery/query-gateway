@@ -1048,6 +1048,15 @@
                   </manufacturedMaterial>
                 </manufacturedProduct>
               </consumable>
+              <participant typeCode="CSM">
+                <participantRole classCode="MANU"> 
+                  <code code="412307009" displayName="drug vehicle" codeSystem="2.16.840.1.113883.6.96" codeSystemName="SNOMED CT"/>
+                  <playingEntity classCode='MMAT'>
+                    <code code="DrugVehicleCode" codeSystem="2.16.840.1.113883.6.96"/>
+                    <name>Drug Vehicle Name</name>
+                  </playingEntity>
+                </participantRole>
+              </participant>
               <entryRelationship typeCode='SUBJ'>
                 <observation classCode='OBS' moodCode='EVN'>
                   <templateId root='2.16.840.1.113883.3.88.11.83.8.1'/>
