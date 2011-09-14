@@ -30,11 +30,17 @@ module Importer
         else
           encounter_list << encounter
         end
+        extract_performer(entry_element, encounter)
       end
       encounter_list
     end
     
     private
     
+    def extract_performer(parent_element, encounter)
+      performer_element = parent_element.at_xpath("./cda:performer")
+      encounter.performer = import_actor(performer_element) if performer_element
+    end
+
   end
 end

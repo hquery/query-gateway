@@ -9,6 +9,7 @@ class EncounterImporterTest < ActiveSupport::TestCase
     
     encounter = patient[:encounters][0]
     assert encounter.codes['CPT'].include? '99241'
+    assert_equal encounter.performer['person']['name'], 'Dr. Kildare'
     
   end
 end
