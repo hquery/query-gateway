@@ -1818,7 +1818,7 @@
                   <statusCode code="completed"/>
                   <effectiveTime value="19991114"/>
                   <value xsi:type="PQ" value="177" unit="cm"/>
-                  <interpretationCode displayName="Normal"/>
+                  <interpretationCode code="N" codeSystem="2.16.840.1.113883.5.83" displayName="Normal"/>
                   <referenceRange>
                     <observationRange nullFlavor="UNK"/>
                   </referenceRange>
@@ -1838,7 +1838,7 @@
                   <statusCode code="completed"/>
                   <effectiveTime value="19991114"/>
                   <value xsi:type="PQ" value="86" unit="kg"/>
-                  <interpretationCode displayName="Normal"/>
+                  <interpretationCode code="N" codeSystem="2.16.840.1.113883.5.83" displayName="Normal"/>
                   <referenceRange>
                     <observationRange nullFlavor="UNK"/>
                   </referenceRange>

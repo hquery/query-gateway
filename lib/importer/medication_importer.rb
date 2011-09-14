@@ -5,6 +5,8 @@ module Importer
   # TODO: Patient Instructions needs to be implemented. Will likely be a reference to the narrative section
   # TODO: Couldn't find an example medication reaction. Isn't clear to me how it should be implemented from the specs, so
   #       reaction is not implemented.
+  # TODO: Couldn't find an example dose indicator. Isn't clear to me how it should be implemented from the specs, so
+  #       dose indicator is not implemented.
   class MedicationImporter < QME::Importer::SectionImporter
     include CoreImporter
 

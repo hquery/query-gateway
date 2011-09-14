@@ -11,6 +11,7 @@ require 'importer/immunization'
 require 'importer/immunization_importer'
 require 'importer/medication'
 require 'importer/medication_importer'
+require 'importer/vital_sign_importer'
 
 pi = QME::Importer::PatientImporter.instance
 
@@ -19,6 +20,7 @@ pi.instance_eval do
   @section_importers[:results] = Importer::ResultImporter.new
   @section_importers[:immunizations] = Importer::ImmunizationImporter.new
   @section_importers[:medications] = Importer::MedicationImporter.new
+  @section_importers[:vital_signs] = Importer::VitalSignImporter.new
 end
 
 QME::Importer::CodeSystemHelper::CODE_SYSTEMS["2.16.840.1.113883.5.83"] = "HITSP C80 Observation Status"
