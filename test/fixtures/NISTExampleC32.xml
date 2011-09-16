@@ -2354,6 +2354,9 @@
               <text>IHE Requires reference to go here instead of originalText of code.<reference/>
               </text>
               <effectiveTime value="20000407"/>
+              <!-- BEGIN addition by MJH -->
+              <priorityCode code="xyzzy" codeSystemName="CPT" codeSystem="2.16.840.1.113883.6.12" codeSystemVersion="4"/>
+              <!-- END addition by MJH -->
               <performer>
                 <assignedEntity>
                   <id/>
@@ -2376,6 +2379,14 @@
                   </playingEntity>
                 </participantRole>
               </participant>
+              <!-- BEGIN addition by MJH -->
+              <entryRelationship typeCode="RSON">
+                <act classCode="ACT" moodCode="EVN">
+                  <code code="308292007" codeSystem="2.16.840.1.113883.6.96" displayName="Transfer of care"/>
+                  <statusCode code="completed"/>
+                </act>
+              </entryRelationship>
+              <!-- END addition by MJH -->
             </encounter>
           </entry>
         </section>

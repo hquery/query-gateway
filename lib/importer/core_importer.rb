@@ -57,10 +57,11 @@ module Importer
         if code_system
           code_hash['codeSystem'] = code_system
         else
-          code_hash['codeSystem'] = code_element['codeSystem']
+          code_hash['codeSystemOid'] = code_element['codeSystem']
+          code_hash['codeSystem'] = QME::Importer::CodeSystemHelper.code_system_for(code_hash['codeSystemOid'])
         end
       end
-      
+
       code_hash
     end
     
