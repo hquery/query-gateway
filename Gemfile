@@ -10,8 +10,6 @@ end
 
 gem 'jquery-rails'
 
-gem 'therubyracer'
-
 gem "mongoid", "~> 2.0"
 gem "bson_ext", "~> 1.3", :platforms => :mri
 
