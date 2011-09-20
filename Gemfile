@@ -35,4 +35,6 @@ group :test do
   gem 'awesome_print', :require => 'ap'
   gem 'mocha', :require => false
   gem 'pry'
+  gem 'therubyracer', :platforms => :ruby
+  gem 'therubyrhino', :platforms => :jruby
 end
