@@ -20,6 +20,12 @@ class MedicationImporterTest < ActiveSupport::TestCase
     assert_equal '334980009', medication.delivery_method['code']
     assert_equal '73639000', medication.type_of_medication['code']
     assert_equal 'DrugVehicleCode', medication.vehicle['code']
+    assert_equal 'eleventeen', medication.fulfillment_history[0].prescription_number
+    assert_equal 'Pseudo', medication.fulfillment_history[0].provider['person']['given']
+    assert_equal '100 Bureau Drive', medication.fulfillment_history[0].dispensing_pharmacy_location['streetAddress']
+    assert_equal 1316476800, medication.fulfillment_history[0].dispense_date
+    assert_equal 30, medication.fulfillment_history[0].quantity_dispensed['value']
+    assert_equal 4, medication.fulfillment_history[0].fill_number
 
     medication = patient[:medications][3]
     assert_equal 'VA/KPproblemList', medication.indication['code']

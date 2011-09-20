@@ -7,6 +7,7 @@ module Importer
   #       reaction is not implemented.
   # TODO: Couldn't find an example dose indicator. Isn't clear to me how it should be implemented from the specs, so
   #       dose indicator is not implemented.
+  # TODO: Fill Status is not implemented. Couldn't figure out which entryRelationship it should be nested in
   class MedicationImporter < QME::Importer::SectionImporter
     include CoreImporter
 
@@ -57,6 +58,8 @@ module Importer
                 "cda:participant/cda:participantRole[cda:code/@code='412307009' and cda:code/@codeSystem='2.16.840.1.113883.6.96']/cda:playingEntity/cda:code", 'SNOMED-CT')
 
         extract_order_information(entry_element, medication)
+        
+        extract_fulfillment_history(entry_element, medication)
 
         if @check_for_usable
           medication_list << medication if medication.usable?
@@ -68,6 +71,30 @@ module Importer
     end
 
     private
+    
+    def extract_fulfillment_history(parent_element, medication)
+      fhs = parent_element.xpath("./cda:entryRelationship/cda:supply[@moodCode='EVN']")
+      if fhs
+        medication.fulfillment_history = []
+        fhs.each do |fh_element|
+          fulfillment_history = FulfillmentHistory.new
+          fulfillment_history.prescription_number = fh_element.at_xpath('./cda:id').try(:[], 'root')
+          actor_element = fh_element.at_xpath('./cda:performer')
+          if actor_element
+            fulfillment_history.provider = import_actor(actor_element)
+            addr_element = actor_element.at_xpath("./cda:assignedEntity/cda:addr")
+            if addr_element
+              fulfillment_history.dispensing_pharmacy_location = import_address(addr_element)
+            end
+          end
+          hl7_timestamp = fh_element.at_xpath('./cda:effectiveTime').try(:[], 'value')
+          fulfillment_history.dispense_date = QME::Importer::HL7Helper.timestamp_to_integer(hl7_timestamp) if hl7_timestamp
+          fulfillment_history.quantity_dispensed = extract_scalar(fh_element, "./cda:quantity")
+          fulfillment_history.fill_number = fh_element.at_xpath("./cda:entryRelationship[@typeCode='COMP']/cda:sequenceNumber").try(:[], 'value').to_i
+          medication.fulfillment_history << fulfillment_history
+        end
+      end
+    end
     
     def extract_order_information(parent_element, medication)
       order_elements = parent_element.xpath("./cda:entryRelationship[@typeCode='REFR']/cda:supply[@moodCode='INT']")

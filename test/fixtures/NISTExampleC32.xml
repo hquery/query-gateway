@@ -1064,6 +1064,33 @@
                   <statusCode code='completed'/>
                 </observation>
               </entryRelationship>
+              <entryRelationship>
+                <supply moodCode="EVN">
+                  <id root="eleventeen"/>
+                  <effectiveTime value="20110920"/>
+                  <quantity value="30"/>
+                  <performer>
+                    <assignedEntity>
+                      <addr>
+                        <streetAddressLine>100 Bureau Drive</streetAddressLine>
+                        <city>Gaithersburg</city>
+                        <state>MD</state>
+                        <postalCode>20899</postalCode>
+                      </addr>
+                      <assignedPerson>
+                        <name>
+                          <prefix>Dr.</prefix>
+                          <given>Pseudo</given>
+                          <family>Physician-3</family>
+                        </name>
+                      </assignedPerson>
+                    </assignedEntity>
+                  </performer>
+                  <entryRelationship typeCode="COMP">
+                    <sequenceNumber value="4"/>
+                  </entryRelationship>
+                </supply>
+              </entryRelationship>
               <entryRelationship typeCode="REFR">
                 <observation classCode="OBS" moodCode="EVN">
                   <templateId root="2.16.840.1.113883.10.20.1.47"/>
