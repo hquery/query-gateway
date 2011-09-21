@@ -18,6 +18,8 @@ require 'importer/encounter_importer'
 require 'importer/vital_sign_importer'
 require 'importer/allergy'
 require 'importer/allergy_importer'
+require 'importer/procedure'
+require 'importer/procedure_importer'
 
 pi = QME::Importer::PatientImporter.instance
 
@@ -29,6 +31,7 @@ pi.instance_eval do
   @section_importers[:encounters] = Importer::EncounterImporter.new
   @section_importers[:vital_signs] = Importer::VitalSignImporter.new
   @section_importers[:allergies] = Importer::AllergyImporter.new
+  @section_importers[:procedures] = Importer::ProcedureImporter.new
 end
 
 QME::Importer::CodeSystemHelper::CODE_SYSTEMS["2.16.840.1.113883.5.83"] = "HITSP C80 Observation Status"
