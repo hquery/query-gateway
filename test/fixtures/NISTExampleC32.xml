@@ -912,13 +912,16 @@
               </text>
               <statusCode code="completed"/>
               <effectiveTime value="1998"/>
+              <!-- BEGIN MJH Addition -->
+              <targetSiteCode code="1234567" codeSystem="2.16.840.1.113883.6.96" displayName="Dummy"/>
+              <!-- END MJH Addition -->
               <performer>
                 <assignedEntity>
                   <id/>
                   <addr/>
                   <telecom/>
                   <assignedPerson>
-                    <name/>
+                    <name>Dr. Kildare</name>
                   </assignedPerson>
                 </assignedEntity>
               </performer>
