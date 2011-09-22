@@ -11,6 +11,22 @@ class ActiveSupport::TestCase
   setup { load "#{Rails.root}/db/seeds.rb" }
 end
 
+class ImporterApiTest < ActiveSupport::TestCase
+  def setup    
+    doc = Nokogiri::XML(File.new('test/fixtures/NISTExampleC32.xml'))
+    doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
+    pi = QME::Importer::PatientImporter.instance
+    patient = pi.create_c32_hash(doc)
+    pi.get_demographics(patient, doc)
+    patient_json = patient.to_json
+    patient_api = QueryExecutor.patient_api_javascript.to_s
+    initialize_patient = 'var patient = new hQuery.Patient(barry);'
+    date = Time.new(2010,1,1)
+    initialize_date = "var sampleDate = new Date(#{date.to_i*1000});"
+    @context = ExecJS.compile(patient_api + "\nvar barry = " + patient_json + ";\n" + initialize_patient + "\n" + initialize_date)
+  end
+end
+
 def dump_database
   db = Mongoid.master
   QueryUtilities.clean_js_libs
