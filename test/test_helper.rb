@@ -19,6 +19,7 @@ class ImporterApiTest < ActiveSupport::TestCase
     patient = pi.create_c32_hash(doc)
     pi.get_demographics(patient, doc)
     patient_json = patient.to_json
+    #puts patient_json
     patient_api = QueryExecutor.patient_api_javascript.to_s
     initialize_patient = 'var patient = new hQuery.Patient(barry);'
     date = Time.new(2010,1,1)
