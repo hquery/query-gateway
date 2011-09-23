@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/hquery/patientapi.git
-  revision: c250e9700386b68481ff24ddab0cb7ef8b55e9d0
+  revision: a5100188b2f313b50d2708e4fc7c042437b8b51d
   specs:
     hquery-patient-api (0.1.0)
 

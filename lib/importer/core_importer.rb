@@ -22,14 +22,14 @@ module Importer
       person_hash = {}
       name_element = person_element.at_xpath("./cda:name")
       person_hash['name'] = name_element.try(:text)
-      person_hash['given'] = name_element.at_xpath("./cda:given").try(:text)
+      person_hash['first'] = name_element.at_xpath("./cda:given").try(:text)
       person_hash['last'] = name_element.at_xpath("./cda:family").try(:text)
       person_hash
     end
     
     def import_address(address_element)
       address_hash = {}
-      address_hash['streetAddress'] = address_element.at_xpath("./cda:streetAddressLine").try(:text)
+      address_hash['streetAddress'] = [address_element.at_xpath("./cda:streetAddressLine").try(:text)]
       address_hash['city'] = address_element.at_xpath("./cda:city").try(:text)
       address_hash['stateOrProvince'] = address_element.at_xpath("./cda:state").try(:text)
       address_hash['zip'] = address_element.at_xpath("./cda:postalCode").try(:text)
