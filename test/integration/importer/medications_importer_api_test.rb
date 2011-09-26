@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class MedicationsImporterApiTest < ImporterApiTest
-  def test_vitals_importing
+  def test_medications_importing
     assert @context.eval('patient.medications().match({"RxNorm": ["307782"]}).length != 0')
     assert_equal 2, @context.eval('patient.medications()[0].dose().value()')
     assert_equal nil, @context.eval('patient.medications()[0].dose().unit()')
