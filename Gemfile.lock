@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/hquery/patientapi.git
-  revision: a5100188b2f313b50d2708e4fc7c042437b8b51d
+  revision: 8ea6836892e4838123afab2e2c3f971949d342a5
   specs:
     hquery-patient-api (0.1.0)
 
@@ -82,7 +82,7 @@ GEM
       activesupport (~> 3.0)
       daemons
     erubis (2.7.0)
-    execjs (1.2.8)
+    execjs (1.2.9)
       multi_json (~> 1.0)
     factory_girl (1.3.3)
     hashie (1.1.0)
