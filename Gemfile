@@ -21,7 +21,7 @@ gem "hquery-patient-api", :git => 'http://github.com/hquery/patientapi.git', :br
 
 gem 'coderay'
 
-gem 'bluecloth'
+gem 'kramdown'
 
 # needed but not specified by macaddr
 # macaddr comes in from quality-measure-engine -> resque-status -> uuid -> macaddr (feels like Maven)
