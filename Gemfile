@@ -13,11 +13,11 @@ gem 'jquery-rails'
 gem "mongoid", "~> 2.0"
 gem "bson_ext", "~> 1.3", :platforms => :mri
 
-gem 'quality-measure-engine', :git => 'http://github.com/pophealth/quality-measure-engine.git', :branch => 'develop'
+gem 'quality-measure-engine', "1.0.2"
 
 gem 'delayed_job_mongoid', :git => 'https://github.com/collectiveidea/delayed_job_mongoid.git'
 
-gem "hquery-patient-api", :git => 'http://github.com/hquery/patientapi.git', :branch => 'develop'
+gem "hquery-patient-api", :git => 'http://github.com/hquery/patientapi.git', :tag => 'V0.1'
 
 gem 'coderay'
 
