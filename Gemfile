@@ -17,7 +17,7 @@ gem 'quality-measure-engine', :git => 'http://github.com/pophealth/quality-measu
 
 gem 'delayed_job_mongoid', :git => 'https://github.com/collectiveidea/delayed_job_mongoid.git'
 
-gem "hquery-patient-api", :git => 'http://github.com/hquery/patientapi.git'
+gem "hquery-patient-api", :git => 'http://github.com/hquery/patientapi.git', :branch => 'develop'
 
 gem 'coderay'
 
