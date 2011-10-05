@@ -4,6 +4,7 @@ class QueriesController < ApplicationController
       @queries = Query.desc(:updated_at)
       respond_to do |format|
         format.atom
+        format.html
       end
     end
   end
