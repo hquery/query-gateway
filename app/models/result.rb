@@ -12,4 +12,13 @@ class Result
       Time.new(2011, 8, 12) # hardcode to old date if there are no results in the system
     end
   end
+  
+  def to_json
+    json = {}
+    self.raw_attributes.each do |key, value|
+      json[key] = value
+    end
+    
+    return json
+  end
 end
