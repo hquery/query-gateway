@@ -11,7 +11,10 @@ class ResultsController < ApplicationController
   def show
     @result = Result.find(params[:id])
     if stale?(:last_modified => @result.created_at.utc)
-      render :json => @result.to_json
+      respond_to do |format|
+        format.html
+        format.json { render :json => @result }
+      end
     end
   end
 end

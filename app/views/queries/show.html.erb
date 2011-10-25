@@ -1,0 +1,37 @@
+<h1>Query</h1>
+
+<table>
+  <tr>
+    <td>Status</td>
+    <td><%= @qh['status'] %></td>
+  </tr>
+  <tr>
+    <td>Created</td>
+    <td><%= @qh['created_at'] %></td>
+  </tr>
+  <tr>
+    <td>Last Updated</td>
+    <td><%= @qh['updated_at'] %></td>
+  </tr>
+</table>
+
+<h2>Logs</h2>
+<table>
+<% @qh['job_logs'].each do |jl| -%>
+  <tr>
+    <td><%= jl['created_at'] %></td>
+    <td><%= jl['message'] %></td>
+  </tr>  
+<% end -%>
+</table>
+
+<% if @qh['result_url'] -%>
+<h2>Result</h2>
+<p><%= link_to @qh['result_url'], @qh['result_url']%></p>
+<% end -%>
+
+<h2>Map</h2>
+<%= raw CodeRay.scan(@qh['map'], :javascript).div %>
+
+<h2>Reduce</h2>
+<%= raw CodeRay.scan(@qh['reduce'], :javascript).div %>
