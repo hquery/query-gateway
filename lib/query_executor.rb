@@ -8,23 +8,24 @@ class QueryExecutor
   
   PATIENTS_COLLECTION = "records"
 
-  def initialize(map_js, reduce_js, query_id, filter={})
+  def initialize(map_js, reduce_js, functions_js, query_id, filter={})
     @map_js = map_js
     @reduce_js = reduce_js
     @query_id = query_id
     @filter = filter
+    @functions_js = functions_js
   end
 
   def execute
     db =  Mongoid.master
-    # convert the filter hash to a mongo query style hash.  Currently we are passing in a mongo style query hash so this is a no-op
     exts = db['system.js'].find().to_a.collect do |ext|
-      if (ext['value'].class == BSON::Code)
-        "#{ext['_id']}();\n"
-      else
-        ""
-      end
-    end
+          if (ext['value'].class == BSON::Code)
+            "#{ext['_id']}();\n"
+          else
+            ""
+          end
+        end
+    exts << @functions_js    
     results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts) , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
     result = Result.new
     result.query = Query.find(@query_id)
@@ -53,7 +54,8 @@ class QueryExecutor
   end
 
   private
-  def build_map_function(exts)
+  def build_map_function(exts = "")
+    
     "function() {
       this.hQuery || (this.hQuery = {});
       var hQuery = this.hQuery;

@@ -12,10 +12,12 @@ class QueriesController < ApplicationController
   def create
     map = params[:map].try(:read)
     reduce = params[:reduce].try(:read)
-    @query = Query.new(:map => map, :reduce => reduce)
+    functions = params[:functions].try(:read)
+    @query = Query.new(:map => map, :reduce => reduce, :functions=>functions)
     if params[:filter]
       @query.filter_from_json_string(params[:filter].read)
     end
+
     if @query.save
       response.headers["Location"] = query_url(@query)
       @query.job

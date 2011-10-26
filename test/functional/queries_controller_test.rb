@@ -9,10 +9,23 @@ class QueriesControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "POST should add a new job without filter" do
+  test "POST should add a new job without filter or functions" do
+    job_params = create_job_params
+    job_params.delete(:functions)
+    post :create, job_params
+    assert_response 201
+    assert assigns(:query).map.include? 'gender'
+    puts assigns(:query).functions
+    assert assigns(:query).functions.nil?
+    
+  end
+  
+  
+  test "POST should add a new job with functions" do
     post :create, create_job_params
     assert_response 201
     assert assigns(:query).map.include? 'gender'
+    assert assigns(:query).functions.include? 'sum'
   end
   
   test "should reject jobs without a reduce function" do

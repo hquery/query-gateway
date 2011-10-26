@@ -91,6 +91,20 @@ class QueryJobTest < ActiveSupport::TestCase
     assert_equal results["F"].to_i, 287
   end
 
+  test "Job executes correctly with function" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/map_reduce/simple_map_with_function.js')
+    functions = File.read('test/fixtures/library_function/simple_function.js')
+    rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
+    query = Query.create(map: mf, reduce: rf, functions: functions)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["M"].to_i, 213
+    assert_equal results["F"].to_i, 287
+  end
+  
   test "test cancel job" do
     Delayed::Worker.delay_jobs=true
     query = create_query

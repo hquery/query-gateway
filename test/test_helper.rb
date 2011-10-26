@@ -47,8 +47,9 @@ def create_query
   Query.create(map: mf, reduce: rf)
 end
 
-def create_job_params
+def create_job_params()
   map = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_map.js'), 'application/javascript')
   reduce = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_reduce.js'), 'application/javascript')
-  {:map => map, :reduce => reduce}
+  functions = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/library_function/simple_function.js'), 'application/javascript')
+  {map: map, reduce: reduce, functions: functions}
 end

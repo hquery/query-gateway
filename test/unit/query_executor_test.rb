@@ -11,7 +11,7 @@ class QueryExecutorTest < ActiveSupport::TestCase
     mf = File.read('test/fixtures/map_reduce/simple_map.js')
     rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
     q = Query.create(map: mf, reduce: rf)
-    qe = QueryExecutor.new(mf, rf, q.id)
+    qe = QueryExecutor.new(mf, rf, nil,q.id)
     qe.execute
     q.reload
 
@@ -23,7 +23,7 @@ class QueryExecutorTest < ActiveSupport::TestCase
     mf = File.read('test/fixtures/map_reduce/map_with_underscore.js')
     rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
     q = Query.create(map: mf, reduce: rf)
-    qe = QueryExecutor.new(mf, rf, q.id)
+    qe = QueryExecutor.new(mf, rf, nil, q.id)
     qe.execute
     q.reload
 
@@ -35,7 +35,7 @@ class QueryExecutorTest < ActiveSupport::TestCase
     mf = File.read('test/fixtures/map_reduce/simple_map.js')
     rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
     q = Query.create(map: mf, reduce: rf)
-    qe = QueryExecutor.new(mf, rf, q.id, {gender: "M"})
+    qe = QueryExecutor.new(mf, rf,nil, q.id, {gender: "M"})
     qe.execute
     q.reload
 
@@ -50,7 +50,7 @@ class QueryExecutorTest < ActiveSupport::TestCase
     q = Query.create(map: mf, reduce: rf)
 
     # 739558907 = 18 years ago from June 8, 2011
-    qe = QueryExecutor.new(mf, rf, q.id, {birthdate: {"$gt" => 739558907}})
+    qe = QueryExecutor.new(mf, rf, nil, q.id, {birthdate: {"$gt" => 739558907}})
     qe.execute
     q.reload
 

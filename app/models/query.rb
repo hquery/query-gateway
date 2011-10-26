@@ -5,6 +5,7 @@ class Query
   
   field :map, :type => String
   field :reduce, :type => String
+  field :functions, :type=> String, :default=> ""
   field :filter, :type => Hash
   field :status, :type => Symbol
   field :delayed_job_id
@@ -32,7 +33,7 @@ class Query
   end
   
   def job
-    dj = QueryJob.submit(self.map, self.reduce, self.filter, self.id)
+    dj = QueryJob.submit(self.map, self.reduce, self.functions, self.filter, self.id)
     self.delayed_job_id = dj.id
     save!
     dj
