@@ -25,6 +25,14 @@
 <% end -%>
 </table>
 
+<% if @qh['status'] == :failed -%>
+<h2>Job Failed</h2>
+<p>
+  Reason:
+  <pre><%= @qh['error_message'] %></pre>
+</p>
+<% end -%>
+
 <% if @qh['result_url'] -%>
 <h2>Result</h2>
 <p><%= link_to @qh['result_url'], @qh['result_url']%></p>

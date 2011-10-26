@@ -7,6 +7,7 @@ class Query
   field :reduce, :type => String
   field :filter, :type => Hash
   field :status, :type => Symbol
+  field :error_message, :type => String
   field :delayed_job_id
   
   embeds_many :job_logs
