@@ -8,6 +8,7 @@ class Query
   field :functions, :type=> String, :default=> ""
   field :filter, :type => Hash
   field :status, :type => Symbol
+  field :error_message, :type => String
   field :delayed_job_id
   
   embeds_many :job_logs
