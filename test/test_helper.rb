@@ -20,7 +20,7 @@ class ImporterApiTest < ActiveSupport::TestCase
     pi.get_demographics(patient, doc)
     patient_json = patient.to_json
     #puts patient_json
-    patient_api = QueryExecutor.patient_api_javascript.to_s
+    patient_api = QueryUtilities.patient_api_javascript.to_s
     initialize_patient = 'var patient = new hQuery.Patient(barry);'
     date = Time.new(2010,1,1)
     initialize_date = "var sampleDate = new Date(#{date.to_i*1000});"
@@ -30,8 +30,8 @@ end
 
 def dump_database
   db = Mongoid.master
-  QueryUtilities.clean_js_libs
-  QueryUtilities.load_js_libs
+  MongoQueryExecutor.clean_js_libs
+  MongoQueryExecutor.load_js_libs
   db.collection('job_logs').remove({}) if db['job_log_events']
   db.collection('results').remove({}) if db['results']
   db.collection('queries').remove({}) if db['queries']

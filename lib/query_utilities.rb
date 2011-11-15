@@ -1,23 +1,22 @@
 # module for utilities related to generation of map/reduce queries
 module QueryUtilities
-
-  # Load query extension libraries into Mongo system.js collection
-  def self.load_js_libs
-    Dir.glob(File.join(Rails.root, 'db', 'js', '*')).each do |js_file|
-      fn_name = File.basename(js_file, '.js')
-      raw_js = File.read(js_file)
-      Mongoid.master['system.js'].save(
-        {
-          '_id' => fn_name,
-          'value' => BSON::Code.new(raw_js)
-        }
-      )
-    end 
+  require 'sprockets'
+  require 'tilt'
+  
+  def self.stringify_key(key)
+    if (key.is_a? BSON::OrderedHash)
+      key = (key.map {|val| stringify_key(val)}).join('_')
+    end
+    if (key.is_a? Array)
+      key = (key.map {|val| stringify_key(val)}).join('_')
+    end
+    key.to_s
   end
   
-  # Remove the contents of the Mongo system.js collection
-  def self.clean_js_libs
-    Mongoid.master['system.js'].remove()
+  def self.patient_api_javascript
+    Tilt::CoffeeScriptTemplate.default_bare=true
+    Rails.application.assets.find_asset("patient")
   end
+  
   
 end

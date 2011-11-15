@@ -1,8 +1,8 @@
-require 'query_executor'
+require 'query_utilities'
 
 namespace :doc do
   task :generate_js do
-    api = QueryExecutor.patient_api_javascript
+    api = QuerUtilities.patient_api_javascript
     
     Dir.mkdir(Rails.root + 'tmp') unless Dir.exists?(Rails.root + 'tmp')
     

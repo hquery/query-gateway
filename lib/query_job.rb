@@ -8,7 +8,10 @@ class QueryJob < Struct.new(:map, :reduce,:functions, :filter, :query_id)
   # run the job using the query executor
   def perform
    qe = QueryExecutor.new(map, reduce,functions, query_id, filter)
-   qe.execute
+   results = qe.execute
+   result = Result.new results
+   result.query = Query.find(query_id)
+   result.save!
   end
 
   def before(job,*args)

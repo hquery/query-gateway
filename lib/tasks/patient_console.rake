@@ -5,7 +5,7 @@ require 'tilt'
 require 'coffee_script'
 require 'sprockets'
 require 'execjs'
-require 'query_executor'
+require 'query_utilities'
 
 namespace :patient do
   desc "Start interactive patient console"

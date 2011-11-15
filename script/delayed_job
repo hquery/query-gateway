@@ -2,5 +2,6 @@
 
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib', 'query_job'))
+QueryJob.set_const(:QueryExecutor, MongoQueryExecutor)
 require 'delayed/command'
 Delayed::Command.new(ARGV).daemonize
