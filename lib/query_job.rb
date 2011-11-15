@@ -21,7 +21,9 @@ class QueryJob < Struct.new(:map, :reduce,:functions, :filter, :query_id)
 
   def failure(job,*args)
     query = Query.find(query_id)
-    query.status_change(:failed, "Job failed - Error: #{job.last_error}")
+    query.status_change(:failed, "Job failed")
+    query.error_message = job.last_error
+    query.save
   end
 
   def enqueue(job,*args)
@@ -35,11 +37,7 @@ class QueryJob < Struct.new(:map, :reduce,:functions, :filter, :query_id)
   end
 
   def after(job,*args)
-    # see if it was rescheduled after an error
-    if(! Query.find(query_id).result)
-      query = Query.find(query_id)
-      query.status_change(:rescheduled, "Job rescheduled")
-    end
+    # no op
   end
 
   def success(job,*args)
