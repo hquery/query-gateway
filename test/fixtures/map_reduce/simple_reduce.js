@@ -1,5 +1,7 @@
-function(gender, counts) {
+function reduce(gender, counts) {
   var sum = 0;
-  for(var i in counts) sum += counts[i];
+  while(counts.hasNext()){
+    sum += counts.next();
+  }
   return sum;
 };

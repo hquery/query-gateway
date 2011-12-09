@@ -1,4 +1,4 @@
-require 'cover_me'
+#require 'cover_me'
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
@@ -6,6 +6,7 @@ require 'factory_girl'
 require 'mocha'
 
 Factory.find_definitions
+
 
 class ActiveSupport::TestCase
   setup { load "#{Rails.root}/db/seeds.rb" }
@@ -30,8 +31,8 @@ end
 
 def dump_database
   db = Mongoid.master
-  MongoQueryExecutor.clean_js_libs
-  MongoQueryExecutor.load_js_libs
+  #MongoQueryExecutor.clean_js_libs
+  #MongoQueryExecutor.load_js_libs
   db.collection('job_logs').remove({}) if db['job_log_events']
   db.collection('results').remove({}) if db['results']
   db.collection('queries').remove({}) if db['queries']

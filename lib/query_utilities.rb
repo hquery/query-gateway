@@ -15,7 +15,7 @@ module QueryUtilities
   
   def self.patient_api_javascript
     Tilt::CoffeeScriptTemplate.default_bare=true
-    Rails.application.assets.find_asset("patient")
+    Rails.application.assets.find_asset("patient").to_s
   end
   
   

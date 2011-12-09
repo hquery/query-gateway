@@ -26,7 +26,7 @@ class MongoQueryExecutor
           end
         end
     exts << @functions_js    
-    results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts) , @reduce_js, :query => @filter, raw: true, out: {inline: 1})
+    results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts) ,build_reduce_function(), :query => @filter, raw: true, out: {inline: 1})
     result = {}
     results['results'].each do |rv|
       key = QueryUtilities.stringify_key(rv['_id'])
@@ -71,6 +71,27 @@ class MongoQueryExecutor
     };"
 
   end
+  
+  
+  def build_reduce_function(){
+    "function(k,v){
+       var iter = (function(x){
+         this.index = 0;
+         this.arr = (x==null)? [] : x;
+         
+         this.hasNext = function(){
+           return this.index >= this.arr.length;
+         };
+         
+         this.next = function(){
+           return this.arr[this.index++];
+         }
+       })(v);
+       
+       #{@reduce_js}
+       return reduce(k,v);
+    }"
+  }
   
  
   
