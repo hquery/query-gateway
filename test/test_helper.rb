@@ -31,8 +31,7 @@ end
 
 def dump_database
   db = Mongoid.master
-  #MongoQueryExecutor.clean_js_libs
-  #MongoQueryExecutor.load_js_libs
+
   db.collection('job_logs').remove({}) if db['job_log_events']
   db.collection('results').remove({}) if db['results']
   db.collection('queries').remove({}) if db['queries']
@@ -54,3 +53,5 @@ def create_job_params()
   functions = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/library_function/simple_function.js'), 'application/javascript')
   {map: map, reduce: reduce, functions: functions}
 end
+
+

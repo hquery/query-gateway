@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-
+gem 'java-query-gateway', '0.1', :git =>"http://github.com/rdingwell/java-hquery-executor.git", :platforms => :jruby
 gem 'rails'
 gem 'jruby-openssl', :platforms => :jruby
 group :assets do
@@ -7,7 +7,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'uglifier'
 end
-gem 'java_query_executor', :git =>"file:///Users/bobd/projects/java-query-gateway"
+
 gem 'jquery-rails'
 
 gem "mongoid", "~> 2.0"
@@ -28,6 +28,7 @@ gem 'kramdown'
 gem 'systemu', :git => 'http://github.com/rdingwell/systemu'
 
 group :test do
+
   # Pretty printed test output
   gem 'minitest'
   gem 'turn', :require => false
@@ -38,4 +39,6 @@ group :test do
   gem 'pry'
   gem 'therubyracer', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
+
 end
+
