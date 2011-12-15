@@ -15,11 +15,10 @@ class ImporterApiTest < ActiveSupport::TestCase
   def setup    
     doc = Nokogiri::XML(File.new('test/fixtures/NISTExampleC32.xml'))
     doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
-    pi = QME::Importer::PatientImporter.instance
-    patient = pi.create_c32_hash(doc)
-    pi.get_demographics(patient, doc)
-    patient_json = patient.to_json
-    #puts patient_json
+    pi = HealthDataStandards::Import::C32::PatientImporter.instance
+    patient = pi.parse_c32(doc)
+    patient.save!
+    patient_json = Mongoid.master['records'].find_one(patient.id).to_json
     patient_api = QueryExecutor.patient_api_javascript.to_s
     initialize_patient = 'var patient = new hQuery.Patient(barry);'
     date = Time.new(2010,1,1)
