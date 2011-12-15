@@ -73,26 +73,25 @@ class MongoQueryExecutor
   end
   
   
-  def build_reduce_function(){
+  def build_reduce_function()
     "function(k,v){
-       var iter = (function(x){
+       
+       var iter = function(x){
          this.index = 0;
          this.arr = (x==null)? [] : x;
          
          this.hasNext = function(){
-           return this.index >= this.arr.length;
+           return this.index < this.arr.length;
          };
          
          this.next = function(){
            return this.arr[this.index++];
          }
-       })(v);
+       };
        
        #{@reduce_js}
-       return reduce(k,v);
+       return reduce(k,new iter(v));
     }"
-  }
-  
- 
-  
+  end
+
 end

@@ -1,5 +1,5 @@
 require 'query_job'
-require 'java_query_executor'
+require 'mongo_query_executor'
 
-QueryJob.const_set(:QueryExecutor , JavaQueryExecutor)
+QueryJob.const_set(:QueryExecutor , MongoQueryExecutor)
 
