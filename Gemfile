@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-gem 'java-query-gateway', '0.1', :git =>"http://github.com/rdingwell/java-hquery-executor.git", :platforms => :jruby
+#gem 'java-query-gateway', '0.1', :git =>"http://github.com/rdingwell/java-hquery-executor.git", :platforms => :jruby
 gem 'rails'
 gem 'jruby-openssl', :platforms => :jruby
 group :assets do
