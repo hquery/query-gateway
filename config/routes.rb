@@ -8,12 +8,6 @@ QueryGateway::Application.routes.draw do
 
   post 'records/create'
   post 'library_functions', :to => "library_functions#create"
-  get 'queues/server_status'
-  resources :queues do
-      member do
-        get :job_status
-      end
-  end
   
   root :to => 'queries#index'
   
