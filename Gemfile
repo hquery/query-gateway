@@ -15,7 +15,7 @@ gem "bson_ext", "~> 1.3", :platforms => :mri
 
 gem 'delayed_job_mongoid', :git => 'https://github.com/collectiveidea/delayed_job_mongoid.git'
 
-gem "hquery-patient-api", :git => 'http://github.com/hquery/patientapi.git', :branch => 'develop'
+gem "hquery-patient-api", :git => 'http://github.com/hquery/patientapi.git', :tag => 'V0.2'
 gem "health-data-standards", :git => 'http://github.com/projectcypress/health-data-standards.git', :branch => 'develop'
 
 gem 'coderay'
