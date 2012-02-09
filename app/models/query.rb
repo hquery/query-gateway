@@ -11,6 +11,7 @@ class Query
   field :error_message, :type => String
   field :delayed_job_id
   
+  belongs_to :request, :class_name => 'PMNRequest', :inverse_of => :query
   embeds_many :job_logs
   has_one :result
   
