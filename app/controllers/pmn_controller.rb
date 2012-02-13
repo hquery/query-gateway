@@ -1,7 +1,12 @@
 require 'webrick'
 
 class PmnController < ApplicationController
+  before_filter :patch_accept
   
+  def patch_accept
+    request.format = 'xml' unless params[:format]
+  end
+
   # IModelProcessorService::PostRequest
   def create
     doc = parse_request_body
@@ -19,12 +24,11 @@ class PmnController < ApplicationController
     end
     @doc_ids.compact!
     
-    # create a new query shell and get the id -- we only accept one query document
+    # create a new PMNRequest -- we only accept one query document per request
     # per request, either HQMF or multipart/form-data
     request = PMNRequest.new(@doc_ids[0])
     request.save!
     @id = request.id
-    
     respond_to do |format|
       format.xml
     end
@@ -57,7 +61,7 @@ class PmnController < ApplicationController
       query_hash = parse_form_data(request)
       map = query_hash['map']
       reduce = query_hash['reduce']
-      function = query_hash['functions']
+      functions = query_hash['functions']
     else # HQMF
     end
 
@@ -66,7 +70,6 @@ class PmnController < ApplicationController
     request.save!
     request.query.save!
     request.query.job
-    
     respond_to do |format|
       format.xml
     end
@@ -101,7 +104,7 @@ class PmnController < ApplicationController
   end
   
   # IModelProcessorService::GetResponse
-  def response
+  def get_response
     request = PMNRequest.find(params[:id])
     
     @doc = request.query.result

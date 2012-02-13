@@ -5,10 +5,10 @@ QueryGateway::Application.routes.draw do
 
   post 'pmn/PostRequest/:pmn_request_id', :to => 'pmn#create'
   post 'pmn/PostRequestDocument/:id/:doc_id/:offset', :to => 'pmn#add'
-  post 'pmn/Start/:id', :to => 'pmn#start'
+  put 'pmn/Start/:id', :to => 'pmn#start'
   post 'pmn/Stop/:id', :to => 'pmn#stop'
   get 'pmn/GetStatus/:id', :to => 'pmn#status'
-  get 'pmn/GetResponse/:id', :to => 'pmn#response'
+  get 'pmn/GetResponse/:id', :to => 'pmn#get_response'
   get 'pmn/GetResponseDocument/:id/:doc_id/:offset', :to => 'pmn#doc'
   get 'pmn/Close/:id', :to => 'pmn#close'
   
