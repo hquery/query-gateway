@@ -42,7 +42,7 @@ class PmnController < ApplicationController
       doc = parse_request_body
       base64_data = doc.at_xpath('//pmn:Data').inner_text
       request.content ||= ''
-      request.content << Base64.decode64(body)
+      request.content << Base64.decode64(base64_data)
       request.save!
     end
 
@@ -87,7 +87,8 @@ class PmnController < ApplicationController
   # IModelProcessorService::GetStatus
   def status
     request = PMNRequest.find(params[:id])
-    @status = case request.query.status
+    query_status = request.query.nil? ? :queued : request.query.status
+    @status = case query_status
       when :running then 'InProgress'
       when :failed then 'Error'
       when :queued then 'Pending'
@@ -96,7 +97,7 @@ class PmnController < ApplicationController
       when :cancelled then 'Cancelled'
       else 'Pending'
     end
-    @message = request.query.job_logs.last.message
+    @message = request.query.nil? ? 'Waiting for query docs' : request.query.job_logs.last.message
     
     respond_to do |format|
       format.xml
@@ -107,7 +108,7 @@ class PmnController < ApplicationController
   def get_response
     request = PMNRequest.find(params[:id])
     
-    @doc = request.query.result
+    @doc = request.query.result.to_json
     respond_to do |format|
       format.xml
     end
@@ -116,9 +117,9 @@ class PmnController < ApplicationController
   # IModelProcessorService::GetResponseDocument
   def doc
     request = PMNRequest.find(params[:id])
+    offset = params[:offset].to_i
     
-    result_json = request.query.result.to_json
-    @doc = Base64.decode64(result_json)
+    @doc = request.query.result.to_json[offset..-1]
     respond_to do |format|
       format.xml
     end
@@ -152,8 +153,6 @@ class PmnController < ApplicationController
     parser = WEBrick::HTTPRequest.new(WEBrick::Config::HTTP)
     parser.parse(StringIO.new(http_request))
     
-    puts parser.header
-    puts parser.query
     parser.query
   end
   
