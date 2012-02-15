@@ -4,9 +4,9 @@ xml.ResponseResponse('xmlns' => 'http://lincolnpeak.com/schemas/DNS4/API') do
     xml.Document do
       xml.DocumentId 'result'
       xml.Filename 'result.json'
-      xml.Viewable 'false'
       xml.MimeType 'application/json'
-      xml.size @doc.length
+      xml.Size @doc.length
+      xml.Viewable 'false'
     end
   end
 end
