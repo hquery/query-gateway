@@ -9,10 +9,4 @@ class ResultsControllerTest < ActionController::TestCase
     get :index, :format => :atom
     assert_response :success
   end
-  
-  test "should get result" do
-    r = Factory(:gender_result)
-    get :show, :id => r.id
-    assert_response :success
-  end
 end

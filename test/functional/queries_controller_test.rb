@@ -16,12 +16,17 @@ class QueriesControllerTest < ActionController::TestCase
     assert_response 201
     assert assigns(:query).map.include? 'gender'
     puts assigns(:query).functions
-    assert assigns(:query).functions.nil?
-    
+    assert assigns(:query).functions.nil?  
   end
   
-  
   test "POST should add a new job with functions" do
+    post :create, create_job_params
+    assert_response 201
+    assert assigns(:query).map.include? 'gender'
+    assert assigns(:query).functions.include? 'sum'
+  end
+  
+  test "POST should add a new job from HQMF" do
     post :create, create_job_params
     assert_response 201
     assert assigns(:query).map.include? 'gender'

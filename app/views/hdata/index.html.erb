@@ -1,3 +1,26 @@
-<h1>Welcome to the hQuery Gateway</h1>
-<p>This gateway conforms to the hData RESTful Transport and uses the Distributed Query Content Profile. 
-   View the <%= link_to "root.xml", hdata_root_url(:xml) %></p>
+<%= render partial: 'shared/tab_menu', locals: { selected: {hdata: true}} %>
+
+<div> 
+  <%= render :partial=> "sidebar" %>
+</div>
+
+<div id="mainPanel" >
+  <h1>Welcome to the hQuery Gateway</h1>
+  <div class="top_border">
+    <div class="top_border_lower"></div>
+  </div>
+  
+  <p>
+    This gateway conforms to the hData RESTful Transport and uses the Distributed Query Content Profile. 
+    View the <%= link_to "root.xml", hdata_root_url(:xml) %>
+  </p>
+  <p>
+    For a list of all queries that are pending or completed in this gateway, click on the "Queries" tab above.
+  </p>
+  
+  <div class="bottom_border_lower relative">
+    <div class="bottom_border"></div>
+  </div>
+    
+</div>
+

@@ -8,6 +8,7 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'daemons'
 gem 'jquery-rails'
 
 gem "mongoid", "~> 2.0"
@@ -17,6 +18,7 @@ gem 'delayed_job_mongoid', :git => 'https://github.com/collectiveidea/delayed_jo
 
 gem "hquery-patient-api", :git => 'http://github.com/hquery/patientapi.git', :branch => 'develop'
 gem "health-data-standards", :git => 'http://github.com/projectcypress/health-data-standards.git', :branch => 'develop'
+gem "hqmf2js", :git => 'http://github.com/hadleynet/hqmf2js.git', :branch => 'query-health-dev'
 
 gem 'coderay'
 

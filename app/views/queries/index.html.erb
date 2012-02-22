@@ -1,16 +1,32 @@
-<h1>hQuery Gateway</h1>
-<h2>Queries</h2>
-<table>
-  <tr>
-    <td>Date</td>
-    <td>Status</td>
-    <td>Link</td>
-  </tr>
-<% @queries.each do |query| -%>
-  <tr>
-    <td><%= query.updated_at %></td>
-    <td><%= query.status %></td>
-    <td><%= link_to query_url(query), query_url(query) %></td>
-  </tr>
-<% end -%>
-</table>
+<%= render partial: 'shared/tab_menu', locals: { selected: {queries: true}} %>
+
+<div> 
+  <%= render :partial=> "sidebar" %>
+</div>
+
+<div id="mainPanel" >
+  <h1>Queries</h1>
+  <div class="top_border">
+    <div class="top_border_lower"></div>
+  </div>
+  
+  <table class="simpleTable">
+    <tr>
+      <th>Date</th>
+      <th>Status</th>
+      <th>Link</th>
+    </tr>
+    <% @queries.each do |query| -%>
+      <tr>
+        <td><%= query.updated_at %></td>
+        <td><%= query.status %></td>
+        <td><%= link_to query_url(query), query_url(query) %></td>
+      </tr>
+    <% end -%>
+  </table>
+  
+  <div class="bottom_border_lower relative">
+    <div class="bottom_border"></div>
+  </div>
+    
+</div>

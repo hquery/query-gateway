@@ -1,13 +1,13 @@
 require 'mongo'
 
-class QueryJob < Struct.new(:map, :reduce,:functions, :filter, :query_id)
+class QueryJob < Struct.new(:format, :map, :reduce,:functions, :filter, :query_id)
 
   FINISHED_COLLECTION = "finished_jobs"
   RESULTS_COLLECTION = "query_results"
 
   # run the job using the query executor
   def perform
-   qe = QueryExecutor.new(map, reduce,functions, query_id.to_s, filter)
+   qe = QueryExecutor.new(format, map, reduce, functions, query_id.to_s, filter)
    results = qe.execute
    result = Result.new results
    result.query = Query.find(query_id)
@@ -45,8 +45,8 @@ class QueryJob < Struct.new(:map, :reduce,:functions, :filter, :query_id)
     query.status_change(:complete, "Job successful")
   end
 
-  def self.submit(map, reduce, functions , filter = {}, query_id)
-    return Delayed::Job.enqueue(QueryJob.new(map, reduce, functions,filter, query_id), :run_at=>2.from_now)
+  def self.submit(format, map, reduce, functions, filter = {}, query_id)
+    return Delayed::Job.enqueue(QueryJob.new(format, map, reduce, functions, filter, query_id), :run_at=>2.from_now)
   end
 
   def self.find_job(job_id)

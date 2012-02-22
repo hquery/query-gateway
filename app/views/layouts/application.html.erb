@@ -2,13 +2,20 @@
 <html>
 <head>
   <title>QueryGateway</title>
-  <%= stylesheet_link_tag    "application" %>
+  <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <%= yield :head %>
 </head>
 <body>
-
-<%= yield %>
-
+  <%= render :partial => 'shared/header', :locals => {:definition => @definition} %>
+  <div id="container">
+    <div id="pageContent">
+      <%= yield %>
+    </div>
+  </div>
 </body>
 </html>

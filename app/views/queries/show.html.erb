@@ -1,48 +1,87 @@
-<h1>Query</h1>
+<% content_for :head do -%>
 
-<table>
-  <tr>
-    <td>Status</td>
-    <td><%= @qh['status'] %></td>
-  </tr>
-  <tr>
-    <td>Created</td>
-    <td><%= @qh['created_at'] %></td>
-  </tr>
-  <tr>
-    <td>Last Updated</td>
-    <td><%= @qh['updated_at'] %></td>
-  </tr>
-</table>
-
-<h2>Logs</h2>
-<table>
-<% @qh['job_logs'].each do |jl| -%>
-  <tr>
-    <td><%= jl['created_at'] %></td>
-    <td><%= jl['message'] %></td>
-  </tr>  
-<% end -%>
-</table>
-
-<% if @qh['status'] == :failed -%>
-<h2>Job Failed</h2>
-<p>
-  Reason:
-  <pre><%= @qh['error_message'] %></pre>
-</p>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".expander").toggle(
+        function() {
+          $(this).addClass('open');
+          var codeElement = $(this).data('code');
+          $('#' + codeElement).next(".msg").fadeOut();
+          $('#' + codeElement).slideDown(2000);
+        },
+        function() {
+          $(this).removeClass('open');
+          var codeElement = $(this).data('code');
+          $('#' + codeElement).slideUp(1000);
+          $('#' + codeElement).next(".msg").fadeIn(1000);
+        });
+     });
+  </script>
 <% end -%>
 
-<% if @qh['result_url'] -%>
-<h2>Result</h2>
-<p><%= link_to @qh['result_url'], @qh['result_url']%></p>
-<% end -%>
+<%= render partial: 'shared/tab_menu', locals: { selected: {queries: true}} %>
 
-<h2>Map</h2>
-<%= raw CodeRay.scan(@qh['map'], :javascript).div %>
+<div> 
+  <%= render :partial=> "sidebar" %>
+</div>
 
-<h2>Reduce</h2>
-<%= raw CodeRay.scan(@qh['reduce'], :javascript).div %>
+<div id="mainPanel" >
+  <h1>Query</h1>
+  <div class="top_border">
+    <div class="top_border_lower"></div>
+  </div>
+  
+  <table class="simpleTable">
+    <tr><th>Status</th><td><%= @qh['status'] %></td></tr>
+    <tr><th>Created</th><td><%= @qh['created_at'] %></td></tr>
+    <tr><th>Last Updated</th><td><pre><%= @qh['updated_at'] %></pre></td></tr>
+    
+    <tr><th>Logs</th><td>
+      <table class="simpleTable">
+        <tr>
+          <th>Creation Date</th>
+          <th>Message</th>
+        </tr>
+      <% @qh['job_logs'].each do |log| -%>
+        <tr>
+          <td><%= log['created_at'] %></td>
+          <td><%= log['message'] %></td>
+        </tr>  
+      <% end -%>
+      </table>
+    </td></tr>
+    
+    <% if @qh['status'] == :failed -%>
+      <tr><th>Failure Reason</th><td><%= @qh['error_message'] %></td></tr>
+    <% end -%>
 
-<h2>Functions</h2>
-<%= raw CodeRay.scan(@qh['functions'], :javascript).div %>
+    <tr>
+      <th><span class="expander" data-code="mapFunction" title="Expand to see Javascript code">Map Function</span></th>
+      <td>
+        <div id="mapFunction" style="display: none"><%= raw CodeRay.scan(@qh['map'], :javascript).div %></div>
+        <span data-code="mapFunction" class="msg" title="Expand to see Javascript code">[ Javascript Function ]</span>
+      </td>
+    <tr>
+      <th><span class="expander" data-code="reduceFunction" title="Expand to see Javascript code">Reduce Function</span></th>
+      <td>
+        <div id="reduceFunction" style="display: none"><%= raw CodeRay.scan(@qh['reduce'], :javascript).div %></div>
+        <span data-code="reduceFunction" class="msg" title="Expand to see Javascript code">[ Javascript Function ]</span>
+      </td>
+    </tr>
+    <tr>
+      <th><span class="expander" data-code="supportingFunctions" title="Expand to see Javascript code">Supporting Functions</span></th>
+      <td>
+        <div id="supportingFunctions" style="display: none"><%= raw CodeRay.scan(@qh['functions'], :javascript).div %></div>
+        <span data-code="supportingFunctions" class="msg" title="Expand to see Javascript code">[ Javascript Function ]</span>
+      </td>
+    </tr>
+    
+    <% if @query.result -%>
+      <tr><th>Result</th><td><%= raw CodeRay.scan(pretty_json(@query.result), :json).div %></td></tr>
+    <% end -%>
+  </table>
+  
+  <div class="bottom_border_lower relative">
+    <div class="bottom_border"></div>
+  </div>    
+</div>

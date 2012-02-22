@@ -1,7 +1,9 @@
 QueryGateway::Application.routes.draw do
 
-  resources :results, :only => [:index, :show]
+  resources :results, :only => [:index]
+  
   resources :queries
+  post 'queries/upload_hqmf'
 
   get "hdata/index"
   get "hdata/root"

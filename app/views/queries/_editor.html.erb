@@ -1,0 +1,18 @@
+<% content_for :head do -%>
+  <%= javascript_include_tag 'ace_editor/ace' %>
+  <%= javascript_include_tag 'ace_editor/mode-xml' %>
+  <%= stylesheet_link_tag :editor_factory %>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      editorFactory.initialize($('#hqmf_container', $('#hqmf_editor'), $('hqmf_text')));
+    });
+  </script>
+<% end %>
+
+<td>
+  <div id="hqmf_container" class="debug_container">
+    <div id="hqmf_editor" class="debug_editor"></div>
+    <textarea id="hqmf_text" name="query[hqmf]" class="hidden">Paste HQMF text here.</textarea>
+  </div>
+</td>
