@@ -5,8 +5,17 @@ QueryGateway::Application.routes.draw do
   resources :queries
   post 'queries/upload_hqmf'
 
-  get "hdata/index"
-  get "hdata/root"
+  post 'pmn/PostRequest/:pmn_request_id', :to => 'pmn#create'
+  post 'pmn/PostRequestDocument/:id/:doc_id/:offset', :to => 'pmn#add'
+  put 'pmn/Start/:id', :to => 'pmn#start'
+  post 'pmn/Stop/:id', :to => 'pmn#stop'
+  get 'pmn/GetStatus/:id', :to => 'pmn#status'
+  get 'pmn/GetResponse/:id', :to => 'pmn#get_response'
+  get 'pmn/GetResponseDocument/:id/:doc_id/:offset', :to => 'pmn#doc'
+  get 'pmn/Close/:id', :to => 'pmn#close'
+  
+  get 'hdata/index'
+  get 'hdata/root'
 
   post 'records/create'
   post 'library_functions', :to => "library_functions#create"

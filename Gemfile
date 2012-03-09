@@ -23,6 +23,7 @@ gem "hqmf2js", :git => 'http://github.com/hadleynet/hqmf2js.git', :branch => 'qu
 gem 'coderay'
 
 gem 'kramdown'
+gem 'pry'
 
 # needed but not specified by macaddr
 # macaddr comes in from quality-measure-engine -> resque-status -> uuid -> macaddr (feels like Maven)
@@ -37,7 +38,6 @@ group :test do
   gem 'factory_girl', '1.3.3'
   gem 'awesome_print', :require => 'ap'
   gem 'mocha', :require => false
-  gem 'pry'
   gem 'therubyracer', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
 
