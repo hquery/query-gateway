@@ -34,6 +34,7 @@ def dump_database
   db.collection('job_logs').remove({}) if db['job_log_events']
   db.collection('results').remove({}) if db['results']
   db.collection('queries').remove({}) if db['queries']
+  db.collection('pmn_requests').remove({}) if db['pmn_requests']
 end
 
 def dump_jobs

@@ -1,0 +1,13 @@
+<Request xmlns="http://lincolnpeak.com/schemas/DNS4/API">
+	<RequestDocuments>
+		<Document>
+			<DocumentId>1</DocumentId>
+			<Filename>request.mime</Filename>
+			<Viewable>false</Viewable>
+			<MimeType>multipart/form-data; boundary=-----------RubyMultipartPost</MimeType>
+			<Size>998</Size>
+		</Document>
+	</RequestDocuments>
+	<RequestTypeId/>
+	<Settings/>
+</Request>
