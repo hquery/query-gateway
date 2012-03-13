@@ -148,8 +148,6 @@ class PmnController < ApplicationController
     http_request << "Content-Length: #{request.content.length}\r\n\r\n"
     http_request << request.content
     
-    puts http_request
-    
     parser = WEBrick::HTTPRequest.new(WEBrick::Config::HTTP)
     parser.parse(StringIO.new(http_request))
     
