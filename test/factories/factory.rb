@@ -57,5 +57,4 @@ end
 
 Factory.define :gender_result, :class => Result do |r|
   r.created_at Time.now
-
 end

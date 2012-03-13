@@ -9,4 +9,12 @@ class ResultsControllerTest < ActionController::TestCase
     get :index, :format => :atom
     assert_response :success
   end
+
+  test "should get an individual result" do
+    Factory(:gender_result)
+    r = Result.first
+    get :show, :id => r.id
+    assert_response :success
+  end
+
 end
