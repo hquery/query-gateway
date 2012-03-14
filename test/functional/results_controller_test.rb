@@ -3,6 +3,7 @@ require 'test_helper'
 class ResultsControllerTest < ActionController::TestCase
   setup do
     dump_database
+    Factory(:gender_result)
   end
   
   test "should get an atom feed at index" do
@@ -11,7 +12,6 @@ class ResultsControllerTest < ActionController::TestCase
   end
 
   test "should get an individual result" do
-    Factory(:gender_result)
     r = Result.first
     get :show, :id => r.id
     assert_response :success

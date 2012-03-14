@@ -1,6 +1,6 @@
 QueryGateway::Application.routes.draw do
 
-  resources :results, :only => [:index]
+  resources :results, :only => [:index, :show]
   
   resources :queries
   post 'queries/upload_hqmf'
