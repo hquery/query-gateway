@@ -1,0 +1,20 @@
+<Request xmlns="http://lincolnpeak.com/schemas/DNS4/API">
+	<RequestDocuments>
+		<Document>
+			<DocumentId>1</DocumentId>
+			<Filename>request.hqmf</Filename>
+			<Viewable>false</Viewable>
+			<MimeType>application/xml</MimeType>
+			<Size>998</Size>
+		</Document>
+		<Document>
+			<DocumentId>2</DocumentId>
+			<Filename>request.txt</Filename>
+			<Viewable>true</Viewable>
+			<MimeType>text/plain</MimeType>
+			<Size>120</Size>
+		</Document>
+	</RequestDocuments>
+	<RequestTypeId/>
+	<Settings/>
+</Request>

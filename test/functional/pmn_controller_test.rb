@@ -16,7 +16,7 @@ class PmnControllerTest < ActionController::TestCase
     doc
   end
 
-  test "should create a new PMN request" do
+  test "should create a new PMN request with native JS" do
     query_summary = File.read(File.join(Rails.root, 'test', 'fixtures', 'pmn', 'post_request.xml'))
     @request.env['RAW_POST_DATA'] = query_summary
     @request.env['CONTENT_TYPE'] = 'application/xml'
@@ -138,4 +138,41 @@ class PmnControllerTest < ActionController::TestCase
     assert_equal 'application/xml', @response.content_type
   end
 
+  test "should create a new PMN request with HQMF" do
+    query_summary = File.read(File.join(Rails.root, 'test', 'fixtures', 'pmn', 'post_hqmf_request.xml'))
+    @request.env['RAW_POST_DATA'] = query_summary
+    @request.env['CONTENT_TYPE'] = 'application/xml'
+    post :create
+    assert_response :success
+    assert_equal 'application/xml', @response.content_type
+    doc = parse_response_body
+    assert_equal 1, doc.xpath('count(//pmn:DesiredDocuments/ms:string)')
+    assert_equal '1', doc.xpath('//pmn:DesiredDocuments/ms:string[1]').inner_text
+    request_id = doc.at_xpath('//pmn:RequestResult').inner_text
+    assert request_id
+    r = PMNRequest.first(:conditions => {:doc_id => '1'})
+    assert r
+    assert_equal "application/xml", r.mime_type
+    assert_equal nil, r.content
+    
+    add_doc = File.read(File.join(Rails.root, 'test', 'fixtures', 'pmn', 'add_hqmf_document.xml'))
+    @request.env['RAW_POST_DATA'] = add_doc
+    @request.env['CONTENT_TYPE'] = 'application/xml'
+    post :add, {id: request_id, doc_id: '1', offset: '0'}
+    assert_response :success
+    assert_equal 'application/xml', @response.content_type
+
+    @request.env['RAW_POST_DATA'] = nil
+    @request.env['CONTENT_TYPE'] = nil
+    put :start, {id: request_id}
+    assert_response :success
+    assert_equal 'application/xml', @response.content_type
+    r.reload
+    assert r.query.map
+    assert r.query.map.include? 'IPP'
+    assert r.query.reduce
+    assert r.query.functions
+    assert r.query.functions.include? 'IPP'
+  end
+  
 end
