@@ -57,12 +57,12 @@ class QueriesController < ApplicationController
     hqmf_contents = File.open(hqmf_path).read
     map_reduce = HQMF2JS::Converter.generate_map_reduce(hqmf_contents)
     
-    query = Query.new(:format => 'hqmf', :map => map_reduce[:map], :reduce => map_reduce[:reduce], :functions => map_reduce[:functions])
-    if query.save
-      response.headers["Location"] = query_url(query)
-      query.job
+    @query = Query.new(:format => 'hqmf', :map => map_reduce[:map], :reduce => map_reduce[:reduce], :functions => map_reduce[:functions])
+    if @query.save
+      response.headers["Location"] = query_url(@query)
+      @query.job
     end
     
-    redirect_to query_path(query)
+    redirect_to query_path(@query)
   end
 end

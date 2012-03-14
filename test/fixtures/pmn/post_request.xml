@@ -7,6 +7,13 @@
 			<MimeType>multipart/form-data; boundary=-----------RubyMultipartPost</MimeType>
 			<Size>998</Size>
 		</Document>
+		<Document>
+			<DocumentId>2</DocumentId>
+			<Filename>request.txt</Filename>
+			<Viewable>true</Viewable>
+			<MimeType>text/plain</MimeType>
+			<Size>120</Size>
+		</Document>
 	</RequestDocuments>
 	<RequestTypeId/>
 	<Settings/>

@@ -56,6 +56,46 @@ class PmnControllerTest < ActionController::TestCase
     r.reload
     assert r.query
     
+    r.query.status = :running
+    r.query.save!
+    get :status, {id: request_id}
+    assert_response :success
+    assert_equal 'application/xml', @response.content_type
+    doc = parse_response_body
+    assert_equal 'InProgress', doc.at_xpath('//pmn:Code').inner_text
+
+    r.query.status = :failed
+    r.query.save!
+    get :status, {id: request_id}
+    assert_response :success
+    assert_equal 'application/xml', @response.content_type
+    doc = parse_response_body
+    assert_equal 'Error', doc.at_xpath('//pmn:Code').inner_text
+
+    r.query.status = :error
+    r.query.save!
+    get :status, {id: request_id}
+    assert_response :success
+    assert_equal 'application/xml', @response.content_type
+    doc = parse_response_body
+    assert_equal 'Error', doc.at_xpath('//pmn:Code').inner_text
+
+    r.query.status = :cancelled
+    r.query.save!
+    get :status, {id: request_id}
+    assert_response :success
+    assert_equal 'application/xml', @response.content_type
+    doc = parse_response_body
+    assert_equal 'Cancelled', doc.at_xpath('//pmn:Code').inner_text
+
+    r.query.status = :other
+    r.query.save!
+    get :status, {id: request_id}
+    assert_response :success
+    assert_equal 'application/xml', @response.content_type
+    doc = parse_response_body
+    assert_equal 'Pending', doc.at_xpath('//pmn:Code').inner_text
+
     r.query.status = :complete
     r.query.result = Result.new
     r.query.result[:population] = 10

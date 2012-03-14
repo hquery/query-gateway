@@ -1,6 +1,16 @@
 require 'test_helper'
 
 class QueryTest < ActiveSupport::TestCase
+  setup do
+    dump_database
+  end
+  
+  test "Still get last query update before any queries are added" do
+    t = Query.last_query_update
+    assert t
+    assert_equal 2011, t.year
+  end
+
   test "Can see if they have been updated" do
     q = Query.new(:map => 'foo', :reduce => 'bar')
     q.save

@@ -2,9 +2,6 @@ require 'mongo'
 
 class QueryJob < Struct.new(:format, :map, :reduce,:functions, :filter, :query_id)
 
-  FINISHED_COLLECTION = "finished_jobs"
-  RESULTS_COLLECTION = "query_results"
-
   # run the job using the query executor
   def perform
    qe = QueryExecutor.new(format, map, reduce, functions, query_id.to_s, filter)
@@ -62,11 +59,4 @@ class QueryJob < Struct.new(:format, :map, :reduce,:functions, :filter, :query_i
     end
   end
   
-  def self.all_jobs()
-    Delayed::Job.all
-  end
-  
-  def self.job_results(job_id)
-    return Mongoid.master[RESULTS_COLLECTION].find_one( {"_id" => BSON::ObjectId.from_string(job_id)})
-  end
 end

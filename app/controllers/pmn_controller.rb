@@ -16,7 +16,7 @@ class PmnController < ApplicationController
       mime_type = entry.at_xpath('./pmn:MimeType').inner_text
       doc_id = entry.at_xpath('./pmn:DocumentId').inner_text
       doc_size = entry.at_xpath('./pmn:Size').inner_text.to_i
-      if mime_type && (mime_type =~ /^(multipart\/form-data)|(application\/json)/)
+      if mime_type && (mime_type =~ /^(multipart\/form-data)|(application\/xml)/)
         {:doc_id => doc_id, :mime_type => mime_type, :size => doc_size}
       else
         nil
