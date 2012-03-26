@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/hadleynet/hqmf2js.git
-  revision: abf1414515cea1ea4643d1b1084bed326012f3d0
+  revision: 95a259e803507dd3150326a8aa73666f4e4ded41
   branch: query-health-dev
   specs:
     hqmf2js (0.1.0)

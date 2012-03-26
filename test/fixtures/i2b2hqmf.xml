@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QualityMeasureDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            classCode="DOC">
+            <typeId extension="POQM_HD00001" root="2.16.840.1.113883.1.3"/>
+            <id root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003.1"/>
+            <code codeSystem="2.16.840.1.113883.6.1" code="57024-2"/>
+            <title> 18--Diabe-HGB A@13:56:17</title>
+            <statusCode code="completed"/>
+            <setId root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"/>
+            <versionNumber value="1"/>
+            <author contextControlCode="OP" typeCode="AUT">
+                        <assignedPerson classCode="ASSIGNED"/>
+            </author>
+            <custodian typeCode="CST">
+                        <assignedPerson classCode="ASSIGNED"/>
+            </custodian>
+            <controlVariable>
+                        <localVariableName>MeasurePeriod</localVariableName>
+                        <measurePeriod>
+                                    <id extension="StartDate" root="0"/>
+                                    <value>
+                                                <low value="20110101"/>
+                                                <high value="20111231"/>
+                                                <width value="1" unit="a"/>
+                                    </value>
+                        </measurePeriod>
+            </controlVariable>
+            <component>
+                        <measureDescriptionSection>
+                                    <title>Measure Description Section</title>
+                                    <text> 18--Diabe-HGB A@13:56:17</text>
+                        </measureDescriptionSection>
+            </component>
+            <component>
+                        <dataCriteriaSection>
+                                    <code codeSystem="2.16.840.1.113883.6.1" code="57025-9"/>
+                                    <title>Data Criteria Section</title>
+                                    <text>This section describes the data criteria.</text>
+                                    <definition>
+                                                <observationDefinition>
+                                                  <id extension="Demographics"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                </observationDefinition>
+                                    </definition>
+                                    <definition>
+                                                <encounterDefinition>
+                                                  <id extension="Encounters"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                </encounterDefinition>
+                                    </definition>
+                                    <definition>
+                                                <observationDefinition>
+                                                  <id extension="Problems"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                </observationDefinition>
+                                    </definition>
+                                    <definition>
+                                                <observationDefinition>
+                                                  <id extension="Allergies"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                </observationDefinition>
+                                    </definition>
+                                    <definition>
+                                                <procedureDefinition>
+                                                  <id extension="Procedures"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                </procedureDefinition>
+                                    </definition>
+                                    <definition>
+                                                <observationDefinition>
+                                                  <id extension="Results"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                </observationDefinition>
+                                    </definition>
+                                    <definition>
+                                                <observationDefinition>
+                                                  <id extension="Vitals"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                </observationDefinition>
+                                    </definition>
+                                    <definition>
+                                                <substanceAdministrationDefinition>
+                                                  <id extension="Medications"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                </substanceAdministrationDefinition>
+                                    </definition>
+                                    <definition>
+                                                <supplyDefinition>
+                                                  <id extension="RX"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                </supplyDefinition>
+                                    </definition>
+                                    <entry>
+                                                <localVariableName>_18-34_years_old_N100A3</localVariableName>
+                                                <observationCriteria>
+                                                  <id extension="_18-34_years_old_N100A3"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"/>
+                                                  <code displayName="Current Chronological Age"
+                                                  codeSystemName="SNOMED CT"
+                                                  codeSystem="2.16.840.1.113883.6.96"
+                                                  code="424144002"/>
+                                                  <effectiveTime>
+                                                  <low value="20110101"/>
+                                                  <high value="20111231"/>
+                                                  </effectiveTime>
+                                                  <value xsi:type="IVL_PQ">
+                                                  <low unit="a" inclusive="true" value="18"/>
+                                                  <high unit="a" inclusive="false" value="35"/>
+                                                  </value>
+                                                  <definition>
+                                                  <observationReference moodCode="DEF">
+                                                  <id extension="Demographics"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                  </observationReference>
+                                                  </definition>
+                                                </observationCriteria>
+                                    </entry>
+                                    <entry>
+                                                <localVariableName>_35-44_years_old_N100BB</localVariableName>
+                                                <observationCriteria>
+                                                  <id extension="_35-44_years_old_N100BB"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"/>
+                                                  <code displayName="Current Chronological Age"
+                                                  codeSystemName="SNOMED CT"
+                                                  codeSystem="2.16.840.1.113883.6.96"
+                                                  code="424144002"/>
+                                                  <effectiveTime>
+                                                  <low value="20110101"/>
+                                                  <high value="20111231"/>
+                                                  </effectiveTime>
+                                                  <value xsi:type="IVL_PQ">
+                                                  <low unit="a" inclusive="true" value="35"/>
+                                                  <high unit="a" inclusive="false" value="45"/>
+                                                  </value>
+                                                  <definition>
+                                                  <observationReference moodCode="DEF">
+                                                  <id extension="Demographics"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                  </observationReference>
+                                                  </definition>
+                                                </observationCriteria>
+                                    </entry>
+                                    <entry>
+                                                <localVariableName>_45-54_years_old_N100D3</localVariableName>
+                                                <observationCriteria>
+                                                  <id extension="_45-54_years_old_N100D3"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"/>
+                                                  <code displayName="Current Chronological Age"
+                                                  codeSystemName="SNOMED CT"
+                                                  codeSystem="2.16.840.1.113883.6.96"
+                                                  code="424144002"/>
+                                                  <effectiveTime>
+                                                  <low value="20110101"/>
+                                                  <high value="20111231"/>
+                                                  </effectiveTime>
+                                                  <value xsi:type="IVL_PQ">
+                                                  <low unit="a" inclusive="true" value="45"/>
+                                                  <high unit="a" inclusive="false" value="55"/>
+                                                  </value>
+                                                  <definition>
+                                                  <observationReference moodCode="DEF">
+                                                  <id extension="Demographics"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                  </observationReference>
+                                                  </definition>
+                                                </observationCriteria>
+                                    </entry>
+                                    <entry>
+                                                <localVariableName>_55-64_years_old_N100EB</localVariableName>
+                                                <observationCriteria>
+                                                  <id extension="_55-64_years_old_N100EB"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"/>
+                                                  <code displayName="Current Chronological Age"
+                                                  codeSystemName="SNOMED CT"
+                                                  codeSystem="2.16.840.1.113883.6.96"
+                                                  code="424144002"/>
+                                                  <effectiveTime>
+                                                  <low value="20110101"/>
+                                                  <high value="20111231"/>
+                                                  </effectiveTime>
+                                                  <value xsi:type="IVL_PQ">
+                                                  <low unit="a" inclusive="true" value="55"/>
+                                                  <high unit="a" inclusive="false" value="65"/>
+                                                  </value>
+                                                  <definition>
+                                                  <observationReference moodCode="DEF">
+                                                  <id extension="Demographics"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                  </observationReference>
+                                                  </definition>
+                                                </observationCriteria>
+                                    </entry>
+                                    <entry>
+                                                <localVariableName>tobacco_user</localVariableName>
+                                                <observationCriteria>
+                                                  <id extension="tobacco_user"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"/>
+                                                  <effectiveTime>
+                                                  <low value="20100101"/>
+                                                  <high value="20111231"/>
+                                                  </effectiveTime>
+                                                  <value codeSystemName="SNOMED-CT"
+                                                  codeSystem="2.16.840.1.113883.6.103"
+                                                  displayName="" code="160603005" xsi:type="CD"/>
+                                                  <definition>
+                                                  <observationReference moodCode="DEF">
+                                                  <id extension="Problems"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                  </observationReference>
+                                                  </definition>
+                                                </observationCriteria>
+                                    </entry>
+                                    <entry>
+                                                <localVariableName>HGB_A1C_LOINC4548-4_GE_9__N1014B</localVariableName>
+                                                <observationCriteria>
+                                                  <id extension="HGB_A1C_LOINC4548-4_GE_9__N1014B"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"/>
+                                                  <code codeSystemName="SNOMED-CT"
+                                                  codeSystem="2.16.840.1.113883.6.1" displayName=""
+                                                  code="127355002"/>
+                                                  <effectiveTime>
+                                                  <low value="20100101"/>
+                                                  <high value="20111231"/>
+                                                  </effectiveTime>
+                                                  <value xsi:type="IVL_PQ">
+                                                  <low inclusive="true" unit="%" value="9"/>
+                                                  </value>
+                                                  <definition>
+                                                  <observationReference moodCode="DEF">
+                                                  <id extension="Results"
+                                                  root="2.16.840.1.113883.3.1619.5148.1"/>
+                                                  </observationReference>
+                                                  </definition>
+                                                </observationCriteria>
+                                    </entry>
+                        </dataCriteriaSection>
+            </component>
+            <component>
+                        <populationCriteriaSection>
+                                    <code codeSystem="2.16.840.1.113883.6.1" code="57026-7"/>
+                                    <title>Population Criteria Section</title>
+                                    <text>This section describes the Initial Patient Population,
+                                                Numerator, Denominator, Denominator Exceptions, and
+                                                Measure Populations</text>
+                                    <entry>
+                                                <patientPopulationCriteria>
+                                                  <id extension="IPP"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"/>
+                                                  <precondition>
+                                                  <atLeastOneTrue>
+                                                  <precondition>
+                                                  <observationReference>
+                                                  <id extension="_18-34_years_old_N100A3"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"
+                                                  />
+                                                  </observationReference>
+                                                  </precondition>
+                                                  <precondition>
+                                                  <observationReference>
+                                                  <id extension="_35-44_years_old_N100BB"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"
+                                                  />
+                                                  </observationReference>
+                                                  </precondition>
+                                                  <precondition>
+                                                  <observationReference>
+                                                  <id extension="_45-54_years_old_N100D3"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"
+                                                  />
+                                                  </observationReference>
+                                                  </precondition>
+                                                  <precondition>
+                                                  <observationReference>
+                                                  <id extension="_55-64_years_old_N100EB"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"
+                                                  />
+                                                  </observationReference>
+                                                  </precondition>
+                                                  </atLeastOneTrue>
+                                                  </precondition>
+                                                  <precondition>
+                                                  <observationReference>
+                                                  <id extension="tobacco_user"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"
+                                                  />
+                                                  </observationReference>
+                                                  </precondition>
+                                                  <precondition>
+                                                  <observationReference>
+                                                  <id extension="HGB_A1C_LOINC4548-4_GE_9__N1014B"
+                                                  root="2.16.840.1.113883.3.1619.5148.3.20120320.172056003"
+                                                  />
+                                                  </observationReference>
+                                                  </precondition>
+                                                </patientPopulationCriteria>
+                                    </entry>
+                        </populationCriteriaSection>
+            </component>
+</QualityMeasureDocument>
