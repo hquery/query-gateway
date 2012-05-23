@@ -11,7 +11,8 @@ class QueriesController < ApplicationController
 
   def create
     if params[:hqmf]
-      map_reduce = HQMF2JS::Converter.generate_map_reduce(params[:hqmf])
+      doc = HQMF::Parser.parse(params[:hqmf], HQMF::Parser::HQMF_VERSION_2)
+      map_reduce = HQMF2JS::Converter.generate_map_reduce(doc)
       map = map_reduce[:map]
       reduce = map_reduce[:reduce]
       functions = map_reduce[:functions]
@@ -55,7 +56,8 @@ class QueriesController < ApplicationController
   def upload_hqmf
     hqmf_path = params[:query][:hqmf].tempfile.path
     hqmf_contents = File.open(hqmf_path).read
-    map_reduce = HQMF2JS::Converter.generate_map_reduce(hqmf_contents)
+    doc = HQMF::Parser.parse(hqmf_contents, HQMF::Parser::HQMF_VERSION_2)
+    map_reduce = HQMF2JS::Converter.generate_map_reduce(doc)
     
     @query = Query.new(:format => 'hqmf', :map => map_reduce[:map], :reduce => map_reduce[:reduce], :functions => map_reduce[:functions])
     if @query.save

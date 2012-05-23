@@ -17,6 +17,17 @@
   <custodian typeCode="CST">
     <assignedPerson classCode="ASSIGNED"/>
   </custodian>
+  <controlVariable>
+    <localVariableName>MeasurePeriod</localVariableName>
+    <measurePeriod>
+      <id extension="MeasurePeriod" root="0"/>
+      <value>
+        <low value="20110101"/>
+        <high value="20111231"/>
+        <width value="1" unit="a"/>
+      </value>
+    </measurePeriod>
+  </controlVariable>
   <component>
     <measureDescriptionSection>
       <code code="34089-3" codeSystem="2.16.840.1.113883.6.1"/>

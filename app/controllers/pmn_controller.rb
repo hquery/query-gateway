@@ -63,7 +63,8 @@ class PmnController < ApplicationController
       reduce = query_hash['reduce']
       functions = query_hash['functions']
     else # HQMF
-      query_hash = HQMF2JS::Converter.generate_map_reduce(request.content)
+      doc = HQMF::Parser.parse(request.content, HQMF::Parser::HQMF_VERSION_2)
+      query_hash = HQMF2JS::Converter.generate_map_reduce(doc)
       map = query_hash[:map]
       reduce = query_hash[:reduce]
       functions = query_hash[:functions]
