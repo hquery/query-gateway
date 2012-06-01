@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 #gem 'java-query-gateway', '0.1', :git =>"http://github.com/rdingwell/java-hquery-executor.git", :platforms => :jruby
 
-ruby '1.9.2'
 
 gem 'rails', '~> 3.2.1'
 gem 'jruby-openssl', :platforms => :jruby
@@ -46,5 +45,9 @@ group :test do
   gem 'therubyracer', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
 
+end
+
+group :production do
+  gem 'thin'
 end
 
