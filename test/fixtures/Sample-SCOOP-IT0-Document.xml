@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="CDA.xsl"?>
+<!--
+Readers should be aware of the evolving "Using SNOMED CT in HL7 Version 3" implementation guide, currently in a draft state. The guide, co-developed by HL7 and the College of American Pathologists, will be balloted by HL7 as an Informative Document. Recommendations in the final published guide should usurp patterns of SNOMED CT usage found in this sample instance.
+-->
+<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:voc="urn:hl7-org:v3/voc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
+	<!-- 
+********************************************************
+  CDA Header
+********************************************************
+-->
+	
+	<effectiveTime value="20000407"/>
+	<recordTarget>
+		<patientRole>
+			<id extension="12345" root="2.16.840.1.113883.19.5"/>
+			<patient>
+				<name>
+					<given>Henry</given>
+					<family>Levin</family>
+					<suffix>the 7th</suffix>
+				</name>
+				<administrativeGenderCode code="M" codeSystem="2.16.840.1.113883.5.1"/>
+				<birthTime value="19320924"/>
+			</patient>
+		</patientRole>
+	</recordTarget>
+</ClinicalDocument>
