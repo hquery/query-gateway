@@ -31,7 +31,7 @@ gem 'kramdown'
 gem 'pry'
 
 # Specific to the SCOOP staging environment
-gem "heroku"
+gem 'heroku'
 
 group :test do
 
