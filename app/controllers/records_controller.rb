@@ -1,6 +1,8 @@
 class RecordsController < ApplicationController
   def create
+
     xml_file = params[:content].read
+
     doc = Nokogiri::XML(xml_file)
 
     root_element_name = doc.root.name
