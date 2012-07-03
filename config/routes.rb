@@ -18,6 +18,7 @@ QueryGateway::Application.routes.draw do
   get 'hdata/root'
 
   post 'records/create'
+  delete 'records/destroy'
   post 'library_functions', :to => "library_functions#create"
   
   root :to => 'queries#index'
