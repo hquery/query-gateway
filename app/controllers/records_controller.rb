@@ -36,7 +36,7 @@ class RecordsController < ApplicationController
   end
 
   def destroy
-    Patient.delete_all
+    Record.delete_all
 
     render :text => 'All patients were deleted', :status => 200
     
