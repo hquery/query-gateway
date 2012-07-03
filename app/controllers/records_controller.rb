@@ -35,4 +35,11 @@ class RecordsController < ApplicationController
     
   end
 
+  def destory
+    Patient.delete_all
+
+    render :text => 'All patients were deleted', :status => 200
+    
+  end
+
 end
