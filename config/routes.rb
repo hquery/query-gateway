@@ -19,6 +19,7 @@ QueryGateway::Application.routes.draw do
 
   post 'records/create'
   delete 'records/destroy'
+  
   post 'library_functions', :to => "library_functions#create"
   
   root :to => 'queries#index'
