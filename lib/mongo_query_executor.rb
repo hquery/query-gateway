@@ -8,25 +8,20 @@ class MongoQueryExecutor
  
   PATIENTS_COLLECTION = "records"
 
-  def initialize(map_js, reduce_js, functions_js, query_id, filter={})
-     @map_js = map_js
-     @reduce_js = reduce_js
-     @query_id = query_id
-     @filter = filter
-     @functions_js = functions_js
-   end
+  def initialize(format, map_js, reduce_js, functions_js, query_id, filter={})
+    @format = format
+    @map_js = map_js
+    @reduce_js = reduce_js
+    @query_id = query_id
+    @filter = filter
+    @functions_js = functions_js
+  end
 
   def execute
     db =  Mongoid.master
-    exts = db['system.js'].find().to_a.collect do |ext|
-          if (ext['value'].class == BSON::Code)
-            "#{ext['_id']}();\n"
-          else
-            ""
-          end
-        end
-    exts << @functions_js    
-    results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts) ,build_reduce_function(), :query => @filter, raw: true, out: {inline: 1})
+    exts = []
+    exts << @functions_js
+    results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts), build_reduce_function(), :query => @filter, raw: true, out: {inline: 1})
     result = {}
     results['results'].each do |rv|
       key = QueryUtilities.stringify_key(rv['_id'])
@@ -36,42 +31,24 @@ class MongoQueryExecutor
     
   end
   
-  
-  # Load query extension libraries into Mongo system.js collection
-  def self.load_js_libs
-    Dir.glob(File.join(Rails.root, 'db', 'js', '*')).each do |js_file|
-      fn_name = File.basename(js_file, '.js')
-      raw_js = File.read(js_file)
-      Mongoid.master['system.js'].save(
-        {
-          '_id' => fn_name,
-          'value' => BSON::Code.new(raw_js)
-        }
-      )
-    end 
-  end
-  
-  # Remove the contents of the Mongo system.js collection
-  def self.clean_js_libs
-    Mongoid.master['system.js'].remove()
-  end
- 
-
   private
+  
   def build_map_function(exts = "")
-    
     "function() {
       this.hQuery || (this.hQuery = {});
+      this.Specifics || (this.Specifics = {});
       var hQuery = this.hQuery;
-      #{exts.join}
+      var Specifics = this.Specifics;
       #{QueryUtilities.patient_api_javascript}
+      #{exts.join}
       #{@map_js}
       var patient = new hQuery.Patient(this);
+      if (Specifics.initialize) {
+        Specifics.initialize();
+      }
       map(patient);
     };"
-
   end
-  
   
   def build_reduce_function()
     "function(k,v){
@@ -93,5 +70,4 @@ class MongoQueryExecutor
        return reduce(k,new iter(v));
     }"
   end
-
 end

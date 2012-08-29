@@ -4,6 +4,6 @@ module ResultsHelper
   # This method generates the terse JSON, parses it, and then
   # pretty generates it. I realize how silly this is.
   def pretty_json(result)
-	JSON.pretty_generate(JSON.parse(result.to_json))
+  	JSON.pretty_generate(JSON.parse(result.to_json))
   end
 end

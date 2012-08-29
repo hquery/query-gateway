@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 #gem 'java-query-gateway', '0.1', :git =>"http://github.com/rdingwell/java-hquery-executor.git", :platforms => :jruby
-gem 'rails'
+gem 'rails', '~> 3.2.1'
 gem 'jruby-openssl', :platforms => :jruby
 group :assets do
   gem 'sass-rails'
@@ -8,23 +8,23 @@ group :assets do
   gem 'uglifier'
 end
 
+gem 'daemons'
 gem 'jquery-rails'
 
 gem "mongoid", "~> 2.0"
 gem "bson_ext", "~> 1.3", :platforms => :mri
 
-gem 'delayed_job_mongoid', :git => 'https://github.com/collectiveidea/delayed_job_mongoid.git'
+gem 'delayed_job_mongoid', '~> 1.0.8'
 
-gem "hquery-patient-api", :git => 'http://github.com/hquery/patientapi.git', :tag => 'V0.2'
+gem "hquery-patient-api", :git => 'http://github.com/hquery/patientapi.git', :tag => 'V0.3'
 gem "health-data-standards", :git => 'http://github.com/projectcypress/health-data-standards.git', :branch => 'develop'
+gem "hqmf2js", :git => 'http://github.com/pophealth/hqmf2js.git', :branch => 'develop'
+gem 'hqmf-parser', :git => 'https://github.com/pophealth/hqmf-parser.git', :branch => 'develop'
 
 gem 'coderay'
 
 gem 'kramdown'
-
-# needed but not specified by macaddr
-# macaddr comes in from quality-measure-engine -> resque-status -> uuid -> macaddr (feels like Maven)
-gem 'systemu', :git => 'http://github.com/rdingwell/systemu'
+gem 'pry'
 
 group :test do
 
@@ -35,7 +35,6 @@ group :test do
   gem 'factory_girl', '1.3.3'
   gem 'awesome_print', :require => 'ap'
   gem 'mocha', :require => false
-  gem 'pry'
   gem 'therubyracer', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
 

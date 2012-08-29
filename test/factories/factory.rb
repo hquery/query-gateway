@@ -5,6 +5,7 @@ require 'factory_girl'
 # ==========
 
 Factory.define :queued_job, :class => Query do |q|
+  q.format 'js'
   q.map 'foo'
   q.reduce 'foo'
   q.job_logs [JobLog.new(:created_at => 60.seconds.ago.time, :message => 'Job queued')]
@@ -12,6 +13,7 @@ Factory.define :queued_job, :class => Query do |q|
 end
 
 Factory.define :running_job, :class => Query do |q|
+  q.format 'js'
   q.map 'foo'
   q.reduce 'foo'
   q.job_logs [JobLog.new(:created_at => 60.seconds.ago.time, :message => 'Job queued'),
@@ -20,6 +22,7 @@ Factory.define :running_job, :class => Query do |q|
 end
 
 Factory.define :successful_job, :class => Query do |q|
+  q.format 'js'
   q.map 'foo'
   q.reduce 'foo'
   q.job_logs [JobLog.new(:created_at => 60.seconds.ago.time, :message => 'Job queued'),
@@ -29,6 +32,7 @@ Factory.define :successful_job, :class => Query do |q|
 end
 
 Factory.define :rescheduled_job,:class => Query do |q|
+  q.format 'js'
   q.map 'foo'
   q.reduce 'foo'
   q.job_logs [JobLog.new(:created_at => 60.seconds.ago.time, :message => 'Job queued'),
@@ -38,6 +42,7 @@ Factory.define :rescheduled_job,:class => Query do |q|
 end
 
 Factory.define :failed_job, :class => Query do |q|
+  q.format 'js'
   q.map 'foo'
   q.reduce 'foo'
   q.job_logs [JobLog.new(:created_at => 60.seconds.ago.time, :message => 'Job queued'),
@@ -52,5 +57,4 @@ end
 
 Factory.define :gender_result, :class => Result do |r|
   r.created_at Time.now
-
 end

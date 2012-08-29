@@ -34,6 +34,7 @@ def dump_database
   db.collection('job_logs').remove({}) if db['job_log_events']
   db.collection('results').remove({}) if db['results']
   db.collection('queries').remove({}) if db['queries']
+  db.collection('pmn_requests').remove({}) if db['pmn_requests']
 end
 
 def dump_jobs
@@ -43,14 +44,29 @@ end
 def create_query
   mf = File.read('test/fixtures/map_reduce/simple_map.js')
   rf = File.read('test/fixtures/map_reduce/simple_reduce.js')
-  Query.create(map: mf, reduce: rf)
+  Query.create(format: 'js', map: mf, reduce: rf)
 end
 
-def create_job_params()
-  map = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_map.js'), 'application/javascript')
+def create_job_params
+  map = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_map.js'), 'application/hqmf+xml')
   reduce = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/map_reduce/simple_reduce.js'), 'application/javascript')
   functions = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/library_function/simple_function.js'), 'application/javascript')
-  {map: map, reduce: reduce, functions: functions}
+  filter = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test/fixtures/filter/all.json'), 'application/json')
+  {format: 'js', map: map, reduce: reduce, functions: functions, filter: filter}
 end
 
+def create_hqmf_job_params
+  hqmf = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test', 'fixtures', 'NQF59New.xml'), 'application/xml')
+  {format: 'hqmf', hqmf: hqmf}
+end
+
+def create_hqmf_upload
+  hqmf = Rack::Test::UploadedFile.new(File.join(Rails.root, 'test', 'fixtures', 'NQF59New.xml'), 'application/xml')
+  # patch Uploaded file - for some reason the tempfile property isn't available like
+  # it is for a real file upload
+  class << hqmf
+    attr_reader :tempfile
+  end
+  {query: {hqmf: hqmf}}
+end
 

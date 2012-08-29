@@ -1,0 +1,140 @@
+@import "mixins";
+$paletteWidth  : 180px;
+$paletteBorderWidth  : 18px;
+$paletteRadius : 18px;
+
+$workspaceBorderColor :#cccccc;
+$workspaceBorderWidth : 18px;
+$workspaceBorderRadius : 18px;
+
+$LinksBorderColor: #ccc;
+
+$variablesBorderColor  : #B7E0E1;
+$displayBorderColor : #8FC1D3;
+
+div.palette {
+  position: relative;
+  width: $paletteWidth + $paletteBorderWidth;
+  float:left;
+  h1 { 
+    font-weight:normal;
+    font-size: 16pt;
+    margin:10px $paletteBorderWidth*2 0 0;
+  }
+  
+  ul {
+    margin-top:10px;
+    list-style-type: none;
+    font-size: 10pt;
+  }
+  
+  li {
+    margin:0 0 10px 0;
+    width: $paletteWidth - 20;
+    img {
+      margin: 0 10px 0 0;
+      vertical-align:-12px;
+    } 
+  }
+}
+
+div.paletteLink {
+  position: relative;
+  width: $paletteWidth + $paletteBorderWidth;
+  float:left;
+  h1 { 
+    font-weight:normal;
+    font-size: 16pt;
+    margin:10px $paletteBorderWidth*2 0 0;
+  }
+  
+  ul {
+    margin-top:10px;
+    list-style-type: none;
+    font-size: 10pt;
+  }
+  
+  li {
+    margin:0 0 10px 0;
+    width: $paletteWidth - 20;
+    img {
+      margin: 0 10px 0 0;
+      vertical-align: -8px;
+    } 
+  }
+}
+
+div.border_color, div.border_edge {
+  border-radius: 0 $paletteRadius $paletteRadius 0;
+  border-style: solid;
+  border-width: 0 $paletteBorderWidth 0 0;
+  width: $paletteWidth;
+}
+
+div#links .border_color {
+  margin-top: 55px;
+  background-color: $LinksBorderColor;
+  border-color: $LinksBorderColor;
+}
+
+div.border_edge {
+  background-color: white;
+  border-color: white;
+  width: $paletteWidth - $paletteBorderWidth;
+}
+
+#mainPanel {
+  display: block;
+  h1 { margin: 20px 0 10px 18px; }
+  p { margin: 20px; }
+}
+
+div.icons {
+  padding: 0 0 20px 0;
+}
+
+.simpleTable {
+  margin: 20px;
+}
+
+.top_border, .top_border_lower, .bottom_border, .bottom_border_lower {
+  width:100%;
+  border-style:solid;
+  }
+div.top_border {
+  background-color: $workspaceBorderColor;
+  border-color: $workspaceBorderColor;
+  border-radius: $workspaceBorderRadius $workspaceBorderRadius 0 0;
+  border-width: $workspaceBorderWidth 0 0 0;
+  height: $workspaceBorderWidth - 3;
+}
+
+div.top_border_lower {
+  background-color: white;
+  border-color: white;
+  border-radius: $workspaceBorderRadius $workspaceBorderRadius 0 0;
+  border-width: $workspaceBorderWidth - 3 0 0 0;
+  height: 2px;
+}
+
+div.bottom_border_lower {      
+  background-color: $workspaceBorderColor;
+  border-color:$workspaceBorderColor;
+  border-radius: 0 0 $workspaceBorderRadius $workspaceBorderRadius;
+  border-width: 0 0 $workspaceBorderWidth*2 0;
+  height: 0px;
+  position: absolute;
+  bottom:0;
+}
+
+div.bottom_border {
+  background-color: white;
+  border-color: white;
+  border-radius: 0 0 $workspaceBorderRadius $workspaceBorderRadius;
+  border-width: 0 0 $workspaceBorderWidth 0;
+  height: 0;
+}
+
+div.relative {      
+  position: relative;
+}

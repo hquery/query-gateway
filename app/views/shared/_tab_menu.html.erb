@@ -1,0 +1,8 @@
+<% content_for :tabMenu do -%>
+  <nav>
+    <ul>
+      <li class="<%=(selected[:hdata]) ? ' selected' : ''%>" data-tab="hdata"><%= link_to "hData", hdata_index_path %></li>
+      <li class="<%=(selected[:queries]) ? ' selected' : ''%>" data-tab="queries"><%= link_to "Queries", queries_path %></li>
+    </ul>
+  </nav>
+<% end %>

@@ -1,0 +1,24 @@
+<%= render partial: 'shared/tab_menu', locals: { selected: {queries: true}} %>
+
+<div> 
+  <%= render :partial=> "sidebar" %>
+</div>
+
+<div id="mainPanel" >
+  <h1>New Query</h1>
+  <div class="top_border">
+    <div class="top_border_lower"></div>
+  </div>
+  
+  <%= form_for(@query, :url => queries_upload_hqmf_path, :html => {:method => :post, :multipart => true}) do |f| %>
+    <span style="margin: 20px">
+      <%= f.label '', "Upload HQMF File", :for => :query_hqmf %>
+      <%= f.file_field :hqmf %>
+      <%= f.submit 'Create', :class => "btn primary m" %>
+    </span>
+  <% end %>
+  
+  <div class="bottom_border_lower relative">
+    <div class="bottom_border"></div>
+  </div>    
+</div>

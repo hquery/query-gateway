@@ -3,6 +3,7 @@ class Query
   include Mongoid::Document
   include Mongoid::Timestamps
   
+  field :format, :type => String
   field :map, :type => String
   field :reduce, :type => String
   field :functions, :type=> String, :default=> ""
@@ -11,6 +12,7 @@ class Query
   field :error_message, :type => String
   field :delayed_job_id
   
+  belongs_to :request, :class_name => 'PMNRequest', :inverse_of => :query
   embeds_many :job_logs
   has_one :result
   
@@ -34,7 +36,7 @@ class Query
   end
   
   def job
-    dj = QueryJob.submit(self.map, self.reduce, self.functions, self.filter, self.id)
+    dj = QueryJob.submit(self.format, self.map, self.reduce, self.functions, self.filter, self.id)
     self.delayed_job_id = dj.id
     save!
     dj
