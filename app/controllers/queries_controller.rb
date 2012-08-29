@@ -41,7 +41,9 @@ class QueriesController < ApplicationController
     if stale?(:last_modified => @query.updated_at.utc)
       @qh = @query.attributes
       @qh.delete('delayed_job_id')
-      
+      if @query.status == :complete
+        @qh['result_url'] = result_url(@query.result)
+      end
       respond_to do |format|
         format.json { render :json => @qh }
         format.html

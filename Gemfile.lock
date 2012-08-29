@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/hquery/hqmf2js.git
-  revision: a6a7a9ebbd423b5f79490e9b35d91c87d5e0b3b8
+  revision: a274d0ec861ac266a14d513113b832abce5bdb96
   branch: develop
   specs:
     hqmf2js (0.1.0)
@@ -30,7 +30,7 @@ GIT
 
 GIT
   remote: https://github.com/pophealth/hqmf-parser.git
-  revision: f23ab28e58a6a2fbd6f602bc2ad023d722592fef
+  revision: 3c7d35cba6f6a4b6fcf0dabe467459d7a3950c79
   branch: develop
   specs:
     hqmf-parser (0.0.1)
@@ -100,7 +100,7 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (1.3.3)
-    faraday (0.8.0)
+    faraday (0.8.1)
       multipart-post (~> 1.1)
     google-spreadsheet-ruby (0.1.8)
       nokogiri (>= 1.4.3.1)
@@ -136,9 +136,9 @@ GEM
       activemodel (~> 3.1)
       mongo (~> 1.3)
       tzinfo (~> 0.3.22)
-    multi_json (1.3.5)
+    multi_json (1.3.6)
     multipart-post (1.1.5)
-    nokogiri (1.5.2)
+    nokogiri (1.5.3)
     oauth (0.4.6)
     oauth2 (0.7.1)
       faraday (~> 0.8)
