@@ -12,8 +12,20 @@
   
   <%= form_for(@query, :url => queries_upload_hqmf_path, :html => {:method => :post, :multipart => true}) do |f| %>
     <span style="margin: 20px">
-      <%= f.label '', "Upload HQMF File", :for => :query_hqmf %>
+      <%= f.label '', "HQMF File", :for => :hqmf %>
       <%= f.file_field :hqmf %>
+    </span>
+    <span style="margin: 20px">
+      <%= radio_button_tag(:version, "1.0") %>
+      <%= label_tag(:version_mat, "NQF MAT") %>
+      <%= radio_button_tag(:version, "2.0") %>
+      <%= label_tag(:version_v2, "HQMF V2") %>
+    </span><br/>
+    <span style="margin: 20px">
+      <%= f.label '', "Code Lists", :for => :codes %>
+      <%= f.file_field :codes %>
+    </span><br/>
+    <span style="margin: 20px">
       <%= f.submit 'Create', :class => "btn primary m" %>
     </span>
   <% end %>
