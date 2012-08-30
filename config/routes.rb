@@ -5,6 +5,7 @@ QueryGateway::Application.routes.draw do
   resources :queries
   post 'queries/upload_hqmf'
 
+  post 'pmn/create' # not sure why this required given the following line but tests break without it
   post 'pmn/PostRequest/:pmn_request_id', :to => 'pmn#create'
   post 'pmn/PostRequestDocument/:id/:doc_id/:offset', :to => 'pmn#add'
   put 'pmn/Start/:id', :to => 'pmn#start'
