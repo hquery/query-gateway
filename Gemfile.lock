@@ -1,20 +1,20 @@
 GIT
-  remote: http://github.com/hquery/patientapi.git
-  revision: b81d65013444263b0a6c8db1516b339e73bf1e9a
+  remote: http://github.com/hquery/hqmf2js.git
+  revision: cc1936810085fa43542c351e92765677976cfd1f
   tag: V0.3
-  specs:
-    hquery-patient-api (0.1.0)
-
-GIT
-  remote: http://github.com/pophealth/hqmf2js.git
-  revision: cf9f591bf4408a4aaf302af6a6f8acb2b34cb800
-  branch: develop
   specs:
     hqmf2js (0.1.0)
       coffee-script (~> 2.2.0)
       nokogiri (~> 1.5.2)
       sprockets (~> 2.1.2)
       tilt (~> 1.3.3)
+
+GIT
+  remote: http://github.com/hquery/patientapi.git
+  revision: b81d65013444263b0a6c8db1516b339e73bf1e9a
+  tag: V0.3
+  specs:
+    hquery-patient-api (0.1.0)
 
 GIT
   remote: http://github.com/projectcypress/health-data-standards.git
@@ -29,9 +29,9 @@ GIT
       uuid (~> 2.3.4)
 
 GIT
-  remote: https://github.com/pophealth/hqmf-parser.git
-  revision: a8aebd01efe03149826da95a26641dd5595fb117
-  branch: develop
+  remote: https://github.com/hquery/hqmf-parser.git
+  revision: 8cbd14029c76c2c27409366528c59d0c34bddcc4
+  tag: V0.3
   specs:
     hqmf-parser (0.0.1)
       google-spreadsheet-ruby (= 0.1.8)
