@@ -11,8 +11,15 @@ class QueriesController < ApplicationController
 
   def create
     if params[:hqmf]
-      doc = HQMF::Parser.parse(params[:hqmf], HQMF::Parser::HQMF_VERSION_2)
-      map_reduce = HQMF2JS::Converter.generate_map_reduce(doc)
+      codes_hash = nil
+      if params[:codes]
+        codes_path = params[:codes].tempfile.path
+        code_parser = HQMF::ValueSet::Parser.new
+        codes = code_parser.parse(codes_path, :format => HQMF::ValueSet::Parser.get_format(params[:codes].original_filename))
+        codes_hash = HQMF2JS::Generator::CodesToJson.from_value_sets(codes)
+      end
+      doc = HQMF::Parser.parse(params[:hqmf], params[:version] || HQMF::Parser::HQMF_VERSION_2)
+      map_reduce = HQMF2JS::Converter.generate_map_reduce(doc, codes_hash)
       map = map_reduce[:map]
       reduce = map_reduce[:reduce]
       functions = map_reduce[:functions]
@@ -41,7 +48,9 @@ class QueriesController < ApplicationController
     if stale?(:last_modified => @query.updated_at.utc)
       @qh = @query.attributes
       @qh.delete('delayed_job_id')
-      
+      if @query.status == :complete
+        @qh['result_url'] = result_url(@query.result)
+      end
       respond_to do |format|
         format.json { render :json => @qh }
         format.html
@@ -56,8 +65,15 @@ class QueriesController < ApplicationController
   def upload_hqmf
     hqmf_path = params[:query][:hqmf].tempfile.path
     hqmf_contents = File.open(hqmf_path).read
-    doc = HQMF::Parser.parse(hqmf_contents, HQMF::Parser::HQMF_VERSION_2)
-    map_reduce = HQMF2JS::Converter.generate_map_reduce(doc)
+    codes_hash = nil
+    if params[:query][:codes]
+      codes_path = params[:query][:codes].tempfile.path
+      code_parser = HQMF::ValueSet::Parser.new
+      codes = code_parser.parse(codes_path, :format => HQMF::ValueSet::Parser.get_format(params[:query][:codes].original_filename))
+      codes_hash = HQMF2JS::Generator::CodesToJson.from_value_sets(codes)
+    end
+    doc = HQMF::Parser.parse(hqmf_contents, params[:version] || HQMF::Parser::HQMF_VERSION_2, codes_hash)
+    map_reduce = HQMF2JS::Converter.generate_map_reduce(doc, codes_hash)
     
     @query = Query.new(:format => 'hqmf', :map => map_reduce[:map], :reduce => map_reduce[:reduce], :functions => map_reduce[:functions])
     if @query.save

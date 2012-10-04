@@ -32,22 +32,8 @@ class QueryExecutorTest < ActiveSupport::TestCase
     results = query_executor.execute
     assert_equal 269, results['ipp'].to_i
     assert_equal 46, results['denom'].to_i
-    assert_equal 15, results['numer'].to_i
-    assert_equal 31, results['antinum'].to_i
+    assert_equal 16, results['numer'].to_i
+    assert_equal 30, results['antinum'].to_i
   end
 
-  def test_generated_hqmf_execute
-    hqmf_contents = File.open('test/fixtures/i2b2hqmf.xml').read
-    doc = HQMF::Parser.parse(hqmf_contents, HQMF::Parser::HQMF_VERSION_2)
-    map_reduce = HQMF2JS::Converter.generate_map_reduce(doc)
-    map = map_reduce[:map]
-    reduce = map_reduce[:reduce]
-    functions = map_reduce[:functions]
-    
-    query = Query.create(:format => 'hqmf', :map => map, :reduce => reduce, :functions => functions)
-    query_executor = QueryJob::QueryExecutor.new('hqmf', map, reduce, functions, query.id.to_s)
-    results = query_executor.execute
-    
-    assert_equal 3, results['ipp'].to_i
-  end
 end

@@ -1,11 +1,11 @@
 require 'test_helper'
 
 class ImmunizationsImporterApiTest < ImporterApiTest
-  def test_encounter_importing
+  def test_imunizations_importing
     assert_equal 4, @context.eval('patient.immunizations().length')
     assert @context.eval('patient.immunizations().match({"CVX": ["111"]}).length != 0')
-    assert @context.eval('patient.immunizations().match({"CVX": ["113"]}).length != 0')
-    assert @context.eval('patient.immunizations().match({"CVX": ["09"]}).length != 0')
+    assert @context.eval('patient.immunizations().match({"CVX": ["113"]}, null, null, true).length != 0')
+    assert @context.eval('patient.immunizations().match({"CVX": ["09"]}, null, null, true).length != 0')
 # TODO Need to update the patientapi to handle performer now that they are no longer embedded
 #    assert_equal 'FirstName', @context.eval('patient.immunizations()[3].performer().person().given()')
 #    assert_equal 'LastName', @context.eval('patient.immunizations()[3].performer().person().last()')

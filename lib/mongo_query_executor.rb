@@ -20,7 +20,7 @@ class MongoQueryExecutor
   def execute
     db =  Mongoid.master
     exts = []
-    exts << @functions_js    
+    exts << @functions_js
     results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts), build_reduce_function(), :query => @filter, raw: true, out: {inline: 1})
     result = {}
     results['results'].each do |rv|
@@ -36,11 +36,16 @@ class MongoQueryExecutor
   def build_map_function(exts = "")
     "function() {
       this.hQuery || (this.hQuery = {});
+      this.Specifics || (this.Specifics = {});
       var hQuery = this.hQuery;
-      #{exts.join}
+      var Specifics = this.Specifics;
       #{QueryUtilities.patient_api_javascript}
+      #{exts.join}
       #{@map_js}
       var patient = new hQuery.Patient(this);
+      if (Specifics.initialize) {
+        Specifics.initialize();
+      }
       map(patient);
     };"
   end
