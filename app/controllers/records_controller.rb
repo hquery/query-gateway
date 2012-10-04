@@ -10,18 +10,19 @@ class RecordsController < ApplicationController
     if root_element_name == 'ClinicalDocument'
         doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
 
-        document_type = doc.at_xpath('/cda:ClinicalDocument/cda:templateId')['root']
+        ##document_type = doc.at_xpath('/cda:ClinicalDocument/cda:templateId')['root']
+        document_type = doc.at_xpath('/cda:ClinicalDocument/cda:realmCode')['code']
 
         # check the specific flavour of cda
         # E2E
-        if document_type == 'E2E'
+        if document_type == 'CA'
             pi = HealthDataStandards::Import::E2E::PatientImporter.instance
             patient = pi.parse_e2e(doc)
             patient.save!
             render :text => 'Scoop E2E Document imported', :status => 201
         
         # C32
-        else
+        else 
             pi = HealthDataStandards::Import::C32::PatientImporter.instance
             patient = pi.parse_c32(doc)
             patient.save!
