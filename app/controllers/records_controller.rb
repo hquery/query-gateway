@@ -13,12 +13,12 @@ class RecordsController < ApplicationController
         document_type = doc.at_xpath('/cda:ClinicalDocument/cda:templateId')['root']
 
         # check the specific flavour of cda
-        # scoop basic
-        if document_type == 'scoop_basic'
-            pi = HealthDataStandards::Import::ScoopBasic::PatientImporter.instance
-            patient = pi.parse_scoop_basic(doc)
+        # E2E
+        if document_type == 'E2E'
+            pi = HealthDataStandards::Import::E2E::PatientImporter.instance
+            patient = pi.parse_e2e(doc)
             patient.save!
-            render :text => 'Scoop Basic Patient imported', :status => 201
+            render :text => 'Scoop E2E Document imported', :status => 201
         
         # C32
         else

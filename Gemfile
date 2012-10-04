@@ -19,7 +19,7 @@ gem "bson_ext", "~> 1.3", :platforms => :mri
 gem 'delayed_job_mongoid', '~> 1.0.8'
 
 gem "hquery-patient-api", :git => 'http://github.com/pophealth/patientapi.git', :branch => 'develop'
-gem "health-data-standards", :git => 'http://github.com/scoophealth/health-data-standards.git', :branch => 'feature-scoop-it0'
+gem "health-data-standards", :git => 'http://github.com/scoophealth/health-data-standards.git', :branch => 'feature-scoop-it1'
 gem "hqmf2js", :git => 'http://github.com/hquery/hqmf2js.git', :branch => 'develop'
 #gem 'hqmf2js', path: '../bonnie/hqmf2js'
 gem 'hqmf-parser', :git => 'https://github.com/pophealth/hqmf-parser.git', :branch => 'develop'
