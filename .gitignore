@@ -8,3 +8,4 @@ doc/patient-api
 coverage.data
 coverage/
 Gemfile.lock
+.idea
