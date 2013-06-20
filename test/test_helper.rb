@@ -1,11 +1,11 @@
-#require 'cover_me'
+require 'cover_me'
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'factory_girl'
-require 'mocha'
+require 'mocha/setup'
 
-Factory.find_definitions
+FactoryGirl.find_definitions
 
 
 class ActiveSupport::TestCase
