@@ -22,7 +22,7 @@ gem 'hquery-patient-api', :git => 'http://github.com/scoophealth/patientapi.git'
 gem 'health-data-standards', :git => 'http://github.com/scoophealth/health-data-standards.git', :branch => 'scoop-develop'
 gem 'hqmf2js', :git => 'http://github.com/hquery/hqmf2js.git', :tag => 'V0.3'
 #gem 'hqmf2js', path: '../hqmf2js'
-gem 'hqmf-parser', :git => 'https://github.com/scoophealth/hqmf-parser.git', :branch => 'scoop-develop'
+gem 'hqmf-parser', :git => 'http://github.com/scoophealth/hqmf-parser.git', :branch => 'scoop-develop'
 
 gem 'coderay'
 
