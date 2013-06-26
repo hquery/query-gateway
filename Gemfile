@@ -30,12 +30,12 @@ gem 'kramdown'
 gem 'pry'
 
 # Specific to the SCOOP staging environment
-gem 'heroku'
+#gem 'heroku'
 
 group :test do
 
   # Pretty printed test output
-  gem 'minitest'
+  gem 'minitest', '< 5.0.0'
   gem 'turn', :require => false
   gem 'cover_me', '>= 1.0.0.rc6', :platforms => :ruby
   gem 'factory_girl', '1.3.3'
@@ -46,7 +46,7 @@ group :test do
 
 end
 
-group :production do
-  gem 'thin'
-end
+#group :production do
+#  gem 'thin'
+#end
 
