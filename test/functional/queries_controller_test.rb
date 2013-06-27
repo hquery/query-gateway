@@ -7,8 +7,8 @@ class QueriesControllerTest < ActionController::TestCase
   end
   
   test "should get an atom feed at index" do
-    Factory(:successful_job)
-    Factory(:successful_job)
+    FactoryGirl.create(:successful_job)
+    FactoryGirl.create(:successful_job)
     get :index, :format => :atom
     assert_response :success
   end
@@ -58,7 +58,7 @@ class QueriesControllerTest < ActionController::TestCase
   end
   
   test 'should show JSON for a successful job' do
-    query = Factory(:successful_job)
+    query = FactoryGirl.create(:successful_job)
     get :show, :id => query.id.to_s
     assert_response :success
   end

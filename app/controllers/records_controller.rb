@@ -13,7 +13,7 @@ class RecordsController < ApplicationController
             pi = HealthDataStandards::Import::E2E::PatientImporter.instance
             patient = pi.parse_e2e(doc)
             patient.save!
-            render :text => 'Scoop E2E Document imported', :status => 201
+            render :text => 'E2E Document imported', :status => 201
         # C32
         else
             pi = HealthDataStandards::Import::C32::PatientImporter.instance
