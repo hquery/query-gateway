@@ -18,8 +18,8 @@ GIT
 
 GIT
   remote: http://github.com/scoophealth/health-data-standards.git
-  revision: b6857963b36e786ae9b2e37c995681e3be73f036
-  branch: feature-scoop-it4
+  revision: 1407eed0e3659c8424ccf5fa753178b3a7b59f77
+  branch: develop-preMongoid3
   specs:
     health-data-standards (1.0.1)
       builder (~> 3.0.0)
