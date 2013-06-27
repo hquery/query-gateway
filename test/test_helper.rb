@@ -35,6 +35,8 @@ def dump_database
   db.collection('results').remove({}) if db['results']
   db.collection('queries').remove({}) if db['queries']
   db.collection('pmn_requests').remove({}) if db['pmn_requests']
+# TODO Add records cleaning without impacting tests that require the records
+#  db.collection('records').remove({}) if db['records']
 end
 
 def dump_jobs
