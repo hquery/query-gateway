@@ -34,4 +34,32 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal results["sampled_number"].to_i, 7
     assert_equal results["polypharmacy_number"].to_i, 3
   end
+
+  test "iteration 2 query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/scoop_it2_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["B01AC"].to_i, 4
+    assert_equal results["C01AA"].to_i, 2
+    assert_equal results["C01CA"].to_i, 1
+    assert_equal results["C03CA"].to_i, 3
+    assert_equal results["C03DA"].to_i, 3
+    assert_equal results["C07AG"].to_i, 3
+    assert_equal results["C09AA"].to_i, 3
+    assert_equal results["C10AA"].to_i, 4
+    assert_equal results["H03AA"].to_i, 2
+    assert_equal results["M01AE"].to_i, 2
+    assert_equal results["N02AA"].to_i, 2
+    assert_equal results["N02BE"].to_i, 4
+    assert_equal results["N05BA"].to_i, 3
+    assert_equal results["N06AB"].to_i, 1
+    assert_equal results["R03AC"].to_i, 3
+    assert_equal results["R03BA"].to_i, 2
+    assert_equal results["R03BB"].to_i, 3
+  end
 end
