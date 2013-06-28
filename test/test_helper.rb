@@ -35,8 +35,11 @@ def dump_database
   db.collection('results').remove({}) if db['results']
   db.collection('queries').remove({}) if db['queries']
   db.collection('pmn_requests').remove({}) if db['pmn_requests']
-# TODO Add records cleaning without impacting tests that require the records
-#  db.collection('records').remove({}) if db['records']
+end
+
+def load_scoop_database
+  # Deletes any existing records and loads in scoop records
+  `mongoimport -d #{Mongoid.master.name} -h #{Mongoid.master.connection.host_to_try[0]} --drop -c records test/fixtures/scoop-records.json`
 end
 
 def dump_jobs
