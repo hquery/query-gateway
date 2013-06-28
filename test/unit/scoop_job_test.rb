@@ -20,4 +20,18 @@ class ScoopJobTest < ActiveSupport::TestCase
     results = query.result
     assert_equal results["male_>65"].to_i, 4
   end
+
+  test "iteration 1 query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/scoop_it1_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["total_population"].to_i, 9
+    assert_equal results["sampled_number"].to_i, 7
+    assert_equal results["polypharmacy_number"].to_i, 3
+  end
 end
