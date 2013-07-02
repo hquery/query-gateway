@@ -23,10 +23,10 @@ GIT
 
 GIT
   remote: http://github.com/scoophealth/hqmf-parser.git
-  revision: 4554b0df14abf86226547f5ea3ef201739082212
+  revision: ef279cb3f14823ca89316877b0c62a8817cc857c
   branch: scoop-develop
   specs:
-    hqmf-parser (0.0.1)
+    hqmf-parser (1.1.0)
       google-spreadsheet-ruby (= 0.1.8)
       roo (= 1.10.1)
       rubyzip
@@ -143,9 +143,9 @@ GEM
     multipart-post (1.2.0)
     nokogiri (1.5.10)
     oauth (0.4.7)
-    oauth2 (0.9.1)
+    oauth2 (0.9.2)
       faraday (~> 0.8)
-      httpauth (~> 0.1)
+      httpauth (~> 0.2)
       jwt (~> 0.1.4)
       multi_json (~> 1.0)
       multi_xml (~> 0.5)
