@@ -62,4 +62,18 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal results["R03BA"].to_i, 2
     assert_equal results["R03BB"].to_i, 3
   end
+
+  test "iteration 4 query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/scoop_it4_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["senior_pop"].to_i, 7
+    assert_equal results["senior_pop_digoxin_creatinine_abnormal"].to_i, 2
+    assert_equal results["total_pop"].to_i, 9
+  end
 end
