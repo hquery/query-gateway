@@ -1,6 +1,6 @@
 require 'patient_console'
 require 'bundler/setup'
-require 'test/unit'
+require 'test/unit/testcase'
 require 'tilt'
 require 'coffee_script'
 require 'sprockets'
