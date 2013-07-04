@@ -18,10 +18,12 @@ class MongoQueryExecutor
   end
 
   def execute
-    db =  Mongoid.master
+    #db =  Mongoid.master
+    db = Mongoid.default_session #.options[:database]
     exts = []
     exts << @functions_js
-    results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts), build_reduce_function(), :query => @filter, raw: true, out: {inline: 1})
+    #results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts), build_reduce_function(), :query => @filter, raw: true, out: {inline: 1})
+    results = Result.where(@filter).map_reduce(build_map_function(exts), build_reduce_function()).out(inline: true).raw()
     result = {}
     results['results'].each do |rv|
       key = QueryUtilities.stringify_key(rv['_id'])

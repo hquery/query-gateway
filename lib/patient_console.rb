@@ -48,7 +48,8 @@ class PatientConsole
               next
             end
             query = JSON.parse(parts[1..parts.length].join(' '))
-            db = Mongoid.master
+            #db = Mongoid.master
+            db = Mongoid.default_session
             
             @@patients = []
             
@@ -81,7 +82,8 @@ class PatientConsole
 
   def self.init
     @@patient_index = 0
-    db = Mongoid.master
+    #db = Mongoid.master
+    db = Mongoid.default_session
     patient_api = QueryExecutor.patient_api_javascript.to_s
     @@patients = []
     db['records'].find().each {|p| @@patients << p}
