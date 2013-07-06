@@ -48,7 +48,7 @@ class QueriesController < ApplicationController
     if stale?(:last_modified => @query.updated_at.utc)
       @qh = @query.attributes
       @qh.delete('delayed_job_id')
-      if @query.status == :complete
+      if @query.status == :complete and @query.result != nil
         @qh['result_url'] = result_url(@query.result)
       end
       respond_to do |format|
