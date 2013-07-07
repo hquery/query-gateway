@@ -21,7 +21,7 @@ class ImporterApiTest < ActiveSupport::TestCase
     patient.save!
     db = Mongoid.default_session
     #patient_json = Mongoid.master['records'].find_one(patient.id).to_json
-    patient_json = db['records'].find.select(patient: 0).first.to_json
+    patient_json = db['records'].find(_id: patient.id).first.to_json
     patient_api = QueryUtilities.patient_api_javascript.to_s
     initialize_patient = 'var patient = new hQuery.Patient(barry);'
     date = Time.new(2010,1,1)
