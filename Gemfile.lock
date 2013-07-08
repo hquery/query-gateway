@@ -11,14 +11,15 @@ GIT
 
 GIT
   remote: http://github.com/projectcypress/health-data-standards.git
-  revision: fda23ee8678cfda314412e3e18815653bbcffb63
-  tag: fda23ee8678cfda314412e3e18815653bbcffb63
+  revision: 7911c1f386b765d87c15361488614afa58cf8814
+  tag: v2.1.4
   specs:
-    health-data-standards (2.0.0)
+    health-data-standards (2.1.4)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       mongoid (~> 3.0.6)
       nokogiri (~> 1.5.5)
+      rest-client (~> 1.6.7)
       uuid (~> 2.3.5)
 
 GIT
@@ -180,6 +181,8 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     roo (1.10.1)
       choice (>= 0.1.4)
       google-spreadsheet-ruby (>= 0.1.5)
