@@ -52,7 +52,6 @@ function map(patient) {
                     //emit("Abnormal Creatinine: " + patient.given() + " " + patient.last(), 1);
                     return true;
                 }
-                ;
             }
         }
         return false;
@@ -92,6 +91,7 @@ function map(patient) {
                 }
             }
         }
+        return false;
     }
 
     emit('total_pop', 1);

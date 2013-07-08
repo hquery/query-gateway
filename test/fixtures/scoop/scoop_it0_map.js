@@ -6,4 +6,4 @@ function map(patient) {
             emit("male_>65", 1);
         }
     }
-};
+}

@@ -32,16 +32,16 @@ function map(patient) {
     }
 
     // Checks for Creatinine labs performed within the last year
-    function hasLabCode(patient) {
+    function hasLabCode() {
         return resultList.match(targetLabCodes, addDate(now, -1, 0, 0), end).length;
     }
 
     // Checks for existence of Digoxin
-    function hasMedication(patient) {
+    function hasMedication() {
         return drugList.match(targetMedicationCodes, start, end).length;
     }
 
-    function hasCurrentMedication(patient) {
+    function hasCurrentMedication() {
         for (var i = 0; i < drugList.length; i++) {
             var tmpArray = new hQuery.CodedEntryList();
             tmpArray[0] = drugList[i];
@@ -63,8 +63,8 @@ function map(patient) {
     if (population(patient)) {
         //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);
         emit("senior_pop", 1);
-        if (hasLabCode(patient)) {
-            if (hasMedication(patient) && hasCurrentMedication(patient)) {
+        if (hasLabCode()) {
+            if (hasMedication() && hasCurrentMedication()) {
                 //emit("Digoxin: " + patient.given() + " " + patient.last(), 1);
                 //emit("Creatinine: " + patient.given() + " " + patient.last(), 1);
                 var c = patient.results();
