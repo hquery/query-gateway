@@ -47,7 +47,9 @@ end
 def load_scoop_database
   # Deletes any existing records and loads in scoop records
   #`mongoimport -d #{Mongoid.master.name} -h #{Mongoid.master.connection.host_to_try[0]} --drop -c records test/fixtures/scoop-records.json`
-  `mongoimport -d query_gateway_test --drop -c records test/fixtures/scoop-records.json`
+
+  #puts "#{Mongoid.default_session.inspect}"
+  `mongoimport -d #{Mongoid.default_session.options[:database]} --drop -c records test/fixtures/scoop-records.json`
 end
 
 def dump_jobs
