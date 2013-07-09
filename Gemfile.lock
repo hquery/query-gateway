@@ -12,7 +12,7 @@ GIT
 GIT
   remote: http://github.com/scoophealth/health-data-standards.git
   revision: f78a51fec311a6585c74045d6d39816a0ed1c75f
-  branch: mongoid3-migration
+  branch: scoop-develop
   specs:
     health-data-standards (2.1.4)
       builder (~> 3.0.0)
