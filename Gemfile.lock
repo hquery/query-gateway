@@ -1,15 +1,4 @@
 GIT
-  remote: http://github.com/hquery/hqmf2js.git
-  revision: cc1936810085fa43542c351e92765677976cfd1f
-  tag: V0.3
-  specs:
-    hqmf2js (0.1.0)
-      coffee-script (~> 2.2.0)
-      nokogiri (~> 1.5.2)
-      sprockets (~> 2.1.2)
-      tilt (~> 1.3.3)
-
-GIT
   remote: http://github.com/scoophealth/health-data-standards.git
   revision: f78a51fec311a6585c74045d6d39816a0ed1c75f
   branch: scoop-develop
@@ -24,7 +13,7 @@ GIT
 
 GIT
   remote: http://github.com/scoophealth/hqmf-parser.git
-  revision: ef279cb3f14823ca89316877b0c62a8817cc857c
+  revision: ced7f6432c1ce8c4c79156ce47190a6b71f9e860
   branch: scoop-develop
   specs:
     hqmf-parser (1.1.0)
@@ -32,6 +21,17 @@ GIT
       roo (= 1.10.1)
       rubyzip
       spreadsheet (= 0.6.8)
+
+GIT
+  remote: http://github.com/scoophealth/hqmf2js.git
+  revision: 356ec8e7c5655443aafd715fde9916a44a35af3a
+  tag: 356ec8e
+  specs:
+    hqmf2js (0.1.0)
+      coffee-script (~> 2.2.0)
+      nokogiri (~> 1.5.2)
+      sprockets (~> 2.1.2)
+      tilt (~> 1.3.3)
 
 GIT
   remote: http://github.com/scoophealth/patientapi.git
@@ -82,7 +82,7 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.6.2)
+    coffee-script-source (1.6.3)
     configatron (2.13.0)
       yamler (>= 0.1.0)
     cover_me (1.2.0)
@@ -110,7 +110,7 @@ GEM
     httpauth (0.2.0)
     i18n (0.6.4)
     journey (1.0.4)
-    jquery-rails (3.0.1)
+    jquery-rails (3.0.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.0)
