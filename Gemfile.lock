@@ -10,9 +10,9 @@ GIT
       tilt (~> 1.3.3)
 
 GIT
-  remote: http://github.com/projectcypress/health-data-standards.git
-  revision: 7911c1f386b765d87c15361488614afa58cf8814
-  tag: v2.1.4
+  remote: http://github.com/scoophealth/health-data-standards.git
+  revision: f78a51fec311a6585c74045d6d39816a0ed1c75f
+  branch: mongoid3-migration
   specs:
     health-data-standards (2.1.4)
       builder (~> 3.0.0)
