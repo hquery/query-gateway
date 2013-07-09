@@ -25,7 +25,7 @@ GIT
 GIT
   remote: http://github.com/scoophealth/hqmf2js.git
   revision: 356ec8e7c5655443aafd715fde9916a44a35af3a
-  tag: 356ec8e
+  branch: scoop-develop
   specs:
     hqmf2js (0.1.0)
       coffee-script (~> 2.2.0)
