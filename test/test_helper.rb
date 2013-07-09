@@ -19,7 +19,9 @@ class ImporterApiTest < ActiveSupport::TestCase
     pi = HealthDataStandards::Import::C32::PatientImporter.instance
     patient = pi.parse_c32(doc)
     patient.save!
-    patient_json = Mongoid.master['records'].find_one(patient.id).to_json
+    db = Mongoid.default_session
+    #patient_json = Mongoid.master['records'].find_one(patient.id).to_json
+    patient_json = db['records'].find(_id: patient.id).first.to_json
     patient_api = QueryUtilities.patient_api_javascript.to_s
     initialize_patient = 'var patient = new hQuery.Patient(barry);'
     date = Time.new(2010,1,1)
@@ -29,17 +31,25 @@ class ImporterApiTest < ActiveSupport::TestCase
 end
 
 def dump_database
-  db = Mongoid.master
+  #db = Mongoid.master
+  db = Mongoid.default_session
 
-  db.collection('job_logs').remove({}) if db['job_log_events']
-  db.collection('results').remove({}) if db['results']
-  db.collection('queries').remove({}) if db['queries']
-  db.collection('pmn_requests').remove({}) if db['pmn_requests']
+  #db.collection('job_logs').remove({}) if db['job_log_events']
+  #db.collection('results').remove({}) if db['results']
+  #db.collection('queries').remove({}) if db['queries']
+  #db.collection('pmn_requests').remove({}) if db['pmn_requests']
+  db['job_logs'].drop if db['job_log_events']
+  db['results'].drop if db['results']
+  db['queries'].drop if db['queries']
+  db['pmn_requests'].drop if db['pmn_requests']
 end
 
 def load_scoop_database
   # Deletes any existing records and loads in scoop records
-  `mongoimport -d #{Mongoid.master.name} -h #{Mongoid.master.connection.host_to_try[0]} --drop -c records test/fixtures/scoop-records.json`
+  #`mongoimport -d #{Mongoid.master.name} -h #{Mongoid.master.connection.host_to_try[0]} --drop -c records test/fixtures/scoop-records.json`
+
+  #puts "#{Mongoid.default_session.inspect}"
+  `mongoimport -d #{Mongoid.default_session.options[:database]} --drop -c records test/fixtures/scoop-records.json`
 end
 
 def dump_jobs

@@ -14,12 +14,13 @@ gem 'daemons'
 gem 'jquery-rails'
 
 gem 'mongoid' #, '2.4.2'
-gem 'bson_ext', '~> 1.3', :platforms => :mri
+#gem 'bson_ext', '~> 1.3', :platforms => :mri
 
+gem 'delayed_job'
 gem 'delayed_job_mongoid' #, '~> 1.0.8'
 
 gem 'hquery-patient-api', :git => 'http://github.com/scoophealth/patientapi.git', :tag => 'v1.0.0'
-gem "health-data-standards", :git => 'http://github.com/scoophealth/health-data-standards.git', :branch => 'develop-preMongoid3'
+gem "health-data-standards", :git => 'http://github.com/scoophealth/health-data-standards.git', :branch => 'mongoid3-migration' #:tag => 'v2.1.4'
 gem "hqmf2js", :git => 'http://github.com/hquery/hqmf2js.git', :tag => 'V0.3'
 #gem 'hqmf2js', path: '../hqmf2js'
 gem 'hqmf-parser', :git => 'http://github.com/scoophealth/hqmf-parser.git', :branch => 'scoop-develop'
