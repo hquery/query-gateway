@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/scoophealth/health-data-standards.git
-  revision: f78a51fec311a6585c74045d6d39816a0ed1c75f
+  revision: 12d1dfc3b9142990b6d17b1efcb3d59f8e39d2f5
   branch: scoop-develop
   specs:
     health-data-standards (2.1.4)
@@ -24,14 +24,14 @@ GIT
 
 GIT
   remote: http://github.com/scoophealth/hqmf2js.git
-  revision: 356ec8e7c5655443aafd715fde9916a44a35af3a
+  revision: 0fe2351dd04a61f39b1b05294f0a955e1a65daa5
   branch: scoop-develop
   specs:
     hqmf2js (0.1.0)
       coffee-script (~> 2.2.0)
-      nokogiri (~> 1.5.2)
-      sprockets (~> 2.1.2)
-      tilt (~> 1.3.3)
+      nokogiri (~> 1.5.10)
+      sprockets (~> 2.2.2)
+      tilt (~> 1.4.1)
 
 GIT
   remote: http://github.com/scoophealth/patientapi.git
@@ -43,32 +43,32 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    actionmailer (3.2.8)
-      actionpack (= 3.2.8)
-      mail (~> 2.4.4)
-    actionpack (3.2.8)
-      activemodel (= 3.2.8)
-      activesupport (= 3.2.8)
+    actionmailer (3.2.13)
+      actionpack (= 3.2.13)
+      mail (~> 2.5.3)
+    actionpack (3.2.13)
+      activemodel (= 3.2.13)
+      activesupport (= 3.2.13)
       builder (~> 3.0.0)
       erubis (~> 2.7.0)
       journey (~> 1.0.4)
-      rack (~> 1.4.0)
+      rack (~> 1.4.5)
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
-      sprockets (~> 2.1.3)
-    activemodel (3.2.8)
-      activesupport (= 3.2.8)
+      sprockets (~> 2.2.1)
+    activemodel (3.2.13)
+      activesupport (= 3.2.13)
       builder (~> 3.0.0)
-    activerecord (3.2.8)
-      activemodel (= 3.2.8)
-      activesupport (= 3.2.8)
+    activerecord (3.2.13)
+      activemodel (= 3.2.13)
+      activesupport (= 3.2.13)
       arel (~> 3.0.2)
       tzinfo (~> 0.3.29)
-    activeresource (3.2.8)
-      activemodel (= 3.2.8)
-      activesupport (= 3.2.8)
-    activesupport (3.2.8)
-      i18n (~> 0.6)
+    activeresource (3.2.13)
+      activemodel (= 3.2.13)
+      activesupport (= 3.2.13)
+    activesupport (3.2.13)
+      i18n (= 0.6.1)
       multi_json (~> 1.0)
     ansi (1.4.3)
     arel (3.0.2)
@@ -108,7 +108,7 @@ GEM
     hashie (2.0.5)
     hike (1.2.3)
     httpauth (0.2.0)
-    i18n (0.6.4)
+    i18n (0.6.1)
     journey (1.0.4)
     jquery-rails (3.0.2)
       railties (>= 3.0, < 5.0)
@@ -121,8 +121,7 @@ GEM
     log4r (1.1.10)
     macaddr (1.6.1)
       systemu (~> 2.5.0)
-    mail (2.4.4)
-      i18n (>= 0.4.0)
+    mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     metaclass (0.0.1)
@@ -162,17 +161,17 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (3.2.8)
-      actionmailer (= 3.2.8)
-      actionpack (= 3.2.8)
-      activerecord (= 3.2.8)
-      activeresource (= 3.2.8)
-      activesupport (= 3.2.8)
+    rails (3.2.13)
+      actionmailer (= 3.2.13)
+      actionpack (= 3.2.13)
+      activerecord (= 3.2.13)
+      activeresource (= 3.2.13)
+      activesupport (= 3.2.13)
       bundler (~> 1.0)
-      railties (= 3.2.8)
-    railties (3.2.8)
-      actionpack (= 3.2.8)
-      activesupport (= 3.2.8)
+      railties (= 3.2.13)
+    railties (3.2.13)
+      actionpack (= 3.2.13)
+      activesupport (= 3.2.13)
       rack-ssl (~> 1.3.2)
       rake (>= 0.8.7)
       rdoc (~> 3.4)
@@ -200,8 +199,9 @@ GEM
     slop (3.4.5)
     spreadsheet (0.6.8)
       ruby-ole (>= 1.0)
-    sprockets (2.1.3)
+    sprockets (2.2.2)
       hike (~> 1.2)
+      multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
     systemu (2.5.2)
@@ -209,7 +209,7 @@ GEM
       libv8 (~> 3.11.8.12)
       ref
     thor (0.18.1)
-    tilt (1.3.7)
+    tilt (1.4.1)
     todonotes (0.1.1)
       log4r
     treetop (1.4.14)
@@ -248,7 +248,7 @@ DEPENDENCIES
   mocha
   mongoid
   pry
-  rails (~> 3.2.1)
+  rails
   sass-rails
   therubyracer
   therubyrhino
