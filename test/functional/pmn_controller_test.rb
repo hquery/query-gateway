@@ -28,7 +28,8 @@ class PmnControllerTest < ActionController::TestCase
     assert_equal '1', doc.xpath('//pmn:DesiredDocuments/ms:string[1]').inner_text
     request_id = doc.at_xpath('//pmn:RequestResult').inner_text
     assert request_id
-    r = PMNRequest.first(:conditions => {:doc_id => '1'})
+    #r = PMNRequest.first(:conditions => {:doc_id => '1'})
+    r = PMNRequest.where(doc_id: '1').first
     assert r
     assert_equal "multipart/form-data; boundary=-----------RubyMultipartPost", r.mime_type
     assert_equal nil, r.content

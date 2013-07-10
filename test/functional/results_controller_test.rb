@@ -3,7 +3,7 @@ require 'test_helper'
 class ResultsControllerTest < ActionController::TestCase
   setup do
     dump_database
-    Factory(:gender_result)
+    FactoryGirl.create(:gender_result)
   end
   
   test "should get an atom feed at index" do

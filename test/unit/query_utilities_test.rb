@@ -3,7 +3,7 @@ require 'test_helper'
 class QueryUtilitesTest < ActiveSupport::TestCase
 
   test "Stringification" do
-    key = BSON::OrderedHash.new
+    key = Moped::BSON::Document.new
     key['a'] = 'b'
     key['c'] = 'd'
     str = QueryUtilities.stringify_key(key)

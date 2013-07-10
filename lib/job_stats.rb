@@ -30,12 +30,14 @@ class JobStats
   def self.stats
     # check to see if we have a working connection to mongo
     begin
-      Mongoid.master.stats
+      #Mongoid.master.stats
+      Mongoid.default_session.stats
     rescue
       return {error: "Backend Down"}
     end
 
     s = {backend_status: :good}
+    #result = Query.collection().map_reduce(MAP, REDUCE, {out: {inline: 1}, raw: true})
     result = Query.collection().map_reduce(MAP, REDUCE, {out: {inline: 1}, raw: true})
     result["results"].each do |res|
       type = res["_id"]
