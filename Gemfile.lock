@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: http://github.com/scoophealth/hqmf-parser.git
-  revision: ced7f6432c1ce8c4c79156ce47190a6b71f9e860
+  revision: 7255b22df28004a00721209b8a9f3ff708c2028d
   branch: scoop-develop
   specs:
     hqmf-parser (1.1.0)
@@ -35,8 +35,8 @@ GIT
 
 GIT
   remote: http://github.com/scoophealth/patientapi.git
-  revision: 779b4d707fb7b325c81be2a9713ee073f7d84375
-  tag: v1.0.0
+  revision: 2afc31e48f0480ca9ce16f27939a0a1a5efd153d
+  branch: scoop-develop
   specs:
     hquery-patient-api (1.0.0)
 
