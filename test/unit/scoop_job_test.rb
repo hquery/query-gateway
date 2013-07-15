@@ -90,4 +90,20 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal results["senior_pop_digoxin_creatinine"].to_i, 2
     assert_equal results["total_pop"].to_i, 9
   end
+
+  test "iteration graphical query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/graphical_builder_demographics_map.js')
+    rf = File.read('test/fixtures/scoop/graphical_builder_demographics_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    #puts results.inspect
+    assert_not_nil results
+    #assert_equal results["filtered_pop_sum"].to_i, 4
+    #assert_equal results["unfound_pop_sum"].to_i, 5
+    #assert_equal results["total_pop_sum"].to_i, 9
+  end
 end
