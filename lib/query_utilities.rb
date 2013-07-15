@@ -4,7 +4,7 @@ module QueryUtilities
   require 'tilt'
   
   def self.stringify_key(key)
-    if (key.is_a? BSON::OrderedHash)
+    if (key.is_a? Moped::BSON::Document) #::OrderedHash)
       key = (key.map {|val| stringify_key(val)}).join('_')
     end
     if (key.is_a? Array)

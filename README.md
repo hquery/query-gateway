@@ -14,8 +14,8 @@ hQuery will also run on Windows, however, there are some minor limitations to fu
 
 Dependencies
 ------------
-* Ruby = 1.9.2
-* Rails 3.1
+* Ruby = 1.9.3
+* Rails >= 3.1
 * MongoDB >= 1.8.1
 
 Install Instructions

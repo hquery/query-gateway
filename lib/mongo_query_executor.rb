@@ -18,10 +18,24 @@ class MongoQueryExecutor
   end
 
   def execute
-    db =  Mongoid.master
+    #db =  Mongoid.master
+    db = Mongoid.default_session #.options[:database]
     exts = []
     exts << @functions_js
-    results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts), build_reduce_function(), :query => @filter, raw: true, out: {inline: 1})
+    #results = db[PATIENTS_COLLECTION].map_reduce(build_map_function(exts), build_reduce_function(), :query => @filter, raw: true, out: {inline: 1})
+
+    # An example of using Moped to execute a map_reduce command on a session
+    # can be found at http://mongoid.org/en/moped/docs/driver.html under
+    # Session#command
+    results = db.command(
+        mapreduce: PATIENTS_COLLECTION,
+        map: build_map_function(exts),
+        reduce: build_reduce_function(),
+        query: @filter,
+        raw: true,
+        out: {inline: 1}
+    )
+
     result = {}
     results['results'].each do |rv|
       key = QueryUtilities.stringify_key(rv['_id'])

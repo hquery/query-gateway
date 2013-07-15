@@ -3,7 +3,10 @@ require 'test_helper'
 class QueryExecutorTest < ActiveSupport::TestCase
   
   def setup   
-    Mongoid.master.drop_collection('query_results')
+    #Mongoid.master.drop_collection('query_results')
+    db = Mongoid.default_session
+    #db.drop_collection('query_results')
+    db[:query_results].drop
     if defined?(QueryExecutor.test_setup)
       QueryExecutor.test_setup
     end

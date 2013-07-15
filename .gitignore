@@ -7,3 +7,4 @@ tmp/
 doc/patient-api
 coverage.data
 coverage/
+.idea

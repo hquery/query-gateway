@@ -12,8 +12,11 @@ class QueryJobTest < ActiveSupport::TestCase
     Delayed::Worker.delay_jobs=true
     query = create_query
     query.job
-    assert_equal 1, Mongoid.master['queries'].find({}).count
-    assert_equal :queued, Mongoid.master['queries'].find({}).first['status']
+    #assert_equal 1, Mongoid.master['queries'].find({}).count
+    #assert_equal :queued, Mongoid.master['queries'].find({}).first['status']
+    db = Mongoid.default_session
+    assert_equal 1, db['queries'].find({}).count
+    assert_equal :queued, db['queries'].find({}).first['status']
   end
   
   
@@ -31,7 +34,8 @@ class QueryJobTest < ActiveSupport::TestCase
     payload.failure(job)
     assert_equal Query.find(query.id).status, :failed
 
-    Result.collection.save({_id: job.id, value: {}})
+    #Result.collection.save({_id: job.id, value: {}})
+    Result.collection.insert({_id: job.id, value: {}})
     assert_equal Query.find(query.id).status, :failed
 
     payload.success(job) 
