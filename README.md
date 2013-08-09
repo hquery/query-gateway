@@ -1,4 +1,4 @@
-hQuery
+hQuery [![travis](https://secure.travis-ci.org/scoophealth/query-gateway.png)](http://travis-ci.org/scoophealth/query-gateway)
 =========
 
 The query gateway is a web based application that provides the back end for executing queries. 
