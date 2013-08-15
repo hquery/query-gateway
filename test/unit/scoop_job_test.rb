@@ -91,6 +91,19 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal results["total_pop"].to_i, 9
   end
 
+  test "iteration 6 pneumococcal query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/scoop_it6_pneumo_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["total_pneumovax"].to_i, 2
+    assert_equal results["senior_pop_pneumovax"].to_i, 1
+  end
+
   test "iteration graphical query works properly" do
     Delayed::Worker.delay_jobs=true
     mf = File.read('test/fixtures/scoop/graphical_builder_demographics_map.js')
