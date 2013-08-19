@@ -265,6 +265,7 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal 9, results['>19_pop']
     assert_equal 1, results['>19_pop_height']
   end
+
   test "waist circumference vital signs query works properly" do
     Delayed::Worker.delay_jobs=true
     mf = File.read('test/fixtures/scoop/vital_sign_wc_map.js')
@@ -291,7 +292,6 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal 9, results['>19_pop']
     assert_equal 1, results['>19_pop_heartrate']
   end
-
 
   test "overweight vital signs query works properly" do
     Delayed::Worker.delay_jobs=true
