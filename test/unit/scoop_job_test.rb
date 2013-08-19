@@ -280,7 +280,7 @@ class ScoopJobTest < ActiveSupport::TestCase
   end
 
 
-  test "heart rate signs query works properly" do
+  test "heart rate vital signs query works properly" do
     Delayed::Worker.delay_jobs=true
     mf = File.read('test/fixtures/scoop/vital_sign_heartrate_map.js')
     rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
@@ -293,6 +293,7 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal 1, results['>19_pop_heartrate']
   end
 
+
   test "overweight vital signs query works properly" do
     Delayed::Worker.delay_jobs=true
     mf = File.read('test/fixtures/scoop/vital_sign_overweight_map.js')
@@ -304,6 +305,7 @@ class ScoopJobTest < ActiveSupport::TestCase
     results = query.result
     assert_equal 9, results['>19_pop']
     assert_equal 0, results['>19_pop_overweight']
+    assert_equal 1, results['>19_pop_bmi>30']
   end
 
 end
