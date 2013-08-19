@@ -18,11 +18,11 @@ class ScoopJobTest < ActiveSupport::TestCase
     job.invoke_job
     query.reload
     results = query.result
-    #puts results.inspect
     assert_not_nil results
-    #assert_equal results["filtered_pop_sum"].to_i, 4
-    #assert_equal results["unfound_pop_sum"].to_i, 5
-    #assert_equal results["total_pop_sum"].to_i, 9
+    rvalues = results["{\"type\"=>\"population\"}"]['values']
+    assert_equal rvalues["filtered_pop_sum"].to_i, 4
+    assert_equal rvalues["unfound_pop_sum"].to_i, 5
+    assert_equal rvalues["total_pop_sum"].to_i, 9
   end
 
   test "iteration 0 query works properly" do
