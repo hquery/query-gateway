@@ -303,7 +303,7 @@ class ScoopJobTest < ActiveSupport::TestCase
     query.reload
     results = query.result
     assert_equal 9, results['>19_pop']
-    assert_equal 1, results['>19_pop_overweight']
+    assert_equal 0, results['>19_pop_overweight']
   end
 
 end

@@ -1,9 +1,7 @@
 function map(patient) {
     var targetWaistCircumferenceCodes = {
-        "LOINC": ["8302-2"]
+        "LOINC": ["56115-9"]
     };
-
-    var wcLOINC = { "LOINC" : [ "56115-9" ] }
 
     var targetHeightCodes = {
         "LOINC": ["8302-2"]
@@ -15,7 +13,7 @@ function map(patient) {
 
     var ageLimit = 20;
 
-    var wcLimit = 169;
+    var wcLimit = 80;
 
     var vitalSignList = patient.vitalSigns();
 
@@ -46,10 +44,9 @@ function map(patient) {
     function hasMatchingIndicator() {
         for (var i = 0; i < vitalSignList.length; i++) {
             //if (vitalSignList[i].values()[0].units() == "cm") {
-                if (vitalSignList[i].includesCodeFrom(targetWaistCircumferenceCodes) &&
-                    vitalSignList[i].values()[0].scalar() > wcLimit) {
-                    emit("vital sign: "+vitalSignList[i].values()[0].scalar(), 1)
-                    return true;
+            if (vitalSignList[i].includesCodeFrom(targetWaistCircumferenceCodes) &&
+                vitalSignList[i].values()[0].scalar() > wcLimit) {
+                return true;
                 }
             //}
         }
