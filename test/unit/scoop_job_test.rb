@@ -109,7 +109,7 @@ class ScoopJobTest < ActiveSupport::TestCase
 
   test "pneumococcal vaccine query works properly" do
     Delayed::Worker.delay_jobs=true
-    mf = File.read('test/fixtures/scoop/scoop_pneumococcal_map.js')
+    mf = File.read('test/fixtures/scoop/pneumococcal_map.js')
     rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
     query = Query.create(map: mf, reduce: rf)
     job = query.job
@@ -118,6 +118,100 @@ class ScoopJobTest < ActiveSupport::TestCase
     results = query.result
     assert_equal results["total_pneumovax"].to_i, 2
     assert_equal results["senior_pop_pneumovax"].to_i, 1
+  end
+
+  test "population profile query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/population_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["female_40-49"].to_i, 1
+    assert_equal results["female_50-59"].to_i, 1
+    assert_equal results["female_70-79"].to_i, 1
+    assert_equal results["female_80-89"].to_i, 2
+    assert_equal results["male_60-69"].to_i, 1
+    assert_equal results["male_70-79"].to_i, 2
+    assert_equal results["male_90+"].to_i, 1
+    assert_equal results["total_40-49"].to_i, 1
+    assert_equal results["total_50-59"].to_i, 1
+    assert_equal results["total_60-69"].to_i, 1
+    assert_equal results["total_70-79"].to_i, 3
+    assert_equal results["total_80-89"].to_i, 2
+    assert_equal results["total_90+"].to_i, 1
+    assert_equal results["total_female"].to_i, 5
+    assert_equal results["total_male"].to_i, 4
+    assert_equal results["total_population"].to_i, 9
+  end
+
+  test "fasting blood sugar query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/fasting_blood_sugar_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["has_blood_sugar_result"].to_i, 1
+    assert_equal results["patients_>45"].to_i, 8
+  end
+
+  test "colon screening query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/colon_screening_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["has_hemoccult_result"].to_i, 1
+    assert_equal results["patients_50-74"].to_i, 4
+  end
+
+  test "diabetes hgba1c query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/diabetes_hgba1c_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["has_hgba1c_result"].to_i, 1
+    assert_equal results["diabetics"].to_i, 3
+  end
+
+  test "diabetes hgba1c value query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/diabetes_hgba1c_value_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["has_hgba1c_result"].to_i, 1
+    assert_equal results["has_matching_hgba1c_value"].to_i, 1
+    assert_equal results["diabetics"].to_i, 3
+  end
+
+  test "diabetes ldl value query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/diabetes_ldl_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal results["has_ldl_result"].to_i, 1
+    assert_equal results["has_matching_ldl_value"].to_i, 1
+    assert_equal results["diabetics"].to_i, 3
   end
 
 end

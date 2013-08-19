@@ -1,0 +1,40 @@
+// TODO: Add freetext definition search
+function map(patient) {
+    var targetLabCodes = {
+        "LOINC": ["14771-0"]
+    };
+
+    var ageLimit = 45;
+    var resultList = patient.results();
+
+    var now = new Date(2013, 7, 19);
+    var start = addDate(now, -3, 0, 0);
+    var end = addDate(now, 0, 0, 0);
+
+    // Shifts date by year, month, and date specified
+    function addDate(date, y, m, d) {
+        var n = new Date(date);
+        n.setFullYear(date.getFullYear() + (y || 0));
+        n.setMonth(date.getMonth() + (m || 0));
+        n.setDate(date.getDate() + (d || 0));
+        return n;
+    }
+
+    // Checks if patient is older than ageLimit
+    function population(patient) {
+        return (patient.age(now) > ageLimit);
+    }
+
+    // Checks for Fasting Blood Sugar labs performed within the last 3 years
+    function hasLabCode() {
+        return resultList.match(targetLabCodes, start, end).length;
+    }
+
+    if (population(patient)) {
+        //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);
+        emit("patients_>45", 1);
+        if (hasLabCode()) {
+            emit("has_blood_sugar_result", 1);
+        }
+    }
+}
