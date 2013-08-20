@@ -1,3 +1,4 @@
+// Query Title: Practice population profile
 // TODO: Factor in Clinical Encounters
 function map(patient) {
     var time = new Date(2013, 7, 19);

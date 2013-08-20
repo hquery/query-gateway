@@ -1,3 +1,4 @@
+// Query Title: Practice population profile
 // TODO: Add freetext definition search
 // TODO: Add Colon screening portion of query
 function map(patient) {

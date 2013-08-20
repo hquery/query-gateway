@@ -1,3 +1,4 @@
+// Query Title: Pneumococcal vaccination age 65+
 // TODO: Add freetext definition search
 function map(patient) {
     var targetImmunizationCodes = {
