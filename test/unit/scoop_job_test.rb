@@ -261,6 +261,23 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal 1, results['>19_pop_wc']
   end
 
+
+  test "diabetes and bp query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/diabetes_bp_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal 9, results['total_pop']
+    assert_equal 9, results['>=18_pop']
+    assert_equal 3, results['>=18_diabetics']
+    assert_equal 1, results['>=18_diabetics_has_hgba1c_result']
+    assert_equal 0, results['>=18_diabetics_bp']
+  end
+
   test "overweight query works properly" do
     Delayed::Worker.delay_jobs=true
     mf = File.read('test/fixtures/scoop/vital_sign_overweight_map.js')

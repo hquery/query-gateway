@@ -2,6 +2,7 @@
 // clinical observations and the calculation of BMI based on this information.
 //
 // Extends Query Title: BMI or WC documented in last 2 yrs age > 19
+// Warning: Still a work in progress.
 function map(patient) {
     var targetWaistCircumferenceCodes = {
         "LOINC": ["56115-9"]
