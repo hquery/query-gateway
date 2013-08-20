@@ -1,3 +1,7 @@
+// Illustrates retrieval of height, weight and waist circumference values from
+// clinical observations and the calculation of BMI based on this information.
+//
+// Extends Query Title: BMI or WC documented in last 2 yrs age > 19
 function map(patient) {
     var targetWaistCircumferenceCodes = {
         "LOINC": ["56115-9"]
@@ -13,7 +17,7 @@ function map(patient) {
 
     var ageLimit = 19;
 
-    var wcLimit = 80;
+    var wcLimit = 90;  // waist circumference threshold (cm)
 
     var vitalSignList = patient.vitalSigns();
 
@@ -49,7 +53,17 @@ function map(patient) {
         return vitalSignList.match(targetWeightCodes, start, end).length;
     }
 
-    function hasMatchingIndicator() {
+    // http://en.wikipedia.org/wiki/Body_mass_index
+    function calculateBMI(height, weight, metric) {
+        if (metric) {
+            bmi = weight/(height/100.0)^2; // assume cm and kg
+        } else {
+            bmi = 703 * weight /height^2;  // assume in and lb
+        }
+        return bmi;
+    }
+
+    function hasWaistCircumferenceIndicator() {
         for (var i = 0; i < vitalSignList.length; i++) {
             //if (vitalSignList[i].values()[0].units() == "cm") {
             if (vitalSignList[i].includesCodeFrom(targetWaistCircumferenceCodes) &&
@@ -61,17 +75,8 @@ function map(patient) {
         return false;
     }
 
-    // http://en.wikipedia.org/wiki/Body_mass_index
-    function getBMI(height, weight, metric) {
-        if (metric) {
-            bmi = weight/(height/100.0)^2; // assume cm and kg
-        } else {
-            bmi = 703 * weight /height^2;  // assume in and lb
-        }
-        return bmi;
-    }
 
-    function hasHWMatchingIndicator() {
+    function hasHeightWeightIndicators() {
         var height = 0;
         var weight = 0;
         var bmi = 0;
@@ -86,7 +91,7 @@ function map(patient) {
                 //emit("weight="+weight,1);
             }
             if (height != 0 && weight != 0) {
-                bmi = getBMI(height,weight,true);
+                bmi = calculateBMI(height,weight,true);
                 //emit("bmi="+bmi,1);
                 return bmi > 30;
             }
@@ -97,19 +102,15 @@ function map(patient) {
 
     emit('total_pop', 1);
 
-    if (hasWaistCircumference()) {
-        emit("total_overweight", 1);
-    }
-
     if (population(patient)) {
         //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);
         emit(">19_pop", 1);
-        if (hasWaistCircumference() && hasMatchingIndicator()) {
-            emit(">19_pop_overweight", 1);
+        if (hasWaistCircumference() && hasWaistCircumferenceIndicator()) {
+            emit(">19_pop_overweight_wc", 1);
         } else {
-            emit(">19_pop_overweight", 0)
+            emit(">19_pop_overweight_wc", 0)
         };
-        if (hasHWMatchingIndicator()) {
+        if (hasHeightWeightIndicators()) {
             emit(">19_pop_bmi>30",1);
         } else {
             emit(">19_pop_bmi>30",0);

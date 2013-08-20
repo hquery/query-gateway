@@ -1,3 +1,7 @@
+// Supports Query Title: BMI or WC documented in last 2 yrs age > 19
+//
+// Also illustrates detecting the presence of vital sign information for heart
+// rate, blood pressure, temperature, height, weight and waist circumference.
 function map(patient) {
     var targetHeartRateCodes = {
         "LOINC": ["8867-4"]
@@ -20,16 +24,16 @@ function map(patient) {
     };
 
     var targetWaistCircumferenceCodes = {
-        "LOINC": ["8302-2"]
+        "LOINC": ["56115-9"]
     };
 
-    var ageLimit = 20;
+    var ageLimit = 19;
 
     var vitalSignList = patient.vitalSigns();
 
-    var now = new Date(2013, 6, 20);
-    var start = new Date(2000, 6, 1);
-    var end = addDate(now, 0, 1, 0);
+    var now = new Date(2013, 7, 19);
+    var start = addDate(now, -2, 0, 0);
+    var end = addDate(now, 0, 0, 0);
 
     // Shifts date by year, month, and date specified
     function addDate(date, y, m, d) {
@@ -42,7 +46,7 @@ function map(patient) {
 
     // Checks if patient is older than ageLimit
     function population(patient) {
-        return (patient.age(now) >= ageLimit);
+        return (patient.age(now) > ageLimit);
     }
 
 
@@ -77,18 +81,6 @@ function map(patient) {
     }
 
     emit('total_pop', 1);
-
-    if (hasHeartRate()) {
-        emit("total_heartrate", 1);
-    }
-
-    if (hasBloodPressure()) {
-        emit("total_bp", 1);
-    }
-
-    if (hasTemperature()) {
-        emit("total_temperature", 1);
-    }
 
     if (population(patient)) {
         //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);

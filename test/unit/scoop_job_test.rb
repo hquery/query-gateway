@@ -242,21 +242,6 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal results["mi_or_stroke"].to_i, 2
   end
 
-  test "vital signs overweight query works properly" do
-    Delayed::Worker.delay_jobs=true
-    mf = File.read('test/fixtures/scoop/vital_sign_overweight_map.js')
-    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
-    query = Query.create(map: mf, reduce: rf)
-    job = query.job
-    job.invoke_job
-    query.reload
-    results = query.result
-    assert_equal 9, results['>19_pop']
-    assert_equal 0, results['>19_pop_overweight']
-    assert_equal 1, results['>19_pop_bmi>30']
-  end
-
-
   test "vital signs query works properly" do
     Delayed::Worker.delay_jobs=true
     mf = File.read('test/fixtures/scoop/vital_signs_map.js')
@@ -274,6 +259,20 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal 1, results['>19_pop_height']
     assert_equal 1, results['>19_pop_weight']
     assert_equal 1, results['>19_pop_wc']
+  end
+
+  test "overweight query works properly" do
+    Delayed::Worker.delay_jobs=true
+    mf = File.read('test/fixtures/scoop/vital_sign_overweight_map.js')
+    rf = File.read('test/fixtures/scoop/scoop_general_reduce.js')
+    query = Query.create(map: mf, reduce: rf)
+    job = query.job
+    job.invoke_job
+    query.reload
+    results = query.result
+    assert_equal 9, results['>19_pop']
+    assert_equal 0, results['>19_pop_overweight_wc']
+    assert_equal 1, results['>19_pop_bmi>30']
   end
 
 end
