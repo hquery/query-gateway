@@ -16,7 +16,7 @@ function map(patient) {
     };
 
     var targetBloodPressureDiastolicCodes = {
-        "LOINC": ["8480-6"]
+        "LOINC": ["8462-4"]
     };
 
     var targetTemperatureCodes = {

@@ -7,6 +7,14 @@ function map(patient) {
         "LOINC": ["55284-4"]
     };
 
+    var targetBloodPressureSystolicCodes = {
+        "LOINC": ["8480-6"]
+    };
+
+    var targetBloodPressureDiastolicCodes = {
+        "LOINC": ["8462-4"]
+    };
+
     var targetLabCodes = {
         "LOINC": ["4548-4"]
     };
@@ -44,6 +52,16 @@ function map(patient) {
     // Checks for existence of blood pressure observation
     function hasBloodPressure() {
         return vitalSignList.match(targetBloodPressureCodes, start, end).length;
+    }
+
+    // Checks for existence of systolic blood pressure observation
+    function hasSystolicBloodPressure() {
+        return vitalSignList.match(targetBloodPressureSystolicCodes, start, end).length;
+    }
+
+    // Checks for existence of diastolic blood pressure observation
+    function hasDiastolicBloodPressure() {
+        return vitalSignList.match(targetBloodPressureDiastolicCodes, start, end).length;
     }
 
     // Checks for HGBA1C labs performed within the last 12 months
