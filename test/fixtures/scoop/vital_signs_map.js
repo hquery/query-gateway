@@ -11,6 +11,14 @@ function map(patient) {
         "LOINC": ["55284-4"]
     };
 
+    var targetBloodPressureSystolicCodes = {
+        "LOINC": ["8480-6"]
+    };
+
+    var targetBloodPressureDiastolicCodes = {
+        "LOINC": ["8480-6"]
+    };
+
     var targetTemperatureCodes = {
         "LOINC": ["8310-5"]
     };
@@ -60,6 +68,16 @@ function map(patient) {
         return vitalSignList.match(targetBloodPressureCodes, start, end).length;
     }
 
+    // Checks for existence of systolic blood pressure observation
+    function hasSystolicBloodPressure() {
+        return vitalSignList.match(targetBloodPressureSystolicCodes, start, end).length;
+    }
+
+    // Checks for existence of diastolic blood pressure observation
+    function hasDiastolicBloodPressure() {
+        return vitalSignList.match(targetBloodPressureDiastolicCodes, start, end).length;
+    }
+
     // Checks for existence of temperature observation
     function hasTemperature() {
         return vitalSignList.match(targetTemperatureCodes, start, end).length;
@@ -90,6 +108,12 @@ function map(patient) {
         }
         if (hasBloodPressure()) {
             emit(">19_pop_bp",1)
+        }
+        if (hasSystolicBloodPressure()) {
+            emit(">19_pop_bp_systolic",1)
+        }
+        if (hasDiastolicBloodPressure()) {
+            emit(">19_pop_bp_diastolic",1)
         }
         if (hasTemperature()) {
             emit(">19_pop_temperature", 1);

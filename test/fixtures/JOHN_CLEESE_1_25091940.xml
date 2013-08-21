@@ -25,7 +25,7 @@ CDA Header
   <id extension="1" root="2.16.840.1.113883.3.933"/>
   <code code="34140-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Referral"/>
   <title>PITO EMR-2-EMR Record of JOHN CLEESE</title>
-  <effectiveTime value="201308141524"/>
+  <effectiveTime value="201308211542"/>
   <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
   <!-- 
 	********************************************************
@@ -62,7 +62,7 @@ CDA Header
 	********************************************************
 	-->
   <author typeCode="AUT" contextControlCode="OP">
-    <time value="20130814"/>
+    <time value="20130821"/>
     <assignedAuthor>
       <id extension="000000" root="DCCD2C68-389B-44C4-AD99-B8FB2DAD1493"/>
       <assignedPerson classCode="PSN" determinerCode="INSTANCE">
@@ -211,12 +211,13 @@ Clinically Measured Observation
           <title>Clinical Measured Observations [with entries]</title>
           <text>
             <list>
-              <item>Blood Pressure: 130/85 (standing position)</item>
-              <item>Temperature: 37 (degrees celcius)</item>
-              <item>Weight: 71 (in kg)</item>
-              <item>Height: 170 (in cm)</item>
-              <item>Waist: 36 (Waist Circum in cm)</item>
-              <item>Heart Rate: 85 (in bpm (nnn) Range:40-180)</item>
+              <item>Systolic Blood Pressure: 130 mm[Hg] (standing position)</item>
+              <item>Diastolic Blood Pressure: 85 mm[Hg] (standing position)</item>
+              <item>Temperature: 37 C (degrees celcius)</item>
+              <item>Weight: 71 kg (in kg)</item>
+              <item>Height: 170 cm (in cm)</item>
+              <item>Waist: 36 cm (Waist Circum in cm)</item>
+              <item>Heart Rate: 85 beats/min (in bpm (nnn) Range:40-180)</item>
             </list>
           </text>
           <entry typeCode="COMP" contextConductionInd="true">
@@ -243,11 +244,44 @@ Clinically Measured Observation
               <component typeCode="COMP" contextConductionInd="true">
                 <observation classCode="OBS" moodCode="EVN">
                   <id extension="36" root="2.16.840.1.113883.3.1818.10.2.10.15"/>
-                  <!-- OSCAR Type Code: BP -->
-                  <code code="55284-4" displayName="Blood Pressure" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
-                  <text>Blood Pressure (standing position)</text>
+                  <!-- OSCAR Type Code: SYST -->
+                  <code code="8480-6" displayName="Systolic Blood Pressure" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                  <text>Systolic Blood Pressure (standing position)</text>
                   <effectiveTime value="20130814000000"/>
-                  <value xsi:type="ST">130/85</value>
+                  <value xsi:type="PQ" value="130" unit="mm[Hg]"/>
+                </observation>
+              </component>
+            </organizer>
+          </entry>
+          <entry typeCode="COMP" contextConductionInd="true">
+            <templateId root="2.16.840.1.113883.3.1818.10.3.7"/>
+            <!-- Clinically Measured Observations Organizer -->
+            <organizer classCode="CLUSTER" moodCode="EVN">
+              <id extension="36" root="2.16.840.1.113883.3.1818.10.2.10.15"/>
+              <code code="MEAOBSORG" displayName="Measured Observations Organizer" codeSystem="2.16.840.1.113883.3.3068.10.6.3" codeSystemName="ObservationType-CA-Pending"/>
+              <statusCode code="active"/>
+              <author typeCode="AUT" contextControlCode="OP">
+                <templateId root="2.16.840.1.113883.3.1818.10.4.2"/>
+                <!-- Author Participation -->
+                <time value="20130814151817"/>
+                <assignedAuthor>
+                  <id use="BUS" extension="38809" root="2.16.840.1.113883.3.163.5.0.10.2"/>
+                  <assignedPerson classCode="PSN" determinerCode="INSTANCE">
+                    <name use="L">
+                      <given>doctor</given>
+                      <family>oscardoc</family>
+                    </name>
+                  </assignedPerson>
+                </assignedAuthor>
+              </author>
+              <component typeCode="COMP" contextConductionInd="true">
+                <observation classCode="OBS" moodCode="EVN">
+                  <id extension="36" root="2.16.840.1.113883.3.1818.10.2.10.15"/>
+                  <!-- OSCAR Type Code: DIAS -->
+                  <code code="8462-4" displayName="Diastolic Blood Pressure" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+                  <text>Diastolic Blood Pressure (standing position)</text>
+                  <effectiveTime value="20130814000000"/>
+                  <value xsi:type="PQ" value="85" unit="mm[Hg]"/>
                 </observation>
               </component>
             </organizer>
@@ -280,7 +314,7 @@ Clinically Measured Observation
                   <code code="8310-5" displayName="Temperature" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
                   <text>Temperature (degrees celcius)</text>
                   <effectiveTime value="20130814000000"/>
-                  <value xsi:type="ST">37</value>
+                  <value xsi:type="PQ" value="37" unit="C"/>
                 </observation>
               </component>
             </organizer>
@@ -313,7 +347,7 @@ Clinically Measured Observation
                   <code code="3141-9" displayName="Weight" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
                   <text>Weight (in kg)</text>
                   <effectiveTime value="20130814000000"/>
-                  <value xsi:type="ST">71</value>
+                  <value xsi:type="PQ" value="71" unit="kg"/>
                 </observation>
               </component>
             </organizer>
@@ -346,7 +380,7 @@ Clinically Measured Observation
                   <code code="8302-2" displayName="Height" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
                   <text>Height (in cm)</text>
                   <effectiveTime value="20130814000000"/>
-                  <value xsi:type="ST">170</value>
+                  <value xsi:type="PQ" value="170" unit="cm"/>
                 </observation>
               </component>
             </organizer>
@@ -379,7 +413,7 @@ Clinically Measured Observation
                   <code code="56115-9" displayName="Waist" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
                   <text>Waist (Waist Circum in cm)</text>
                   <effectiveTime value="20130814000000"/>
-                  <value xsi:type="ST">36</value>
+                  <value xsi:type="PQ" value="36" unit="cm"/>
                 </observation>
               </component>
             </organizer>
@@ -412,7 +446,7 @@ Clinically Measured Observation
                   <code code="8867-4" displayName="Heart Rate" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
                   <text>Heart Rate (in bpm (nnn) Range:40-180)</text>
                   <effectiveTime value="20130814000000"/>
-                  <value xsi:type="ST">85</value>
+                  <value xsi:type="PQ" value="85" unit="beats/min"/>
                 </observation>
               </component>
             </organizer>
@@ -2185,11 +2219,8 @@ Code"/>
                     <templateId root="2.16.840.1.113883.3.1818.10.4.8"/>
                     <!-- Dose Observation -->
                     <substanceAdministration classCode="SBADM" moodCode="RQO">
-                      <text>Take 1.0 to 2.0 TABLET PO QID 25 D</text>
                       <!-- Duration -->
-                      <effectiveTime xsi:type="IVL_TS" operator="I">
-                        <width value="25" unit="D"/>
-                      </effectiveTime>
+                      <text>25 D</text>
                       <!-- Frequency -->
                       <!-- OSCAR Frequency Code QID -->
                       <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
@@ -2340,11 +2371,8 @@ Code"/>
                     <templateId root="2.16.840.1.113883.3.1818.10.4.8"/>
                     <!-- Dose Observation -->
                     <substanceAdministration classCode="SBADM" moodCode="RQO">
-                      <text>Take 1.0 TABLET PO QAM 28 D</text>
                       <!-- Duration -->
-                      <effectiveTime xsi:type="IVL_TS" operator="I">
-                        <width value="28" unit="D"/>
-                      </effectiveTime>
+                      <text>28 D</text>
                       <!-- Frequency -->
                       <!-- OSCAR Frequency Code QAM -->
                       <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
@@ -2495,11 +2523,8 @@ Code"/>
                     <templateId root="2.16.840.1.113883.3.1818.10.4.8"/>
                     <!-- Dose Observation -->
                     <substanceAdministration classCode="SBADM" moodCode="RQO">
-                      <text>Take 1.0 TABLET PO TID 28 D</text>
                       <!-- Duration -->
-                      <effectiveTime xsi:type="IVL_TS" operator="I">
-                        <width value="28" unit="D"/>
-                      </effectiveTime>
+                      <text>28 D</text>
                       <!-- Frequency -->
                       <!-- OSCAR Frequency Code TID -->
                       <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
@@ -2650,11 +2675,8 @@ Code"/>
                     <templateId root="2.16.840.1.113883.3.1818.10.4.8"/>
                     <!-- Dose Observation -->
                     <substanceAdministration classCode="SBADM" moodCode="RQO">
-                      <text>Take 1.0 TABLET SL BID 20 D</text>
                       <!-- Duration -->
-                      <effectiveTime xsi:type="IVL_TS" operator="I">
-                        <width value="20" unit="D"/>
-                      </effectiveTime>
+                      <text>20 D</text>
                       <!-- Frequency -->
                       <!-- OSCAR Frequency Code BID -->
                       <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
@@ -2805,11 +2827,8 @@ Code"/>
                     <templateId root="2.16.840.1.113883.3.1818.10.4.8"/>
                     <!-- Dose Observation -->
                     <substanceAdministration classCode="SBADM" moodCode="RQO">
-                      <text>Take 1.0 TABLET (ENTERIC-COATED) PO OD 28 D</text>
                       <!-- Duration -->
-                      <effectiveTime xsi:type="IVL_TS" operator="I">
-                        <width value="28" unit="D"/>
-                      </effectiveTime>
+                      <text>28 D</text>
                       <!-- Frequency -->
                       <!-- OSCAR Frequency Code OD -->
                       <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
@@ -2960,11 +2979,8 @@ Code"/>
                     <templateId root="2.16.840.1.113883.3.1818.10.4.8"/>
                     <!-- Dose Observation -->
                     <substanceAdministration classCode="SBADM" moodCode="RQO">
-                      <text>Take 1.0 TABLET PO QAM 56 D</text>
                       <!-- Duration -->
-                      <effectiveTime xsi:type="IVL_TS" operator="I">
-                        <width value="56" unit="D"/>
-                      </effectiveTime>
+                      <text>56 D</text>
                       <!-- Frequency -->
                       <!-- OSCAR Frequency Code QAM -->
                       <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
@@ -3115,11 +3131,8 @@ Code"/>
                     <templateId root="2.16.840.1.113883.3.1818.10.4.8"/>
                     <!-- Dose Observation -->
                     <substanceAdministration classCode="SBADM" moodCode="RQO">
-                      <text>take 1.0 TABLET PO OD 28 D</text>
                       <!-- Duration -->
-                      <effectiveTime xsi:type="IVL_TS" operator="I">
-                        <width value="28" unit="D"/>
-                      </effectiveTime>
+                      <text>28 D</text>
                       <!-- Frequency -->
                       <!-- OSCAR Frequency Code OD -->
                       <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
@@ -3270,11 +3283,8 @@ Code"/>
                     <templateId root="2.16.840.1.113883.3.1818.10.4.8"/>
                     <!-- Dose Observation -->
                     <substanceAdministration classCode="SBADM" moodCode="RQO">
-                      <text>Take 1.0 TABLET PO OD 28 D</text>
                       <!-- Duration -->
-                      <effectiveTime xsi:type="IVL_TS" operator="I">
-                        <width value="28" unit="D"/>
-                      </effectiveTime>
+                      <text>28 D</text>
                       <!-- Frequency -->
                       <!-- OSCAR Frequency Code OD -->
                       <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
@@ -3425,11 +3435,8 @@ Code"/>
                     <templateId root="2.16.840.1.113883.3.1818.10.4.8"/>
                     <!-- Dose Observation -->
                     <substanceAdministration classCode="SBADM" moodCode="RQO">
-                      <text>take 1.0 TABLET PO OD 28 D</text>
                       <!-- Duration -->
-                      <effectiveTime xsi:type="IVL_TS" operator="I">
-                        <width value="28" unit="D"/>
-                      </effectiveTime>
+                      <text>28 D</text>
                       <!-- Frequency -->
                       <!-- OSCAR Frequency Code OD -->
                       <effectiveTime xsi:type="PIVL_TS" institutionSpecified="true">
