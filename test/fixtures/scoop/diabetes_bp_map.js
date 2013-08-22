@@ -1,11 +1,6 @@
 // Supports Query Title: Diabetes & BP <= 130/80 in last yr
 
-// Warning: Still work in progress.
 function map(patient) {
-
-    var targetBloodPressureCodes = {
-        "LOINC": ["55284-4"]
-    };
 
     var targetBloodPressureSystolicCodes = {
         "LOINC": ["8480-6"]
@@ -24,8 +19,8 @@ function map(patient) {
     };
 
     var ageLimit = 18;
-    var bpSystolicLimit = 130
-    var bpDiastolicLimit = 80
+    var bpSystolicLimit = 130;
+    var bpDiastolicLimit = 80;
 
     var resultList = patient.results();
     var problemList = patient.conditions();
@@ -49,11 +44,6 @@ function map(patient) {
         return (patient.age(now) >= ageLimit);
     }
 
-    // Checks for existence of blood pressure observation
-    function hasBloodPressure() {
-        return vitalSignList.match(targetBloodPressureCodes, start, end).length;
-    }
-
     // Checks for existence of systolic blood pressure observation
     function hasSystolicBloodPressure() {
         return vitalSignList.match(targetBloodPressureSystolicCodes, start, end).length;
@@ -74,15 +64,23 @@ function map(patient) {
         return problemList.match(targetProblemCodes).length;
     }
 
-
-    function hasBloodPressureMatchingIndicator() {
-        for (var i = 0; i < vitalSignList.length; i++) {
-            if (vitalSignList[i].includesCodeFrom(targetBloodPressureCodes) &&
-                vitalSignList[i].values()[0].scalar() < bpSystolicLimit) {
-                //emit('systolic_dystolic['+i+']: '+vitalSignList[i].values()[0].scalar(), 1);
-                return true;
-            } else {
-                //emit('systolic_dystolic['+i+']: '+vitalSignList[i].values()[0].scalar(), 0);
+    function hasBloodPressureMatchingIndicators() {
+        for (var i = 0; i < vitalSignList.length - 1; i++) {
+            var bpSystolic = 0;
+            var bpDiastolic = 0;
+            if (vitalSignList[i].includesCodeFrom(targetBloodPressureSystolicCodes)) {
+                if (vitalSignList[i].values()[0].units() == "mm[Hg]") {
+                    bpSystolic = vitalSignList[i].values()[0].scalar();
+                    //emit('systolic['+i+']: '+vitalSignList[i].values()[0].scalar(), 1);
+                } // TODO - assumes diastolic is next vital sign after systolic!  Can we do better?
+                if (vitalSignList[i+1].values()[0].units() == "mm[Hg]") {
+                    bpDiastolic = vitalSignList[i+1].values()[0].scalar();
+                    //emit('diastolic['+(i+1)+']: '+vitalSignList[i+1].values()[0].scalar(), 1);
+                }
+            }
+            if (bpSystolic > 0 && bpDiastolic > 0 &&
+                bpSystolic < bpSystolicLimit && bpDiastolic < bpDiastolicLimit) {
+                return true
             }
         }
         return false;
@@ -95,22 +93,20 @@ function map(patient) {
         emit(">=18_pop", 1);
 
         if (hasProblemCode()) {
-            emit(">=18_diabetics", 1);
-            if(hasLabCode()) {
-                emit(">=18_diabetics_has_hgba1c_result", 1);
-                if (hasBloodPressure()) {
-                    emit(">=18_diabetics_bp",1)
-                    //if (hasBloodPressureMatchingIndicator()) {
-                    //    emit(">=18_diabetics_bp130",1)
-                    //}
-                } else {
-                    emit(">=18_diabetics_bp",0)
-                }
+            emit(">=18_diabetics", 1); //+patient.given()+" "+patient.last(), 1);
+            if (hasBloodPressureMatchingIndicators()) {
+                emit(">=18_diabetics_bp130", 1); //+patient.given()+" "+patient.last(), 1);
             } else {
-                emit(">=18_diabetics_has_hgba1c_result", 0);
+                emit(">=18_diabetics_bp130", 0);
             }
-        } else {
-            emit(">=18_diabetics", 0);
+            if(hasLabCode()) {
+                emit(">=18_diabetics_hgba1c", 1); //+patient.given()+" "+patient.last(), 1);
+                if (hasBloodPressureMatchingIndicators()) {
+                    emit(">=18_diabetics_hgba1c_bp130", 1); //+patient.given()+" "+patient.last(), 1);
+                } else {
+                    emit(">=18_diabetics_hgba1c_bp130", 0);
+                }
+            }
         }
     }
 }

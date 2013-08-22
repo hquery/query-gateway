@@ -254,7 +254,6 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal 9, results['total_pop']
     assert_equal 9, results['>19_pop']
     assert_equal 1, results['>19_pop_heartrate']
-    #assert_equal 2, results['>19_pop_bp']
     assert_equal 2, results['>19_pop_bp_systolic']
     assert_equal 2, results['>19_pop_bp_diastolic']
     assert_equal 1, results['>19_pop_temperature']
@@ -276,8 +275,10 @@ class ScoopJobTest < ActiveSupport::TestCase
     assert_equal 9, results['total_pop']
     assert_equal 9, results['>=18_pop']
     assert_equal 3, results['>=18_diabetics']
-    assert_equal 1, results['>=18_diabetics_has_hgba1c_result']
-    assert_equal 0, results['>=18_diabetics_bp']
+    assert_equal 1, results['>=18_diabetics_hgba1c']
+    assert_equal 0, results['>=18_diabetics_bp130']
+    assert_equal 0, results['>=18_diabetics_hgba1c_bp130']
+    #assert_equal 'xyz', results
   end
 
   test "overweight query works properly" do
