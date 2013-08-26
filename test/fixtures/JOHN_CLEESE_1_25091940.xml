@@ -25,7 +25,7 @@ CDA Header
   <id extension="1" root="2.16.840.1.113883.3.933"/>
   <code code="34140-4" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="Referral"/>
   <title>PITO EMR-2-EMR Record of JOHN CLEESE</title>
-  <effectiveTime value="201308211542"/>
+  <effectiveTime value="201308261552"/>
   <confidentialityCode code="N" codeSystem="2.16.840.1.113883.5.25"/>
   <!-- 
 	********************************************************
@@ -34,7 +34,7 @@ CDA Header
 	-->
   <recordTarget typeCode="RCT" contextControlCode="OP">
     <patientRole classCode="PAT">
-      <id extension="000000000" root="2BFBA1E9-79C2-4BBB-B589-41B949BD6A3B" assigningAuthorityName="BC-PHN"/>
+      <id extension="448000001" root="2BFBA1E9-79C2-4BBB-B589-41B949BD6A3B" assigningAuthorityName="BC-PHN"/>
       <addr>
         <streetAddressLine></streetAddressLine>
         <city></city>
@@ -62,7 +62,7 @@ CDA Header
 	********************************************************
 	-->
   <author typeCode="AUT" contextControlCode="OP">
-    <time value="20130821"/>
+    <time value="20130826"/>
     <assignedAuthor>
       <id extension="000000" root="DCCD2C68-389B-44C4-AD99-B8FB2DAD1493"/>
       <assignedPerson classCode="PSN" determinerCode="INSTANCE">
