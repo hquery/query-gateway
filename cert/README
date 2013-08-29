@@ -1,5 +1,5 @@
 # Change into the query-gateway root directory.  Make a cert subdirectory.
-cd $HOME/query-gateway && mkdir query
+cd $HOME/query-gateway && mkdir cert && cd cert
 #
 # Generate a self-signed certificate.  You need to answer some questions.
 # Most of them can be answered arbitrarily but it is important that the
