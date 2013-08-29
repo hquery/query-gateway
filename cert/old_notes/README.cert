@@ -8,4 +8,9 @@ openssl genrsa -out endpoint.key 4096
 # Request a certificate for this subordinate CA
 openssl req -new -key endpoint.key -out endpoint.csr
 # Process request for the subordinate CA and get it signed by the root CA
-openssl x509 -req -days 730 -in endpoint.csr -CA ca/LeadLab_root_cert_TEST.crt -CAkey ca/LeadLab_root_cert_TEST.pem -set_serial 01 -out endpoint.crt
+openssl x509 -req -days 730 -in endpoint.csr -CA ca/LeadLab_root_cert_TEST.crt -CAkey ca/LeadLab_root_cert_TEST.pem -set_serial 5342365815382548354816354178354175 -out endpoint.crt
+# Make client credentials
+#openssl genrsa -out client.key 4096
+#openssl req -new -key client.key -out client.csr
+#openssl x509 -req -days 730 -in client.csr -CA ca/LeadLab_root_cert_TEST.crt -CAkey ca/LeadLab_root_cert_TEST.pem -set_serial 5342365815382548354816354178354177 -out client.crt
+
