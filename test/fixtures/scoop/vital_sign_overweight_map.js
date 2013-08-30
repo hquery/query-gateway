@@ -1,8 +1,9 @@
-// Illustrates retrieval of height, weight and waist circumference values from
-// clinical observations and the calculation of BMI based on this information.
-//
+// Reference Number: PDC-009
 // Extends Query Title: BMI or WC documented in last 2 yrs age > 19
 // Warning: Still a work in progress.
+//
+// Illustrates retrieval of height, weight and waist circumference values from
+// clinical observations and the calculation of BMI based on this information.
 function map(patient) {
     var targetWaistCircumferenceCodes = {
         "LOINC": ["56115-9"]
