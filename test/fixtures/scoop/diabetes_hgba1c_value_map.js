@@ -1,3 +1,4 @@
+// Reference Number: PDC-026
 // Query Title: Diabetics with HGBA1C in last yr <= 7.0
 // TODO: Add freetext definition search
 function map(patient) {

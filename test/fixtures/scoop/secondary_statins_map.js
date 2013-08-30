@@ -1,14 +1,10 @@
+// Reference Number: PDC-006
 // Query Title: Statins for secondary prevention
 // TODO: Add freetext definition search
 function map(patient) {
     var targetProblemCodes = {
-        "ICD9": ["410.0", "410.1", "410.2", "410.3", "410.4", "410.5", "410.6", "410.7", "410.8", "410.9",
-                 "411.0", "411.1", "411.2", "411.3", "411.4", "411.5", "411.6", "411.7", "411.8", "411.9",
-                 "412.0", "412.1", "412.2", "412.3", "412.4", "412.5", "412.6", "412.7", "412.8", "412.9",
-                 "429.7,", "410", "411", "412", "V17.1", "438",
-                 "43301", "43311", "43321", "43331", "43341", "43351", "43361", "43371", "43381", "43391",
-                 "43401", "43411", "43421", "43431", "43441", "43451", "43461", "43471", "43481", "43491",
-                 "438.0", "438.1", "438.2", "438.3", "438.4", "438.5", "438.6", "438.7", "438.8", "438.9"]
+        "ICD9": ["410..*", "411..*", "412..*", "429.7", "410", "411", "412",
+                 "V17.1", "438", "433.1", "434.1", "438..*"]
     };
 
     var targetDrugCodes = {
@@ -22,7 +18,7 @@ function map(patient) {
 
     // Checks for diabetic patients
     function hasProblemCode() {
-        return problemList.match(targetProblemCodes).length;
+        return problemList.regex_match(targetProblemCodes).length;
     }
 
     // Checks for active statin prescription
