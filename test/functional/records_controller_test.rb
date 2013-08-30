@@ -26,6 +26,7 @@ class RecordsControllerTest < ActionController::TestCase
     r = db['records'].where({:first => 'JOHN', :last => 'CLEESE'}).first
     assert r
     assert_equal -923616000, r['birthdate']
+    assert_equal "448000001", r['_id']
   end
 
 end

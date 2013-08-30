@@ -1,6 +1,10 @@
+// Reference Number: PDC-001
+// Query Title: Patients, 65 and older, on 5 or more medications
+// Reference Number: PDC-002
+// Query Title: Patients, 65 and older, on 10 or more medications
 function map(patient) {
     var ageLimit = 65;
-    var drugLimit = 5;
+    var drugLimit = 5; // Change this value to number of active medications to count
     var time = new Date(2013, 2, 10);
 
     var drugList = patient.medications();

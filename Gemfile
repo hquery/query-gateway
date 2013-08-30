@@ -17,6 +17,7 @@ gem 'delayed_job'
 gem 'delayed_job_mongoid'
 
 gem 'hquery-patient-api', :git => 'http://github.com/scoophealth/patientapi.git', :branch => 'scoop-develop'
+#gem 'hquery-patient-api', path: '../patientapi'
 gem "health-data-standards", :git => 'http://github.com/scoophealth/health-data-standards.git', :branch => 'scoop-develop'
 gem "hqmf2js", :git => 'http://github.com/scoophealth/hqmf2js.git', :branch => 'scoop-develop'
 #gem 'hqmf2js', path: '../hqmf2js'
