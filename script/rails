@@ -15,25 +15,25 @@ SERVER_CERT_PATH = "cert/ca/LeadLab_root_cert_TEST.pem"
 SERVER_KEY_PATH = "cert/ca/LeadLab_root_cert_TEST.pem"
 
 module Rails
-     class Server < ::Rack::Server
-         def default_options
-             super.merge({
-		 :environment => (ENV['RAILS_ENV'] || "development").dup,
-		 :daemonize => false,
-		 :debugger => false,
-		 :pid => File.expand_path("tmp/pids/server.pid"),
-		 :config => File.expand_path("config.ru"),
-                 :SSLEnable => false,
-                 :SSLVerifyClient => OpenSSL::SSL::VERIFY_PEER|OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT,
-                 :SSLPrivateKey => OpenSSL::PKey::RSA.new(File.open(SERVER_KEY_PATH).read),
-                 :SSLCertificate => OpenSSL::X509::Certificate.new(File.open(SERVER_CERT_PATH).read),
-		 :SSLCACertificateFile => CA_CERT_PATH,
-		 :SSLCertName => [["CN", WEBrick::Utils::getservername]],
-            	})
-		end
-	end
+  class Server < ::Rack::Server
+    def default_options
+      super.merge({
+                      :environment => (ENV['RAILS_ENV'] || "development").dup,
+                      :daemonize => false,
+                      :debugger => false,
+                      :pid => File.expand_path("tmp/pids/server.pid"),
+                      :config => File.expand_path("config.ru"),
+                      :SSLEnable => false,
+                      :SSLVerifyClient => OpenSSL::SSL::VERIFY_PEER|OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT,
+                      :SSLPrivateKey => OpenSSL::PKey::RSA.new(File.open(SERVER_KEY_PATH).read),
+                      :SSLCertificate => OpenSSL::X509::Certificate.new(File.open(SERVER_CERT_PATH).read),
+                      :SSLCACertificateFile => CA_CERT_PATH,
+                      :SSLCertName => [["CN", WEBrick::Utils::getservername]],
+                  })
+    end
+  end
 end
 
-APP_PATH = File.expand_path('../../config/application',  __FILE__)
-require File.expand_path('../../config/boot',  __FILE__)
+APP_PATH = File.expand_path('../../config/application', __FILE__)
+require File.expand_path('../../config/boot', __FILE__)
 require 'rails/commands'
