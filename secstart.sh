@@ -1,4 +1,5 @@
-##!/bin/sh
+#!/bin/sh
+# Start Secure HTTPS Gateway
 
 echo "Installing Dependencies"
 bundle install
