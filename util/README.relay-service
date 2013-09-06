@@ -2,7 +2,8 @@ This server is used to load test files into query-gateway.  It can be
 started from this directory with the command './relay-service.rb'.
 
 The relay service uses port 3000.  Modify the ':Port => 3000' setting
-in the script if another port will be used.
+in the script if another port will be used.  The server can be
+accessed with a web browser using "http://localhost:3000".
 
 IMPORTANT: Set the constant FILE_IMPORT_DIR to the directory where the
 E2E xml files are located.  The default is to use a './files'
