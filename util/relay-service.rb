@@ -6,6 +6,8 @@ require 'net/http/post/multipart'
 
 include WEBrick # import WEBrick namespace
 
+FILE_IMPORT_DIR = './files'
+
 config={}
 config.update(:Port => 3000)
 config.update(:DocumentRoot => './')
@@ -24,7 +26,7 @@ server.mount_proc('/records/destroy') { |req, resp|
 }
 class RecordRelayServlet < HTTPServlet::AbstractServlet
   def do_GET(request, response)
-    Dir.glob('./files/*.xml') do |xml_file|
+    Dir.glob("#{FILE_IMPORT_DIR}/*.xml") do |xml_file|
       url = URI.parse('http://localhost:3001/records/create')
       res = nil
       File.open(xml_file) do |xml|

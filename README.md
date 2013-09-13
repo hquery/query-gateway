@@ -22,7 +22,12 @@ Install Instructions
 --------------------
 
 See the query composer for installation instructions for both the composer and gateway
-  http://github.com/hquery
+  [https://github.com/scoophealth](https://github.com/scoophealth)
+
+Quick Start
+-----------
+
+Assuming the ruby environment has already been set up, you can use the runme.sh file to start a normal gateway server instance, and the secrunme.sh file to start a secure gateway server instance.
 
 License
 -------
