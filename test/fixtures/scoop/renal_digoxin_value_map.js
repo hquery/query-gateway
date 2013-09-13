@@ -2,7 +2,7 @@
 // Query Title: Patients, 65 and older, with impaired renal function who are on digoxin >125 mcg/day
 function map(patient) {
     var targetMedicationCodes = {
-        "whoATC": ["C01AA05"],
+        "whoATC": ["C01AA*"],
         "HC-DIN": ["02281236", "02281228", "02281201", "02245428", "02245427",
             "02245426", "02048264", "02048272", "0021415", "00698296", "00647470"]
     };
@@ -43,7 +43,7 @@ function map(patient) {
 
     // Checks for existence of Digoxin
     function hasMedication() {
-        return drugList.match(targetMedicationCodes, start, end).length;
+        return drugList.regex_match(targetMedicationCodes, start, end).length;
     }
 
     // Checks if Creatinine meets parameters

@@ -11,15 +11,10 @@ function map(patient) {
         "LOINC": ["8462-4"]
     };
 
-    var targetLabCodes = {
-        "LOINC": ["4548-4"]
-    };
-
     var targetProblemCodes = {
-        "ICD9": ["250"]
+        "ICD9": ["250*"]
     };
 
-    var ageLimit = 18;
     var bpSystolicLimit = 130;
     var bpDiastolicLimit = 80;
 
@@ -42,7 +37,7 @@ function map(patient) {
 
     // Checks if patient is older than ageLimit
     function population(patient) {
-        return (patient.age(now) >= ageLimit);
+        return true;
     }
 
     // Checks for existence of systolic blood pressure observation
@@ -55,14 +50,9 @@ function map(patient) {
         return vitalSignList.match(targetBloodPressureDiastolicCodes, start, end).length;
     }
 
-    // Checks for HGBA1C labs performed within the last 12 months
-    function hasLabCode() {
-        return resultList.match(targetLabCodes, start, end).length;
-    }
-
     // Checks for diabetic patients
     function hasProblemCode() {
-        return problemList.match(targetProblemCodes).length;
+        return problemList.regex_match(targetProblemCodes).length;
     }
 
     function hasBloodPressureMatchingIndicators() {
@@ -80,7 +70,7 @@ function map(patient) {
                 }
             }
             if (bpSystolic > 0 && bpDiastolic > 0 &&
-                bpSystolic < bpSystolicLimit && bpDiastolic < bpDiastolicLimit) {
+                bpSystolic <= bpSystolicLimit && bpDiastolic <= bpDiastolicLimit) {
                 return true
             }
         }
@@ -91,22 +81,14 @@ function map(patient) {
 
     if (population(patient)) {
         //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);
-        emit(">=18_pop", 1);
+        emit("pop", 1);
 
         if (hasProblemCode()) {
-            emit(">=18_diabetics", 1); //+patient.given()+" "+patient.last(), 1);
+            emit("diabetics", 1); //+patient.given()+" "+patient.last(), 1);
             if (hasBloodPressureMatchingIndicators()) {
-                emit(">=18_diabetics_bp130", 1); //+patient.given()+" "+patient.last(), 1);
+                emit("diabetics_bp", 1); //+patient.given()+" "+patient.last(), 1);
             } else {
-                emit(">=18_diabetics_bp130", 0);
-            }
-            if(hasLabCode()) {
-                emit(">=18_diabetics_hgba1c", 1); //+patient.given()+" "+patient.last(), 1);
-                if (hasBloodPressureMatchingIndicators()) {
-                    emit(">=18_diabetics_hgba1c_bp130", 1); //+patient.given()+" "+patient.last(), 1);
-                } else {
-                    emit(">=18_diabetics_hgba1c_bp130", 0);
-                }
+                emit("diabetics_bp", 0);
             }
         }
     }

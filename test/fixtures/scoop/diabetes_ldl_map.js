@@ -7,7 +7,7 @@ function map(patient) {
     };
 
     var targetProblemCodes = {
-        "ICD9": ["250"]
+        "ICD9": ["250*"]
     };
 
     var ldlLimit = 2.5;
@@ -35,7 +35,7 @@ function map(patient) {
 
     // Checks for diabetic patients
     function hasProblemCode() {
-        return problemList.match(targetProblemCodes).length;
+        return problemList.regex_match(targetProblemCodes).length;
     }
 
     // Checks if ldl meets parameters
