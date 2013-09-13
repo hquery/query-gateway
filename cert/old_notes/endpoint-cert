@@ -1,0 +1,7 @@
+rm ./endpoint.crt
+rm ./endpoint.csr
+rm ./endpoint.key
+openssl genrsa -out endpoint.key 4096
+openssl req -new -key endpoint.key -out endpoint.csr
+openssl x509 -req -days 300 -in endpoint.csr -CA ca/LeadLab_root_cert_TEST.pem -CAkey ca/LeadLab_root_cert_TEST.key -set_serial 4167245126451912541925481541687546 -out endpoint.crt
+

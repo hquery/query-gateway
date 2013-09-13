@@ -22,7 +22,7 @@ Install Instructions
 --------------------
 
 See the query composer for installation instructions for both the composer and gateway
-  http://github.com/hquery
+  [https://github.com/scoophealth](https://github.com/scoophealth)
 
 License
 -------

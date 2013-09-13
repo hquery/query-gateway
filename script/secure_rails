@@ -21,9 +21,9 @@ module Rails
                       :environment => (ENV['RAILS_ENV'] || "development").dup,
                       :daemonize => false,
                       :debugger => false,
-                      :pid => File.expand_path("tmp/pids/server.pid"),
+                      :pid => File.expand_path("tmp/pids/secure_server.pid"),
                       :config => File.expand_path("config.ru"),
-                      :SSLEnable => false,
+                      :SSLEnable => true,
                       :SSLVerifyClient => OpenSSL::SSL::VERIFY_PEER|OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT,
                       :SSLPrivateKey => OpenSSL::PKey::RSA.new(File.open(SERVER_KEY_PATH).read),
                       :SSLCertificate => OpenSSL::X509::Certificate.new(File.open(SERVER_CERT_PATH).read),
@@ -34,6 +34,6 @@ module Rails
   end
 end
 
-APP_PATH = File.expand_path('../../config/application', __FILE__)
-require File.expand_path('../../config/boot', __FILE__)
+APP_PATH = File.expand_path('../../config/application',  __FILE__)
+require File.expand_path('../../config/boot',  __FILE__)
 require 'rails/commands'
