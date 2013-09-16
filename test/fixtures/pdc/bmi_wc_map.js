@@ -1,4 +1,5 @@
-// Extends Query Title: BMI or WC documented in last 2 yrs age > 19
+// Reference Number: PDC-09
+// Query Title: BMI or WC documented in last 2 yrs age > 19
 //
 // Illustrates retrieval of height, weight and waist circumference values from
 // clinical observations and the calculation of BMI based on this information.
