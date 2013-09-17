@@ -1,5 +1,5 @@
 // Reference Number: PDC-028
-// Supports Query Title: Diabetes & BP <= 130/80 in last yr
+// Query Title: Diabetes & BP <= 130/80 in last yr
 
 function map(patient) {
 
@@ -18,7 +18,6 @@ function map(patient) {
     var bpSystolicLimit = 130;
     var bpDiastolicLimit = 80;
 
-    var resultList = patient.results();
     var problemList = patient.conditions();
     var vitalSignList = patient.vitalSigns();
 
@@ -36,7 +35,7 @@ function map(patient) {
     }
 
     // Checks if patient is older than ageLimit
-    function population(patient) {
+    function population() {
         return true;
     }
 
@@ -50,11 +49,17 @@ function map(patient) {
         return vitalSignList.match(targetBloodPressureDiastolicCodes, start, end).length;
     }
 
+    function hasBloodPressure() {
+        return hasSystolicBloodPressure() && hasDiastolicBloodPressure();
+    }
+
     // Checks for diabetic patients
     function hasProblemCode() {
         return problemList.regex_match(targetProblemCodes).length;
     }
 
+    // Checks for Blood Pressure value matching conditions
+    // TODO - Assumes diastolic is next vital sign after systolic! Can we do better?
     function hasBloodPressureMatchingIndicators() {
         for (var i = 0; i < vitalSignList.length - 1; i++) {
             var bpSystolic = 0;
@@ -63,7 +68,9 @@ function map(patient) {
                 if (vitalSignList[i].values()[0].units() == "mm[Hg]") {
                     bpSystolic = vitalSignList[i].values()[0].scalar();
                     //emit('systolic['+i+']: '+vitalSignList[i].values()[0].scalar(), 1);
-                } // TODO - assumes diastolic is next vital sign after systolic!  Can we do better?
+                }
+            }
+            if (vitalSignList[i+1].includesCodeFrom(targetBloodPressureDiastolicCodes)) {
                 if (vitalSignList[i+1].values()[0].units() == "mm[Hg]") {
                     bpDiastolic = vitalSignList[i+1].values()[0].scalar();
                     //emit('diastolic['+(i+1)+']: '+vitalSignList[i+1].values()[0].scalar(), 1);
@@ -79,13 +86,10 @@ function map(patient) {
 
     emit('total_pop', 1);
 
-    if (population(patient)) {
-        //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);
-        emit("pop", 1);
-
+    if (population()) {
         if (hasProblemCode()) {
             emit("diabetics", 1); //+patient.given()+" "+patient.last(), 1);
-            if (hasBloodPressureMatchingIndicators()) {
+            if (hasBloodPressure() && hasBloodPressureMatchingIndicators()) {
                 emit("diabetics_bp", 1); //+patient.given()+" "+patient.last(), 1);
             } else {
                 emit("diabetics_bp", 0);

@@ -7,14 +7,14 @@ function map(patient) {
         "SNOMED-CT": ["12866006", "394678003"]
     };
 
-    var ageLimit = 65;
+    var ageLimit = 64;
     var immunizationList = patient.immunizations();
 
     var now = new Date(2013, 7, 19);
 
     // Checks if patient is older than ageLimit
     function population(patient) {
-        return (patient.age(now) >= ageLimit);
+        return (patient.age(now) > ageLimit);
     }
 
     // Checks for existence of Pneumovax
@@ -27,6 +27,7 @@ function map(patient) {
     }
 
     if (population(patient)) {
+        emit("patients_>64", 1);
         if (hasImmunization()) {
             emit("senior_pop_pneumovax", 1);
         }

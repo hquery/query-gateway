@@ -18,9 +18,8 @@ class PdcJobTest < ActiveSupport::TestCase
     job.invoke_job
     query.reload
     results = query.result
-    assert_equal 9, results['>19_pop']
-    assert_equal 0, results['>19_pop_overweight_wc']
-    assert_equal 1, results['>19_pop_bmi>30']
+    assert_equal results['has_recorded_values'], 1
+    assert_equal results['patients_>19'], 9
   end
 
   test "colon screening query works properly" do
@@ -45,23 +44,18 @@ class PdcJobTest < ActiveSupport::TestCase
     job.invoke_job
     query.reload
     results = query.result
-    assert_equal results["B01AC"].to_i, 4
-    assert_equal results["C01AA"].to_i, 2
-    assert_equal results["C01CA"].to_i, 1
-    assert_equal results["C03CA"].to_i, 3
-    assert_equal results["C03DA"].to_i, 3
-    assert_equal results["C07AG"].to_i, 3
-    assert_equal results["C09AA"].to_i, 3
-    assert_equal results["C10AA"].to_i, 4
-    assert_equal results["H03AA"].to_i, 2
-    assert_equal results["M01AE"].to_i, 2
-    assert_equal results["N02AA"].to_i, 2
-    assert_equal results["N02BE"].to_i, 4
-    assert_equal results["N05BA"].to_i, 3
-    assert_equal results["N06AB"].to_i, 1
-    assert_equal results["R03AC"].to_i, 3
-    assert_equal results["R03BA"].to_i, 2
-    assert_equal results["R03BB"].to_i, 3
+    assert_equal results["B01"].to_i, 4
+    assert_equal results["C01"].to_i, 3
+    assert_equal results["C03"].to_i, 6
+    assert_equal results["C07"].to_i, 3
+    assert_equal results["C09"].to_i, 3
+    assert_equal results["C10"].to_i, 4
+    assert_equal results["H03"].to_i, 2
+    assert_equal results["M01"].to_i, 2
+    assert_equal results["N02"].to_i, 6
+    assert_equal results["N05"].to_i, 3
+    assert_equal results["N06"].to_i, 1
+    assert_equal results["R03"].to_i, 8
   end
 
   test "diabetes and bp query works properly" do
@@ -74,10 +68,8 @@ class PdcJobTest < ActiveSupport::TestCase
     query.reload
     results = query.result
     assert_equal 9, results['total_pop']
-    assert_equal 9, results['pop']
     assert_equal 3, results['diabetics']
     assert_equal 0, results['diabetics_bp']
-    #assert_equal 'xyz', results
   end
 
   test "diabetes hgba1c query works properly" do
@@ -144,6 +136,7 @@ class PdcJobTest < ActiveSupport::TestCase
     query.reload
     results = query.result
     assert_equal results["total_pneumovax"].to_i, 2
+    assert_equal results["patients_>64"].to_i, 7
     assert_equal results["senior_pop_pneumovax"].to_i, 1
   end
 
@@ -212,8 +205,8 @@ class PdcJobTest < ActiveSupport::TestCase
     query.reload
     results = query.result
     assert_equal results["senior_pop"].to_i, 7
-    assert_equal results["senior_pop_digoxin_creatinine"].to_i, 2
-    assert_equal results["total_pop"].to_i, 9
+    assert_equal results["senior_pop_impaired_renal"].to_i, 2
+    assert_equal results["senior_pop_renal_digoxin"].to_i, 2
   end
 
   test "secondary statins query works properly" do

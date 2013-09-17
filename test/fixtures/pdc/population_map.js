@@ -7,11 +7,11 @@ function map(patient) {
     var gender;
 
     if (patient.gender() == "M") {
-        gender = "male"
+        gender = "male";
         emit("total_male", 1);
     }
     else {
-        gender = "female"
+        gender = "female";
         emit("total_female", 1)
     }
 

@@ -7,12 +7,17 @@ function map(patient) {
             "02245426", "02048264", "02048272", "0021415", "00698296", "00647470"]
     };
 
-    var targetLabCodes = {
-        "LOINC": ["45066-8", "2160-0", "33914-3", "50044-7", "48642-3", "48643-1"]
+    var targetCreatinineCodes = {
+        "LOINC": ["45066-8", "14682-9", "2160-0", "33914-3", "50044-7", "48642-3", "48643-1"]
+    };
+
+    var targetEGFRCodes = {
+        "LOINC": ["33914-3"]
     };
 
     var ageLimit = 65;
     var creatinineLimit = 150; // Measured in umol/L
+    var egfrLimit = 50; // Measured in ml/min
     var digoxinLimit = .125; // Measured in MG
 
     var drugList = patient.medications();
@@ -36,9 +41,14 @@ function map(patient) {
         return (patient.age(now) >= ageLimit);
     }
 
-    // Checks for Creatinine labs performed within the last year
-    function hasLabCode() {
-        return resultList.match(targetLabCodes, addDate(now, -1, 0, 0), end).length;
+    // Checks for Creatinine labs performed within the last 10 years
+    function hasCreatinineCode() {
+        return resultList.match(targetCreatinineCodes, addDate(now, -10, 0, 0), end).length;
+    }
+
+    // Checks for eGFR labs performed within the last 10 years
+    function hasEGFRCode() {
+        return resultList.match(targetEGFRCodes, addDate(now, -10, 0, 0), end).length;
     }
 
     // Checks for existence of Digoxin
@@ -46,17 +56,44 @@ function map(patient) {
         return drugList.regex_match(targetMedicationCodes, start, end).length;
     }
 
+    // Checks for impaired renal function
+    function hasImpairedRenalFunctionCode() {
+        return hasCreatinineCode() || hasEGFRCode();
+    }
+
     // Checks if Creatinine meets parameters
-    function hasMatchingLabValue() {
+    function hasMatchingCreatinineValue() {
         for (var i = 0; i < resultList.length; i++) {
-            if (resultList[i].values()[0].units() == "umol/L") {
-                if (resultList[i].values()[0].scalar() > creatinineLimit) {
-                    //emit("Abnormal Creatinine: " + patient.given() + " " + patient.last(), 1);
-                    return true;
+            if (resultList[i].includesCodeFrom(targetCreatinineCodes)) {
+                if (resultList[i].values()[0].units() == "umol/L") {
+                    if (resultList[i].values()[0].scalar() > creatinineLimit) {
+                        //emit("Abnormal Creatinine: " + patient.given() + " " + patient.last(), 1);
+                        return true;
+                    }
                 }
             }
         }
         return false;
+    }
+
+    // Checks if eGFR meets parameters
+    function hasMatchingEGFRValue() {
+        for (var i = 0; i < resultList.length; i++) {
+            if (resultList[i].includesCodeFrom(targetEGFRCodes)) {
+                if (resultList[i].values()[0].units() == "ml/min") {
+                    if (resultList[i].values()[0].scalar() > egfrLimit) {
+                        //emit("Abnormal Creatinine: " + patient.given() + " " + patient.last(), 1);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    // Checks if Lab values indicate impared renal function
+    function hasImpairedRenalLabValues() {
+        return hasMatchingCreatinineValue() || hasMatchingEGFRValue();
     }
 
     // Checks if existing Digoxin is current
@@ -96,17 +133,18 @@ function map(patient) {
         return false;
     }
 
-    emit('total_pop', 1);
-
     if (population(patient)) {
         //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);
         emit("senior_pop", 1);
-        if (hasLabCode() && hasMedication()) {
-            //emit("Digoxin: " + patient.given() + " " + patient.last(), 1);
-            //emit("Creatinine: " + patient.given() + " " + patient.last(), 1);
-            if (hasMatchingLabValue() && hasCurrentMedication() && hasMatchingMedicationDose()) {
-                emit("senior_pop_digoxin_creatinine", 1);
+        if(hasImpairedRenalFunctionCode() && hasImpairedRenalLabValues()) {
+            emit("senior_pop_impaired_renal", 1);
+            if(hasMedication() && hasCurrentMedication() && hasMatchingMedicationDose()) {
+                emit("senior_pop_renal_digoxin", 1);
+            } else {
+                emit("senior_pop_renal_digoxin", 0);
             }
+        } else {
+            emit("senior_pop_impaired_renal", 0);
         }
     }
 }
