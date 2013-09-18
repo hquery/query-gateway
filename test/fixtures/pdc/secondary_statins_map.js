@@ -16,6 +16,32 @@ function map(patient) {
 
     var now = new Date(2013, 2, 10);
 
+    // Shifts date by year, month, and date specified
+    function addDate(date, y, m, d) {
+        var n = new Date(date);
+        n.setFullYear(date.getFullYear() + (y || 0));
+        n.setMonth(date.getMonth() + (m || 0));
+        n.setDate(date.getDate() + (d || 0));
+        return n;
+    }
+
+    // a and b are javascript Date objects
+    // Returns a with the 1.2x calculated date offset added in
+    function endDateOffset(a, b) {
+        var start = new Date(a);
+        var end = new Date(b);
+        var diff = Math.floor((end-start) / (1000*3600*24));
+        var offset = Math.floor(1.2 * diff);
+        return addDate(start, 0, 0, offset);
+    }
+
+    function isCurrentDrug(drug) {
+        var drugStart = drug.indicateMedicationStart().getTime();
+        var drugEnd = drug.indicateMedicationStop().getTime();
+
+        return (endDateOffset(drugStart, drugEnd) >= now && drugStart <= now);
+    }
+
     // Checks for diabetic patients
     function hasProblemCode() {
         return problemList.regex_match(targetProblemCodes).length;
@@ -43,13 +69,6 @@ function map(patient) {
         }
 
         return false;
-    }
-
-    function isCurrentDrug(drug) {
-        var drugStart = drug.indicateMedicationStart().getTime();
-        var drugEnd = drug.indicateMedicationStop().getTime();
-
-        return (drugEnd >= now && drugStart <= now);
     }
 
     if (hasCurrentDrugCode()) {

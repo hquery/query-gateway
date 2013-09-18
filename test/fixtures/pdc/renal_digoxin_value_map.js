@@ -36,6 +36,23 @@ function map(patient) {
         return n;
     }
 
+    // a and b are javascript Date objects
+    // Returns a with the 1.2x calculated date offset added in
+    function endDateOffset(a, b) {
+        var start = new Date(a);
+        var end = new Date(b);
+        var diff = Math.floor((end-start) / (1000*3600*24));
+        var offset = Math.floor(1.2 * diff);
+        return addDate(start, 0, 0, offset);
+    }
+
+    function isCurrentDrug(drug) {
+        var drugStart = drug.indicateMedicationStart().getTime();
+        var drugEnd = drug.indicateMedicationStop().getTime();
+
+        return (endDateOffset(drugStart, drugEnd) >= now && drugStart <= now);
+    }
+
     // Checks if patient is older than ageLimit
     function population(patient) {
         return (patient.age(now) >= ageLimit);
@@ -102,11 +119,7 @@ function map(patient) {
             var tmpArray = new hQuery.CodedEntryList();
             tmpArray[0] = drugList[i];
             if (tmpArray.match(targetMedicationCodes)) {
-                var drugStart = drugList[i].indicateMedicationStart().getTime();
-                var drugEnd = drugList[i].indicateMedicationStop().getTime();
-
-                // Check if drug is within the right time
-                if (drugEnd >= now && drugStart <= now) {
+                if(isCurrentDrug(drugList[i])) {
                     return true;
                 }
             }
