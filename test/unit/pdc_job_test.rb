@@ -45,7 +45,7 @@ class PdcJobTest < ActiveSupport::TestCase
     query.reload
     results = query.result
     assert_equal results["B01"].to_i, 4
-    assert_equal results["C01"].to_i, 3
+    #assert_equal results["C01"].to_i, 3 #Exists only if current medication detection is disabled
     assert_equal results["C03"].to_i, 6
     assert_equal results["C07"].to_i, 3
     assert_equal results["C09"].to_i, 3

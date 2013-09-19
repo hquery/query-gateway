@@ -3,54 +3,68 @@
 
 function map(patient) {
     var atcLevel = 2; // Level definition based on definition found on Wikipedia
+    var atcCutoff = getATCCodeLength(atcLevel);
 
-    var drugClasses = findATCDrugClasses(patient.medications(), atcLevel);
+    var drugList = patient.medications();
 
-    // Returns list of all ATC medication codes
-    function findATCDrugClasses(drugs, level) {
-        var list = [];
-        var cutoff;
+    var now = new Date(2013, 3, 10);
 
-        // Define ATC cutoff levels
-        switch(level) {
+    // Shifts date by year, month, and date specified
+    function addDate(date, y, m, d) {
+        var n = new Date(date);
+        n.setFullYear(date.getFullYear() + (y || 0));
+        n.setMonth(date.getMonth() + (m || 0));
+        n.setDate(date.getDate() + (d || 0));
+        return n;
+    }
+
+    // a and b are javascript Date objects
+    // Returns a with the 1.2x calculated date offset added in
+    function endDateOffset(a, b) {
+        var start = new Date(a);
+        var end = new Date(b);
+        var diff = Math.floor((end - start) / (1000 * 3600 * 24));
+        var offset = Math.floor(1.2 * diff);
+        return addDate(start, 0, 0, offset);
+    }
+
+    function isCurrentDrug(drug) {
+        var drugStart = drug.indicateMedicationStart().getTime();
+        var drugEnd = drug.indicateMedicationStop().getTime();
+
+        return (endDateOffset(drugStart, drugEnd) >= now && drugStart <= now);
+    }
+
+    // Define ATC cutoff levels
+    function getATCCodeLength(val) {
+        switch (val) {
             case 1:
-                cutoff = 1;
-                break;
+                return 1;
             case 2:
-                cutoff = 3;
-                break;
+                return 3;
             case 3:
-                cutoff = 4;
-                break;
+                return 4;
             case 4:
-                cutoff = 5;
-                break;
-            /* Prevent data leakage - only want classes, not specific substance
-             case 5:
-             cutoff = 7;
-             break;
-             */
+                return 5;
+            case 5:
+                return 7;
             default:
-                return list;
+                return 0;
         }
+    }
 
-        for(var i = 0; i < drugs.length; i++) {
+    for (var i = 0; i < drugList.length; i++) {
+        if (isCurrentDrug(drugList[i])) {
             // Get all represented codes for each drug
-            var codes = drugs[i].medicationInformation().codedProduct();
+            var codes = drugList[i].medicationInformation().codedProduct();
 
             // Filter out only ATC codes
-            for(var j = 0; j < codes.length; j++) {
-                if(codes[j].codeSystemName() == "whoATC") {
+            for (var j = 0; j < codes.length; j++) {
+                if (codes[j].codeSystemName() == "whoATC") {
                     // Truncate to appropriate level length
-                    list.push(codes[j].code().substring(0, cutoff));
+                    emit(codes[j].code().substring(0, atcCutoff), 1);
                 }
             }
         }
-
-        return list;
-    }
-
-    for(var i = 0; i < drugClasses.length; i++) {
-        emit(drugClasses[i], 1);
     }
 }
