@@ -5,7 +5,7 @@
 function map(patient) {
     var ageLimit = 65;
     var drugLimit = 5; // Change this value to number of active medications to count
-    var now = new Date(2013, 2, 10);
+    var now = new Date(2013, 10, 30);
 
     var drugList = patient.medications();
     var currentDrugs = findCurrentDrugs(drugList);
@@ -73,11 +73,11 @@ function map(patient) {
 
     emit('total_population', 1);
     if (patient.age(now) > ageLimit) {
-        emit('sampled_number', 1);
+        emit('denominator_sampled_number', 1);
 
         // Adds patient to count if over ageLimit & over drugLimit
         if (currentDrugs > drugLimit) {
-            emit('polypharmacy_number', 1);
+            emit('numerator_polypharmacy_number', 1);
         }
     }
 }

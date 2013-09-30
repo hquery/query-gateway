@@ -14,7 +14,7 @@ function map(patient) {
     var drugList = patient.medications();
     var problemList = patient.conditions();
 
-    var now = new Date(2013, 2, 10);
+    var now = new Date(2013, 10, 30);
 
     // Shifts date by year, month, and date specified
     function addDate(date, y, m, d) {
@@ -72,9 +72,9 @@ function map(patient) {
     }
 
     if (hasCurrentDrugCode()) {
-        emit("has_current_statin", 1);
+        emit("denominator_has_current_statin", 1);
         if(hasProblemCode()) {
-            emit("mi_or_stroke", 1);
+            emit("numerator_mi_or_stroke", 1);
         }
     }
 }

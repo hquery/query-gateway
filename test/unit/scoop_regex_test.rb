@@ -18,11 +18,11 @@ class ScoopRegexTest < ActiveSupport::TestCase
     job.invoke_job
     query.reload
     results = query.result
-    #assert_equal 'xyz', results
-    assert_equal 9, results['>19_pop']
-    assert_equal 0, results['>19_pop_overweight_wc']
-    assert_equal 1, results['>19_pop_bmi>30']
-    assert_equal 1, results['hasHeight']
+    assert_equal 10, results['>19_pop'].to_i
+    assert_equal 2, results['>19_pop_bmi>30'].to_i
+    assert_equal 1, results['>19_pop_overweight_wc'].to_i
+    assert_equal 2, results['hasHeight'].to_i
+    assert_equal 10, results['total_pop'].to_i
   end
 
 end

@@ -10,7 +10,7 @@ function map(patient) {
     var ageLimit = 64;
     var immunizationList = patient.immunizations();
 
-    var now = new Date(2013, 7, 19);
+    var now = new Date(2013, 10, 30);
 
     // Checks if patient is older than ageLimit
     function population(patient) {
@@ -27,9 +27,9 @@ function map(patient) {
     }
 
     if (population(patient)) {
-        emit("patients_>64", 1);
+        emit("denominator_patients_>64", 1);
         if (hasImmunization()) {
-            emit("senior_pop_pneumovax", 1);
+            emit("numerator_senior_pop_pneumovax", 1);
         }
     }
 }

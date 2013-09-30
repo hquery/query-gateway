@@ -11,7 +11,7 @@ function map(patient) {
     var ageLimitHigh = 74;
     var resultList = patient.results();
 
-    var now = new Date(2013, 7, 19);
+    var now = new Date(2013, 10, 30);
     var start = addDate(now, -2, 0, 0);
     var end = addDate(now, 0, 0, 0);
 
@@ -35,9 +35,9 @@ function map(patient) {
     }
 
     if (population(patient)) {
-        emit("patients_50-74", 1);
+        emit("denominator_patients_50-74", 1);
         if (hasLabCode()) {
-            emit("has_hemoccult_result", 1);
+            emit("numerator_has_hemoccult_result", 1);
         }
     }
 }

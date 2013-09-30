@@ -23,7 +23,7 @@ function map(patient) {
     var drugList = patient.medications();
     var resultList = patient.results();
 
-    var now = new Date(2013, 5, 12);
+    var now = new Date(2013, 10, 30);
     var start = new Date(2000, 6, 1);
     var end = addDate(now, 0, 1, 0);
 
@@ -150,14 +150,14 @@ function map(patient) {
         //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);
         emit("senior_pop", 1);
         if(hasImpairedRenalFunctionCode() && hasImpairedRenalLabValues()) {
-            emit("senior_pop_impaired_renal", 1);
+            emit("denominator_senior_pop_impaired_renal", 1);
             if(hasMedication() && hasCurrentMedication() && hasMatchingMedicationDose()) {
-                emit("senior_pop_renal_digoxin", 1);
+                emit("numerator_senior_pop_renal_digoxin", 1);
             } else {
-                emit("senior_pop_renal_digoxin", 0);
+                emit("numerator_senior_pop_renal_digoxin", 0);
             }
         } else {
-            emit("senior_pop_impaired_renal", 0);
+            emit("denominator_senior_pop_impaired_renal", 0);
         }
     }
 }

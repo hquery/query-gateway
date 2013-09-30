@@ -7,7 +7,7 @@ function map(patient) {
 
     var drugList = patient.medications();
 
-    var now = new Date(2013, 3, 10);
+    var now = new Date(2013, 10, 30);
 
     // Shifts date by year, month, and date specified
     function addDate(date, y, m, d) {

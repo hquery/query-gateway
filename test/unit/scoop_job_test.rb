@@ -18,7 +18,7 @@ class ScoopJobTest < ActiveSupport::TestCase
     job.invoke_job
     query.reload
     results = query.result
-    assert_equal results["male_>65"].to_i, 4
+    assert_equal 4, results["male_>65"].to_i
   end
 
   test "graphical query works properly" do
@@ -32,9 +32,9 @@ class ScoopJobTest < ActiveSupport::TestCase
     results = query.result
     assert_not_nil results
     rvalues = results["{\"type\"=>\"population\"}"]['values']
-    assert_equal rvalues["filtered_pop_sum"].to_i, 4
-    assert_equal rvalues["unfound_pop_sum"].to_i, 5
-    assert_equal rvalues["total_pop_sum"].to_i, 9
+    assert_equal 4, rvalues["filtered_pop_sum"].to_i
+    assert_equal 6, rvalues["unfound_pop_sum"].to_i
+    assert_equal 10, rvalues["total_pop_sum"].to_i
   end
 
   test "renal digoxin query works properly" do
@@ -46,9 +46,9 @@ class ScoopJobTest < ActiveSupport::TestCase
     job.invoke_job
     query.reload
     results = query.result
-    assert_equal results["senior_pop"].to_i, 7
-    assert_equal results["senior_pop_digoxin_creatinine_abnormal"].to_i, 2
-    assert_equal results["total_pop"].to_i, 9
+    assert_equal 7, results["senior_pop"].to_i
+    assert_equal 2, results["senior_pop_digoxin_creatinine_abnormal"].to_i
+    assert_equal 10, results["total_pop"].to_i
   end
 
   test "vital signs overweight query works properly" do
@@ -60,9 +60,9 @@ class ScoopJobTest < ActiveSupport::TestCase
     job.invoke_job
     query.reload
     results = query.result
-    assert_equal 9, results['>19_pop']
-    assert_equal 0, results['>19_pop_overweight_wc']
-    assert_equal 1, results['>19_pop_bmi>30']
+    assert_equal 10, results['>19_pop'].to_i
+    assert_equal 2, results['>19_pop_bmi>30'].to_i
+    assert_equal 1, results['>19_pop_overweight_wc'].to_i
   end
 
   test "vital signs query works properly" do
@@ -74,15 +74,15 @@ class ScoopJobTest < ActiveSupport::TestCase
     job.invoke_job
     query.reload
     results = query.result
-    assert_equal 9, results['total_pop']
-    assert_equal 9, results['>19_pop']
-    assert_equal 1, results['>19_pop_heartrate']
-    assert_equal 2, results['>19_pop_bp_systolic']
-    assert_equal 2, results['>19_pop_bp_diastolic']
-    assert_equal 1, results['>19_pop_temperature']
-    assert_equal 1, results['>19_pop_height']
-    assert_equal 1, results['>19_pop_weight']
-    assert_equal 1, results['>19_pop_wc']
+    assert_equal 10, results['>19_pop'].to_i
+    assert_equal 3, results['>19_pop_bp_diastolic'].to_i
+    assert_equal 3, results['>19_pop_bp_systolic'].to_i
+    assert_equal 1, results['>19_pop_heartrate'].to_i
+    assert_equal 2, results['>19_pop_height'].to_i
+    assert_equal 1, results['>19_pop_temperature'].to_i
+    assert_equal 1, results['>19_pop_wc'].to_i
+    assert_equal 2, results['>19_pop_weight'].to_i
+    assert_equal 10, results['total_pop'].to_i
   end
 
 end

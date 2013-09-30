@@ -9,7 +9,7 @@ function map(patient) {
     var ageLimit = 45;
     var resultList = patient.results();
 
-    var now = new Date(2013, 7, 19);
+    var now = new Date(2013, 10, 30);
     var start = addDate(now, -3, 0, 0);
     var end = addDate(now, 0, 0, 0);
 
@@ -34,9 +34,9 @@ function map(patient) {
 
     if (population(patient)) {
         //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);
-        emit("patients_>45", 1);
+        emit("denominator_patients_>45", 1);
         if (hasLabCode()) {
-            emit("has_blood_sugar_result", 1);
+            emit("numerator_has_blood_sugar_result", 1);
         }
     }
 }

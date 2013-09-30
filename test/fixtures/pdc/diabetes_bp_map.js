@@ -21,7 +21,7 @@ function map(patient) {
     var problemList = patient.conditions();
     var vitalSignList = patient.vitalSigns();
 
-    var now = new Date(2013, 7, 19);
+    var now = new Date(2013, 10, 30);
     var start = addDate(now, -1, 0, 0);  // last 12 months
     var end = addDate(now, 0, 0, 0);
 
@@ -88,11 +88,11 @@ function map(patient) {
 
     if (population()) {
         if (hasProblemCode()) {
-            emit("diabetics", 1); //+patient.given()+" "+patient.last(), 1);
+            emit("denominator_diabetics", 1); //+patient.given()+" "+patient.last(), 1);
             if (hasBloodPressure() && hasBloodPressureMatchingIndicators()) {
-                emit("diabetics_bp", 1); //+patient.given()+" "+patient.last(), 1);
+                emit("numerator_diabetics_bp", 1); //+patient.given()+" "+patient.last(), 1);
             } else {
-                emit("diabetics_bp", 0);
+                emit("numerator_diabetics_bp", 0);
             }
         }
     }
