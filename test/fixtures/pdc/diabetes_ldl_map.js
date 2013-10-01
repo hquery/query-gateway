@@ -41,9 +41,11 @@ function map(patient) {
     // Checks if ldl meets parameters
     function hasMatchingLabValue() {
         for (var i = 0; i < resultList.length; i++) {
-            if (resultList[i].values()[0].units() == "mmol/L") {
-                if (resultList[i].values()[0].scalar() <= ldlLimit) {
-                    return true;
+            if (resultList[i].includesCodeFrom(targetLabCodes) && resultList[i].timeStamp() > start) {
+                if (resultList[i].values()[0].units().toLowerCase() == "mmol/L".toLowerCase()) {
+                    if (resultList[i].values()[0].scalar() <= ldlLimit) {
+                        return true;
+                    }
                 }
             }
         }

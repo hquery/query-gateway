@@ -59,23 +59,29 @@ function map(patient) {
     }
 
     // Checks for Blood Pressure value matching conditions
-    // TODO - Assumes diastolic is next vital sign after systolic! Can we do better?
+    // Systolic and diastolic records do not need to be sequential to return true
     function hasBloodPressureMatchingIndicators() {
-        for (var i = 0; i < vitalSignList.length - 1; i++) {
-            var bpSystolic = 0;
-            var bpDiastolic = 0;
-            if (vitalSignList[i].includesCodeFrom(targetBloodPressureSystolicCodes)) {
-                if (vitalSignList[i].values()[0].units() == "mm[Hg]") {
-                    bpSystolic = vitalSignList[i].values()[0].scalar();
+        var bpSystolic = Number.MAX_VALUE;
+        var bpDiastolic = Number.MAX_VALUE;
+        for (var i = 0; i < vitalSignList.length; i++) {
+            if (vitalSignList[i].includesCodeFrom(targetBloodPressureSystolicCodes) &&
+                vitalSignList[i].timeStamp() > start) {
+                if (vitalSignList[i].values()[0].units().toLowerCase() == "mm[Hg]".toLowerCase()) {
+                    if(vitalSignList[i].values()[0].scalar() < bpSystolic) {
+                        bpSystolic = vitalSignList[i].values()[0].scalar();
+                    }
                     //emit('systolic['+i+']: '+vitalSignList[i].values()[0].scalar(), 1);
                 }
-            }
-            if (vitalSignList[i+1].includesCodeFrom(targetBloodPressureDiastolicCodes)) {
-                if (vitalSignList[i+1].values()[0].units() == "mm[Hg]") {
-                    bpDiastolic = vitalSignList[i+1].values()[0].scalar();
+            } else if (vitalSignList[i].includesCodeFrom(targetBloodPressureDiastolicCodes) &&
+                       vitalSignList[i].timeStamp() > start) {
+                if (vitalSignList[i].values()[0].units().toLowerCase() == "mm[Hg]".toLowerCase()) {
+                    if(vitalSignList[i].values()[0].scalar() < bpDiastolic) {
+                        bpDiastolic = vitalSignList[i].values()[0].scalar();
+                    }
                     //emit('diastolic['+(i+1)+']: '+vitalSignList[i+1].values()[0].scalar(), 1);
                 }
             }
+
             if (bpSystolic > 0 && bpDiastolic > 0 &&
                 bpSystolic <= bpSystolicLimit && bpDiastolic <= bpDiastolicLimit) {
                 return true

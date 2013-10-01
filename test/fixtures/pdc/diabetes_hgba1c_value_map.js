@@ -41,9 +41,11 @@ function map(patient) {
     // Checks if HGBA1C meets parameters
     function hasMatchingLabValue() {
         for (var i = 0; i < resultList.length; i++) {
-            if (resultList[i].values()[0].units() == "%") {
-                if (resultList[i].values()[0].scalar() <= hgba1cLimit) {
-                    return true;
+            if (resultList[i].includesCodeFrom(targetLabCodes) && resultList[i].timeStamp() > start) {
+                if (resultList[i].values()[0].units().toLowerCase() == "%".toLowerCase()) {
+                    if (resultList[i].values()[0].scalar() <= hgba1cLimit) {
+                        return true;
+                    }
                 }
             }
         }

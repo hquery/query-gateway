@@ -206,7 +206,7 @@ class PdcJobTest < ActiveSupport::TestCase
     query.reload
     results = query.result
     assert_equal 7, results["senior_pop"].to_i
-    assert_equal 2, results["denominator_senior_pop_impaired_renal"].to_i
+    assert_equal 3, results["denominator_senior_pop_impaired_renal"].to_i
     assert_equal 2, results["numerator_senior_pop_renal_digoxin"].to_i
   end
 

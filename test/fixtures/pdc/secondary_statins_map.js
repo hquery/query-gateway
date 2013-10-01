@@ -57,7 +57,7 @@ function map(patient) {
 
             // Filter out only ATC codes
             for(var j = 0; j < codes.length; j++) {
-                if(codes[j].codeSystemName() == "whoATC") {
+                if(codes[j].codeSystemName().toLowerCase() == "whoATC".toLowerCase()) {
                     if(targetDrugList.indexOf(codes[j].code().substring(0, 5)) > -1) {
                         emit("had_statins", 1);
                         if(isCurrentDrug(drugList[i])) {
