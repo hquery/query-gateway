@@ -47,6 +47,7 @@ class QueryJob < Struct.new(:format, :map, :reduce,:functions, :filter, :query_i
   end
 
   def self.find_job(job_id)
+    #TODO test this, method doesn't seem to be used anywhere
     #Delayed::Job.find(Moped::BSON::ObjectId.from_string(job_id))
     Delayed::Job.find(Moped::BSON::ObjectId(job_id))
   end
