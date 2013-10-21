@@ -22,11 +22,15 @@ class RecordsControllerTest < ActionController::TestCase
     post :create, {:content => e2e}
     assert_response 201
     db = Mongoid.default_session
-    #r = Mongoid.master['records'].find_one({:first => 'JOHN', :last => 'CLEESE'})
-    r = db['records'].where({:first => 'JOHN', :last => 'CLEESE'}).first
+    assert_equal 501, db[:records].find.count
+    #r = db['records'].where({:first => 'JOHN', :last => 'CLEESE'}).first
+    r = db[:records].where({ _id: 'oqG3YBB7rJvxeUAmPu2Mv2Q/cUji905I9IoJ4w==' }).first
     assert r
+    assert_equal "", r['medical_record_number']
+    assert_equal "", r['first']
+    assert_equal "", r['last']
     assert_equal -923616000, r['birthdate']
-    assert_equal "448000001", r['_id']
+    assert_equal "M", r['gender']
   end
 
 end

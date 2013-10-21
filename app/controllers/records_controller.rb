@@ -12,15 +12,31 @@ class RecordsController < ApplicationController
         if document_type == 'CA'
             pi = HealthDataStandards::Import::E2E::PatientImporter.instance
             patient = pi.parse_e2e(doc)
-            patient_id = patient.medical_record_number
             # By specifying the _id field we create a new document when a record
             # with that _id field doesn't already exist in the collection.  If
             # a record with the same _id field already exists, it is updated
             # with the new document.  For details see
             # http://docs.mongodb.org/manual/reference/method/db.collection.save/
-            if !patient_id.nil? && !patient_id.empty?
-              patient[:_id] = patient_id
+            patient_id = OpenSSL::Digest::SHA224.new
+            if !patient.medical_record_number.nil? && !patient.medical_record_number.empty?
+              patient_id << patient.medical_record_number
+              patient.medical_record_number = ""   # remove HIN
             end
+            if !patient.first.nil? && !patient.first.empty?
+              patient_id << patient.first
+              patient.first = ""                   # remove first name
+            end
+            if !patient.last.nil? && !patient.last.empty?
+              patient_id << patient.last
+              patient.last = ""                    # remove last name
+            end
+            if !patient.birthdate.nil? && !patient.birthdate.to_s.empty?
+              patient_id << patient.birthdate.to_s
+            end
+            if !patient.gender.nil? && !patient.gender.empty?
+              patient_id << patient.gender
+            end
+            patient[:_id] = Base64.strict_encode64(patient_id.digest)
             patient.save!
             render :text => 'E2E Document imported', :status => 201
         # C32
