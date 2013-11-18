@@ -15,7 +15,7 @@ function map(patient) {
     var resultList = patient.results();
     var problemList = patient.conditions();
 
-    var now = new Date(2013, 10, 30);
+    var now = new Date(); // new Date(2013, 10, 30);
     var start = addDate(now, -1, 0, 0);
     var end = addDate(now, 0, 0, 0);
 
@@ -42,8 +42,8 @@ function map(patient) {
     function hasMatchingLabValue() {
         for (var i = 0; i < resultList.length; i++) {
             if (resultList[i].includesCodeFrom(targetLabCodes) && resultList[i].timeStamp() > start) {
-                if (resultList[i].values()[0].units() != null
-                    && resultList[i].values()[0].units().toLowerCase() == "%".toLowerCase()) {
+                if (resultList[i].values()[0].units() !== null &&
+                    resultList[i].values()[0].units().toLowerCase() == "%".toLowerCase()) {
                     if (resultList[i].values()[0].scalar() <= hgba1cLimit) {
                         return true;
                     }

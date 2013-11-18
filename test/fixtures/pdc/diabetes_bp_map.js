@@ -21,7 +21,7 @@ function map(patient) {
     var problemList = patient.conditions();
     var vitalSignList = patient.vitalSigns();
 
-    var now = new Date(2013, 10, 30);
+    var now = new Date(); // new Date(2013, 10, 30);
     var start = addDate(now, -1, 0, 0);  // last 12 months
     var end = addDate(now, 0, 0, 0);
 
@@ -66,8 +66,8 @@ function map(patient) {
         for (var i = 0; i < vitalSignList.length; i++) {
             if (vitalSignList[i].includesCodeFrom(targetBloodPressureSystolicCodes) &&
                 vitalSignList[i].timeStamp() > start) {
-                if (if vitalSignList[i].values()[0].units() != null
-                    && vitalSignList[i].values()[0].units().toLowerCase() == "mm[Hg]".toLowerCase()) {
+                if (if vitalSignList[i].values()[0].units() !== null &&
+                    vitalSignList[i].values()[0].units().toLowerCase() == "mm[Hg]".toLowerCase()) {
                     if(vitalSignList[i].values()[0].scalar() < bpSystolic) {
                         bpSystolic = vitalSignList[i].values()[0].scalar();
                     }
@@ -75,8 +75,8 @@ function map(patient) {
                 }
             } else if (vitalSignList[i].includesCodeFrom(targetBloodPressureDiastolicCodes) &&
                        vitalSignList[i].timeStamp() > start) {
-                if (vitalSignList[i].values()[0].units() != null
-                    && vitalSignList[i].values()[0].units().toLowerCase() == "mm[Hg]".toLowerCase()) {
+                if (vitalSignList[i].values()[0].units() !== null &&
+                    vitalSignList[i].values()[0].units().toLowerCase() == "mm[Hg]".toLowerCase()) {
                     if(vitalSignList[i].values()[0].scalar() < bpDiastolic) {
                         bpDiastolic = vitalSignList[i].values()[0].scalar();
                     }

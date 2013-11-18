@@ -23,7 +23,7 @@ function map(patient) {
     var drugList = patient.medications();
     var resultList = patient.results();
 
-    var now = new Date(2013, 10, 30);
+    var now = new Date();  // new Date(2013, 10, 30);
     var start = new Date(2000, 6, 1);
     var end = addDate(now, 0, 1, 0);
 
@@ -83,8 +83,8 @@ function map(patient) {
         for (var i = 0; i < resultList.length; i++) {
             if (resultList[i].includesCodeFrom(targetCreatinineCodes) &&
                 resultList[i].timeStamp() > start) {
-                if (resultList[i].values()[0].units() != null
-                    && resultList[i].values()[0].units().toLowerCase() == "umol/L".toLowerCase()) {
+                if (resultList[i].values()[0].units() !== null &&
+                    resultList[i].values()[0].units().toLowerCase() == "umol/L".toLowerCase()) {
                     if (resultList[i].values()[0].scalar() > creatinineLimit) {
                         //emit("Abnormal Creatinine: " + patient.given() + " " + patient.last(), 1);
                         return true;
@@ -100,8 +100,8 @@ function map(patient) {
         for (var i = 0; i < resultList.length; i++) {
             if (resultList[i].includesCodeFrom(targetEGFRCodes) &&
                 resultList[i].timeStamp() > start) {
-                if (resultList[i].values()[0].units() != null
-                    && resultList[i].values()[0].units().toLowerCase() == "mL/min".toLowerCase()) {
+                if (resultList[i].values()[0].units() !== null &&
+                    resultList[i].values()[0].units().toLowerCase() == "mL/min".toLowerCase()) {
                     if (resultList[i].values()[0].scalar() > egfrLimit) {
                         //emit("Abnormal Creatinine: " + patient.given() + " " + patient.last(), 1);
                         return true;
@@ -139,8 +139,8 @@ function map(patient) {
             // If Digoxin, check for dose parameter
             for (var j = 0; j < codes.length; j++) {
                 if (codes[j].includedIn(targetMedicationCodes)) {
-                    if (drugList[i].values()[0].units() != null
-                        && drugList[i].values()[0].units().toLowerCase() == "MG".toLowerCase()) {
+                    if (drugList[i].values()[0].units() !== null &&
+                        drugList[i].values()[0].units().toLowerCase() == "MG".toLowerCase()) {
                         if (drugList[i].values()[0].scalar() > digoxinLimit) {
                             return true;
                         }
