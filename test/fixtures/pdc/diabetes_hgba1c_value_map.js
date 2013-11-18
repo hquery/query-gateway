@@ -15,7 +15,7 @@ function map(patient) {
     var resultList = patient.results();
     var problemList = patient.conditions();
 
-    var now = new Date(); // new Date(2013, 10, 30);
+    var now = new Date(2013, 10, 30);
     var start = addDate(now, -1, 0, 0);
     var end = addDate(now, 0, 0, 0);
 
@@ -58,9 +58,9 @@ function map(patient) {
         if(hasLabCode()) {
             emit("has_hgba1c_result", 1);
             if(hasMatchingLabValue()) {
-                emit("numerator_has_matching_hgba1c_value", 1)
+                emit("numerator_has_matching_hgba1c_value", 1);
             } else {
-                emit("numerator_has_matching_hgba1c_value", 0)
+                emit("numerator_has_matching_hgba1c_value", 0);
             }
         }
     }

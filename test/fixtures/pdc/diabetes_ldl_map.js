@@ -58,7 +58,7 @@ function map(patient) {
         if(hasLabCode()) {
             emit("has_ldl_result", 1);
             if(hasMatchingLabValue()) {
-                emit("numerator_has_matching_ldl_value", 1)
+                emit("numerator_has_matching_ldl_value", 1);
             }
         }
     }

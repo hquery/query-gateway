@@ -21,7 +21,7 @@ function map(patient) {
     var problemList = patient.conditions();
     var vitalSignList = patient.vitalSigns();
 
-    var now = new Date(); // new Date(2013, 10, 30);
+    var now = new Date(2013, 10, 30);
     var start = addDate(now, -1, 0, 0);  // last 12 months
     var end = addDate(now, 0, 0, 0);
 
