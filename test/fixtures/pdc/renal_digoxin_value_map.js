@@ -23,7 +23,7 @@ function map(patient) {
     var drugList = patient.medications();
     var resultList = patient.results();
 
-    var now = new Date();  // new Date(2013, 10, 30);
+    var now = new Date(2013, 10, 30);
     var start = new Date(2000, 6, 1);
     var end = addDate(now, 0, 1, 0);
 
