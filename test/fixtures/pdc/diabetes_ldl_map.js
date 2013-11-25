@@ -62,4 +62,8 @@ function map(patient) {
             }
         }
     }
+
+    // Empty Case
+    emit("numerator_has_matching_ldl_value", 0);
+    emit("denominator_diabetics", 0);
 }

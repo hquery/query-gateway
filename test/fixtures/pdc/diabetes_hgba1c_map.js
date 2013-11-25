@@ -40,8 +40,10 @@ function map(patient) {
         emit("denominator_diabetics", 1);
         if(hasLabCode()) {
             emit("numerator_has_hgba1c_result", 1);
-        } else {
-            emit("numerator_has_hgba1c_result", 0);
         }
     }
+
+    // Empty Case
+    emit("numerator_has_hgba1c_result", 0);
+    emit("denominator_diabetics", 0);
 }

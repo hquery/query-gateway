@@ -78,4 +78,8 @@ function map(patient) {
             emit("numerator_no_mi_or_stroke", 1);
         }
     }
+
+    // Empty Case
+    emit("numerator_no_mi_or_stroke", 0);
+    emit("denominator_has_current_statin", 0);
 }

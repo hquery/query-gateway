@@ -63,8 +63,10 @@ function map(patient) {
         emit("denominator_patients_>19", 1);
         if (hasRecordedValues()) {
             emit("numerator_has_recorded_values", 1);
-        } else {
-            emit("numerator_has_recorded_values", 0)
         }
     }
+
+    // Empty Case
+    emit("numerator_has_recorded_values", 0);
+    emit("denominator_patients_>19", 0);
 }

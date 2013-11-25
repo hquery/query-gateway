@@ -80,4 +80,8 @@ function map(patient) {
             emit('numerator_polypharmacy_number', 1);
         }
     }
+
+    // Empty Case
+    emit('numerator_polypharmacy_number', 0);
+    emit('denominator_sampled_number', 0);
 }
