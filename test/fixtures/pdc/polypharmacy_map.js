@@ -72,11 +72,11 @@ function map(patient) {
     }
 
     emit('total_population', 1);
-    if (patient.age(now) > ageLimit) {
+    if (patient.age(now) >= ageLimit) {
         emit('denominator_sampled_number', 1);
 
         // Adds patient to count if over ageLimit & over drugLimit
-        if (currentDrugs > drugLimit) {
+        if (currentDrugs >= drugLimit) {
             emit('numerator_polypharmacy_number', 1);
         }
     }
