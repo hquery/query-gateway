@@ -53,7 +53,7 @@ function map(patient) {
                 for (var j = 0; j < codes.length; j++) {
                     var code = codes[j].code();
 
-                    if(seenDrugs.indexOf(code) == -1) {
+                    if(seenDrugs.indexOf(code) === -1) {
                         seenDrugs.push(code);
                     }
                     else {
