@@ -11,7 +11,8 @@
 // WHERE
 //  d.rx_date >= DATE_SUB( NOW(), INTERVAL 12 MONTH ) AND
 //  (d.regional_identifier IS NULL OR d.regional_identifier = '') AND
-//  (d.ATC IS NULL OR d.ATC = '')
+//  (d.ATC IS NULL OR d.ATC = '') AND
+//  d.archived = 0;
 //
 // Denominator:
 // SELECT
@@ -19,20 +20,23 @@
 // FROM
 //  drugs AS d
 // WHERE
-//  d.rx_date >= DATE_SUB( NOW(), INTERVAL 12 MONTH )
+//  d.rx_date >= DATE_SUB( NOW(), INTERVAL 12 MONTH ) AND
+//  d.archived = 0;
+
 
 function map(patient) {
     var now = new Date();
     var startDate = addDate(now, -1, 0, 0); // last 12 months
 
     var drugList = patient.medications();
-    var currentDrugs;
 
     if (drugList === null || drugList.length === 0) {
-        emit('medication_no_record', 1);
+        emit('patients_no_medication_record', 1);
     } else {
-        currentDrugs = findCurrentDrugs(drugList);
+        emit('patients_with_medication_record', 1);
+        findCurrentDrugs(drugList);
     }
+
 
     // Shifts date by year, month, and date specified
     function addDate(date, y, m, d) {
@@ -89,7 +93,8 @@ function map(patient) {
     emit('total_population', 1);
 
     // Empty Case
-    emit('medication_no_record', 0);
+    emit('patients_no_medication_record', 0);
+    emit('patients_with_medication_record', 0);
     emit('medication_no_codedProduct', 0);
     emit('medication_last12months_uncoded', 0);
     emit('medication_prior_to_last12months_uncoded', 0);
