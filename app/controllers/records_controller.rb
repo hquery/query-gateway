@@ -37,7 +37,10 @@ class RecordsController < ApplicationController
               patient_id << patient.gender
             end
             patient[:_id] = Base64.strict_encode64(patient_id.digest)
-            patient.save!
+            # patient.save! isn't working as documented, don't know why
+            # appears that it should but upsert does what we need.  See
+            #  http://mongoid.org/en/mongoid/docs/persistence.html
+            patient.upsert
             render :text => 'E2E Document imported', :status => 201
         # C32
         else
