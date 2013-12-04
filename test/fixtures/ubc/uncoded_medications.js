@@ -72,7 +72,8 @@ function map(patient) {
                             codes[j].codeSystemName().toLowerCase() !== "HC-DIN".toLowerCase()) {
                             emit('medication_last12months_uncoded', 1);
                         } else {
-                          emit('medication_last12months_coded_'+codes[j].codeSystemName().toLowerCase(), 1);
+                            // show code types
+                            emit('medication_last12months_coded_'+codes[j].codeSystemName().toLowerCase(), 1);
                         }
                     }
                 } else {
