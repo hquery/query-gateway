@@ -1,5 +1,7 @@
-// Reference Number: UBC-002
+// Reference Number: UBC-001
 // Query Title: Patients, 65 and older, on 5 or more medications
+// Reference Number: UBC-002
+// Query Title: Patients, 65 and older, on 10 or more medications
 // Created by rrusk on 2013-12-06.
 
 function map(patient) {
