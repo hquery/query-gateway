@@ -10,8 +10,10 @@ function map(patient) {
     var now = new Date();
 
     var drugList = patient.medications();
-    var currentDrugs = findCurrentDrugs(drugList);
-    var currentDrugsWithoutPRN = findCurrentDrugsWithoutPRN(drugList);
+    var currentUniqueDrugsIncludingPRN = findUniqueCurrentDrugsIncludingPRN(drugList);
+    var currentUniqueDrugsWithoutPRN = findUniqueCurrentDrugsWithoutPRN(drugList);
+    var currentNonUniqueDrugsIncludingPRN = findNonUniqueCurrentDrugsIncludingPRN(drugList);
+    var currentNonUniqueDrugsWithoutPRN = findNonUniqueCurrentDrugsWithoutPRN(drugList);
 
     // Shifts date by year, month, and date specified
     function addDate(date, y, m, d) {
@@ -41,7 +43,7 @@ function map(patient) {
 
     // Returns count of "active" drugs that are between start & end date
     // Also checks for the same "active" drug and doesn't overcount
-    function findCurrentDrugs(drugs) {
+    function findUniqueCurrentDrugsIncludingPRN(drugs) {
         var count = 0;
         var seenDrugs = [];
 
@@ -77,7 +79,7 @@ function map(patient) {
 
     // Returns count of "active" drugs that are between start & end date
     // Also checks for the same "active" drug and doesn't overcount
-    function findCurrentDrugsWithoutPRN(drugs) {
+    function findUniqueCurrentDrugsWithoutPRN(drugs) {
         var count = 0;
         var seenDrugs = [];
 
@@ -116,22 +118,71 @@ function map(patient) {
         return count;
     }
 
+    // Returns count of "active" drugs that are between start & end date
+    function findNonUniqueCurrentDrugsIncludingPRN(drugs) {
+        var count = 0;
+
+        for(var i = 0; i < drugs.length; i++) {
+            var repeat = false;
+
+            // Check if drug is PRN or within the right time
+            if(drugs[i].freeTextSig().indexOf(" E2E_PRN flag") !== -1
+                || isCurrentDrug(drugs[i])) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    // Returns count of "active" drugs that are between start & end date
+    function findNonUniqueCurrentDrugsWithoutPRN(drugs) {
+        var count = 0;
+        var seenDrugs = [];
+
+        for(var i = 0; i < drugs.length; i++) {
+            var repeat = false;
+
+            // Check if drug is within the right time
+            if(isCurrentDrug(drugs[i])) {
+                // check whether drugs[i] is a PRN; if it is skip
+                if (drugs[i].freeTextSig().indexOf(" E2E_PRN flag") !== -1) {
+                    continue; // continue on to next drug immediately
+                }
+                count++;
+            }
+        }
+
+        return count;
+    }
+
     emit('total_population', 1);
     if (patient.age(now) >= ageLimit) {
         emit('denominator_sampled_number', 1);
 
         // Adds patient to count if over ageLimit & over drugLimit
-        if (currentDrugs >= drugLimit) {
+        if (currentUniqueDrugsIncludingPRN >= drugLimit) {
             emit('numerator_polypharmacy_number_including_prn', 1);
         }
         // Adds patient to count if over ageLimit & over drugLimit
-        if (currentDrugsWithoutPRN > drugLimit) {
+        if (currentUniqueDrugsWithoutPRN > drugLimit) {
             emit('numerator_polypharmacy_number_without_prn', 1);
+        }
+
+        // Adds patient to count if over ageLimit & over drugLimit
+        if (currentNonUniqueDrugsIncludingPRN >= drugLimit) {
+            emit('numerator_polypharmacy_number_nonunique_including_prn', 1);
+        }
+        // Adds patient to count if over ageLimit & over drugLimit
+        if (currentNonUniqueDrugsWithoutPRN > drugLimit) {
+            emit('numerator_polypharmacy_number_nonunique_without_prn', 1);
         }
 
         // Empty Case
         emit('numerator_polypharmacy_number_including_prn', 0);
         emit('numerator_polypharmacy_number_without_prn', 0);
+        emit('numerator_polypharmacy_number_nonunique_including_prn', 0);
+        emit('numerator_polypharmacy_number_nonunique_without_prn', 0);
         emit('denominator_sampled_number', 0);
     }
 }
