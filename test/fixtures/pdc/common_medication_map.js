@@ -60,7 +60,8 @@ function map(patient) {
 
             // Filter out only ATC codes
             for (var j = 0; j < codes.length; j++) {
-                if (codes[j].codeSystemName().toLowerCase() == "whoATC".toLowerCase()) {
+                if (codes[j].codeSystemName().toLowerCase() !== null &&
+                    codes[j].codeSystemName().toLowerCase() === "whoATC".toLowerCase()) {
                     // Truncate to appropriate level length
                     emit(codes[j].code().substring(0, atcCutoff), 1);
                 }

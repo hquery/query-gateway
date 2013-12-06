@@ -57,7 +57,8 @@ function map(patient) {
 
             // Filter out only ATC codes
             for(var j = 0; j < codes.length; j++) {
-                if(codes[j].codeSystemName().toLowerCase() == "whoATC".toLowerCase()) {
+                if(codes[j].codeSystemName().toLowerCase() !== null &&
+                   codes[j].codeSystemName().toLowerCase() === "whoATC".toLowerCase()) {
                     if(targetDrugList.indexOf(codes[j].code().substring(0, 5)) > -1) {
                         emit("had_statins", 1);
                         if(isCurrentDrug(drugList[i])) {
@@ -77,4 +78,8 @@ function map(patient) {
             emit("numerator_no_mi_or_stroke", 1);
         }
     }
+
+    // Empty Case
+    emit("numerator_no_mi_or_stroke", 0);
+    emit("denominator_has_current_statin", 0);
 }

@@ -40,4 +40,8 @@ function map(patient) {
             emit("numerator_has_hemoccult_result", 1);
         }
     }
+
+    // Empty Case
+    emit("numerator_has_hemoccult_result", 0);
+    emit("denominator_patients_50-74", 0);
 }

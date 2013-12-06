@@ -66,19 +66,19 @@ function map(patient) {
         for (var i = 0; i < vitalSignList.length; i++) {
             if (vitalSignList[i].includesCodeFrom(targetBloodPressureSystolicCodes) &&
                 vitalSignList[i].timeStamp() > start) {
-                if (vitalSignList[i].values()[0].units().toLowerCase() == "mm[Hg]".toLowerCase()) {
+                if (vitalSignList[i].values()[0].units() !== null &&
+                    vitalSignList[i].values()[0].units().toLowerCase() === "mm[Hg]".toLowerCase()) {
                     if(vitalSignList[i].values()[0].scalar() < bpSystolic) {
                         bpSystolic = vitalSignList[i].values()[0].scalar();
                     }
-                    //emit('systolic['+i+']: '+vitalSignList[i].values()[0].scalar(), 1);
                 }
             } else if (vitalSignList[i].includesCodeFrom(targetBloodPressureDiastolicCodes) &&
                        vitalSignList[i].timeStamp() > start) {
-                if (vitalSignList[i].values()[0].units().toLowerCase() == "mm[Hg]".toLowerCase()) {
+                if (vitalSignList[i].values()[0].units() !== null &&
+                    vitalSignList[i].values()[0].units().toLowerCase() === "mm[Hg]".toLowerCase()) {
                     if(vitalSignList[i].values()[0].scalar() < bpDiastolic) {
                         bpDiastolic = vitalSignList[i].values()[0].scalar();
                     }
-                    //emit('diastolic['+(i+1)+']: '+vitalSignList[i+1].values()[0].scalar(), 1);
                 }
             }
 
@@ -94,12 +94,14 @@ function map(patient) {
 
     if (population()) {
         if (hasProblemCode()) {
-            emit("denominator_diabetics", 1); //+patient.given()+" "+patient.last(), 1);
+            emit("denominator_diabetics", 1);
             if (hasBloodPressure() && hasBloodPressureMatchingIndicators()) {
-                emit("numerator_diabetics_bp", 1); //+patient.given()+" "+patient.last(), 1);
-            } else {
-                emit("numerator_diabetics_bp", 0);
+                emit("numerator_diabetics_bp", 1);
             }
         }
     }
+
+    // Empty Case
+    emit("numerator_diabetics_bp", 0);
+    emit("denominator_diabetics", 0);
 }

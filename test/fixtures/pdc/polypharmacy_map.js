@@ -53,7 +53,7 @@ function map(patient) {
                 for (var j = 0; j < codes.length; j++) {
                     var code = codes[j].code();
 
-                    if(seenDrugs.indexOf(code) == -1) {
+                    if(seenDrugs.indexOf(code) === -1) {
                         seenDrugs.push(code);
                     }
                     else {
@@ -72,12 +72,16 @@ function map(patient) {
     }
 
     emit('total_population', 1);
-    if (patient.age(now) > ageLimit) {
+    if (patient.age(now) >= ageLimit) {
         emit('denominator_sampled_number', 1);
 
         // Adds patient to count if over ageLimit & over drugLimit
-        if (currentDrugs > drugLimit) {
+        if (currentDrugs >= drugLimit) {
             emit('numerator_polypharmacy_number', 1);
         }
     }
+
+    // Empty Case
+    emit('numerator_polypharmacy_number', 0);
+    emit('denominator_sampled_number', 0);
 }

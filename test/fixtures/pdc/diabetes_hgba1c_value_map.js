@@ -42,7 +42,8 @@ function map(patient) {
     function hasMatchingLabValue() {
         for (var i = 0; i < resultList.length; i++) {
             if (resultList[i].includesCodeFrom(targetLabCodes) && resultList[i].timeStamp() > start) {
-                if (resultList[i].values()[0].units().toLowerCase() == "%".toLowerCase()) {
+                if (resultList[i].values()[0].units() !== null &&
+                    resultList[i].values()[0].units().toLowerCase() === "%".toLowerCase()) {
                     if (resultList[i].values()[0].scalar() <= hgba1cLimit) {
                         return true;
                     }
@@ -57,10 +58,12 @@ function map(patient) {
         if(hasLabCode()) {
             emit("has_hgba1c_result", 1);
             if(hasMatchingLabValue()) {
-                emit("numerator_has_matching_hgba1c_value", 1)
-            } else {
-                emit("numerator_has_matching_hgba1c_value", 0)
+                emit("numerator_has_matching_hgba1c_value", 1);
             }
         }
     }
+
+    // Empty Case
+    emit("numerator_has_matching_hgba1c_value", 0);
+    emit("denominator_diabetics", 0);
 }

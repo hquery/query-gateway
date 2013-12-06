@@ -32,4 +32,8 @@ function map(patient) {
             emit("numerator_senior_pop_pneumovax", 1);
         }
     }
+
+    // Empty Case
+    emit("numerator_senior_pop_pneumovax", 0);
+    emit("denominator_patients_>64", 0);
 }

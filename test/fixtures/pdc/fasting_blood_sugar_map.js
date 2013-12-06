@@ -33,10 +33,13 @@ function map(patient) {
     }
 
     if (population(patient)) {
-        //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);
         emit("denominator_patients_>45", 1);
         if (hasLabCode()) {
             emit("numerator_has_blood_sugar_result", 1);
         }
     }
+
+    // Empty Case
+    emit("numerator_has_blood_sugar_result", 0);
+    emit("denominator_patients_>45", 0);
 }

@@ -18,7 +18,7 @@ function map(patient) {
     var ageLimit = 65;
     var creatinineLimit = 150; // Measured in umol/L
     var egfrLimit = 50; // Measured in ml/min
-    var digoxinLimit = .125; // Measured in MG
+    var digoxinLimit = 0.125; // Measured in MG
 
     var drugList = patient.medications();
     var resultList = patient.results();
@@ -83,9 +83,9 @@ function map(patient) {
         for (var i = 0; i < resultList.length; i++) {
             if (resultList[i].includesCodeFrom(targetCreatinineCodes) &&
                 resultList[i].timeStamp() > start) {
-                if (resultList[i].values()[0].units().toLowerCase() == "umol/L".toLowerCase()) {
+                if (resultList[i].values()[0].units() !== null &&
+                    resultList[i].values()[0].units().toLowerCase() === "umol/L".toLowerCase()) {
                     if (resultList[i].values()[0].scalar() > creatinineLimit) {
-                        //emit("Abnormal Creatinine: " + patient.given() + " " + patient.last(), 1);
                         return true;
                     }
                 }
@@ -99,9 +99,9 @@ function map(patient) {
         for (var i = 0; i < resultList.length; i++) {
             if (resultList[i].includesCodeFrom(targetEGFRCodes) &&
                 resultList[i].timeStamp() > start) {
-                if (resultList[i].values()[0].units().toLowerCase() == "mL/min".toLowerCase()) {
+                if (resultList[i].values()[0].units() !== null &&
+                    resultList[i].values()[0].units().toLowerCase() === "mL/min".toLowerCase()) {
                     if (resultList[i].values()[0].scalar() > egfrLimit) {
-                        //emit("Abnormal Creatinine: " + patient.given() + " " + patient.last(), 1);
                         return true;
                     }
                 }
@@ -137,7 +137,8 @@ function map(patient) {
             // If Digoxin, check for dose parameter
             for (var j = 0; j < codes.length; j++) {
                 if (codes[j].includedIn(targetMedicationCodes)) {
-                    if (drugList[i].values()[0].units().toLowerCase() == "MG".toLowerCase()) {
+                    if (drugList[i].values()[0].units() !== null &&
+                        drugList[i].values()[0].units().toLowerCase() === "MG".toLowerCase()) {
                         if (drugList[i].values()[0].scalar() > digoxinLimit) {
                             return true;
                         }
@@ -149,17 +150,16 @@ function map(patient) {
     }
 
     if (population(patient)) {
-        //emit("senior_pop: " + patient.given() + " " + patient.last(), 1);
         emit("senior_pop", 1);
         if(hasImpairedRenalFunctionCode() && hasImpairedRenalLabValues()) {
             emit("denominator_senior_pop_impaired_renal", 1);
             if(hasMedication() && hasCurrentMedication() && hasMatchingMedicationDose()) {
                 emit("numerator_senior_pop_renal_digoxin", 1);
-            } else {
-                emit("numerator_senior_pop_renal_digoxin", 0);
             }
-        } else {
-            emit("denominator_senior_pop_impaired_renal", 0);
         }
     }
+
+    // Empty Case
+    emit("numerator_senior_pop_renal_digoxin", 0);
+    emit("denominator_senior_pop_impaired_renal", 0);
 }
