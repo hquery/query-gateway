@@ -9,7 +9,7 @@ class RecordsController < ApplicationController
         document_type = doc.at_xpath('/cda:ClinicalDocument/cda:realmCode')['code']
         # check the specific flavour of cda
         # E2E
-        if document_type == 'CA'
+        if document_type == 'CA' || document_type == 'CA-BC'
             pi = HealthDataStandards::Import::E2E::PatientImporter.instance
             patient = pi.parse_e2e(doc)
             # By specifying the _id field we create a new document when a record
