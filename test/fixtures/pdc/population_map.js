@@ -5,17 +5,24 @@ function map(patient) {
     var time = new Date(2013, 7, 19);
     var age = Math.floor(patient.age(time));
     var gender;
+    var genderValue = patient.gender();
 
-    if (patient.gender().toUpperCase() === "M") {
-        gender = "male";
-        emit("total_male", 1);
-    } else if (patient.gender().toUpperCase() === "F") {
-        gender = "female";
-        emit("total_female", 1);
+    if (genderValue !== null && genderValue !== undefined) {
+        if (patient.gender().toUpperCase() === "M") {
+            gender = "male";
+            emit("total_male", 1);
+        } else if (patient.gender().toUpperCase() === "F") {
+            gender = "female";
+            emit("total_female", 1);
+        } else {
+            gender = "undifferentiated";
+            emit("total_undifferentiated", 1);
+        }
     } else {
         gender = "undifferentiated";
         emit("total_undifferentiated", 1);
     }
+
 
     if(age <= 9) {
         if(gender !== "undifferentiated") emit(gender + "_0-9", 1);
