@@ -31,6 +31,10 @@ class RecordsControllerTest < ActionController::TestCase
     assert_equal "", r['last']
     assert_equal -923616000, r['birthdate']
     assert_equal "M", r['gender']
+    performer = r['encounters'][0]['performer']
+    assert_equal "doctor", performer['given_name']
+    assert_equal "oscardoc", performer['family_name']
+    assert_equal "999998", performer['npi']
   end
 
 end

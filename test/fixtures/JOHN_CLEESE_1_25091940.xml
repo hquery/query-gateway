@@ -453,19 +453,132 @@ Clinically Measured Observation
           </entry>
         </section>
       </component>
-      <!--
+<!--
 ********************************************************
 Encounter History and Notes
 ********************************************************
 -->
-      <component typeCode="COMP" contextConductionInd="true">
-        <section classCode="DOCSECT" moodCode="EVN">
-          <templateId root="2.16.840.1.113883.3.1818.10.2.22"/>
-          <code code="46240-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of hospitalizations+History of outpatient visits"/>
-          <title>Encounter History and Notes [without entries]</title>
-          <text>No Encounter History</text>
-        </section>
-      </component>
+			<component typeCode="COMP" contextConductionInd="true">
+				<section classCode="DOCSECT" moodCode="EVN">
+					<templateId root="2.16.840.1.113883.3.1818.10.2.12.1"/>
+					<code code="46240-8" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC" displayName="History of hospitalizations+History of outpatient visits"/>
+					<title>Encounter History and Notes [with entries]</title>
+					<text>
+						<list>
+							<item>Sep 26, 2013 Multivitamin</item>
+							<item>Sep 26, 2013 Shark cartiledge</item>
+						</list>
+					</text>
+					<entry typeCode="COMP" contextConductionInd="true">
+						<templateId root="2.16.840.1.113883.3.1818.10.3.9"/>
+						<!-- Encounter Event -->
+						<encounter classCode="ENC" moodCode="EVN">
+							<id extension="19" root="2.16.840.1.113883.3.1818.10.2.10.12" use="BUS"/>
+							<effectiveTime value="20130926162415"/>
+							<!-- Encounter Location -->
+							<participant typeCode="LOC" contextControlCode="OP">
+								<participantRole classCode="SDLOC">
+									<id extension="1234" root="2.16.840.1.113883.3.1818.10.2.10.19" use="BUS"/>
+								</participantRole>
+							</participant>
+							<!-- Encounter Provider -->
+							<participant typeCode="PRF" contextControlCode="OP">
+								<templateId root="2.16.840.1.113883.3.1818.10.4.21"/>
+								<!-- Provider Participation -->
+								<participantRole>
+									<id extension="999998" root="2.16.840.1.113883.3.1818.10.2.10.19" use="BUS"/>
+									<playingEntity classCode="PSN" determinerCode="INSTANCE">
+										<name use="L">
+											<given>doctor</given>
+											<family>oscardoc</family>
+										</name>
+									</playingEntity>
+								</participantRole>
+							</participant>
+							<!-- Encounter Reason -->
+							<entryRelationship typeCode="RSON" contextConductionInd="true">
+								<templateId root="2.16.840.1.113883.3.1818.10.4.24"/>
+								<!-- Reason Observation -->
+								<observation classCode="OBS" moodCode="EVN">
+									<!-- Record ID -->
+									<code code="REASON" displayName="Reason Observation" codeSystem="2.16.840.1.113883.3.3068.10.6.3" codeSystemName="ObservationType-CA-Pending" />
+									<text>Multivitamin</text>
+									<value xsi:type="CD" nullFlavor="NA"/>
+									<!-- Reason Author -->
+									<author typeCode="AUT" contextControlCode="OP">
+										<templateId root="2.16.840.1.113883.3.1818.10.4.2"/>
+										<!-- Author Participation -->
+										<time value="20130926162415"/>
+										<assignedAuthor classCode="ASSIGNED">
+											<id use="BUS" extension="38809" root="2.16.840.1.113883.3.163.5.0.10.2"/>
+											<assignedPerson classCode="PSN" determinerCode="INSTANCE">
+												<name use="L">
+													<given>doctor</given>
+													<family>oscardoc</family>
+												</name>
+											</assignedPerson>
+										</assignedAuthor>
+									</author>
+								</observation>
+							</entryRelationship>
+						</encounter>
+					</entry>
+					<entry typeCode="COMP" contextConductionInd="true">
+						<templateId root="2.16.840.1.113883.3.1818.10.3.9"/>
+						<!-- Encounter Event -->
+						<encounter classCode="ENC" moodCode="EVN">
+							<id extension="20" root="2.16.840.1.113883.3.1818.10.2.10.12" use="BUS"/>
+							<effectiveTime value="20130926162437"/>
+							<!-- Encounter Location -->
+							<participant typeCode="LOC" contextControlCode="OP">
+								<participantRole classCode="SDLOC">
+									<id extension="1234" root="2.16.840.1.113883.3.1818.10.2.10.19" use="BUS"/>
+								</participantRole>
+							</participant>
+							<!-- Encounter Provider -->
+							<participant typeCode="PRF" contextControlCode="OP">
+								<templateId root="2.16.840.1.113883.3.1818.10.4.21"/>
+								<!-- Provider Participation -->
+								<participantRole>
+									<id extension="999998" root="2.16.840.1.113883.3.1818.10.2.10.19" use="BUS"/>
+									<playingEntity classCode="PSN" determinerCode="INSTANCE">
+										<name use="L">
+											<given>doctor</given>
+											<family>oscardoc</family>
+										</name>
+									</playingEntity>
+								</participantRole>
+							</participant>
+							<!-- Encounter Reason -->
+							<entryRelationship typeCode="RSON" contextConductionInd="true">
+								<templateId root="2.16.840.1.113883.3.1818.10.4.24"/>
+								<!-- Reason Observation -->
+								<observation classCode="OBS" moodCode="EVN">
+									<!-- Record ID -->
+									<code code="REASON" displayName="Reason Observation" codeSystem="2.16.840.1.113883.3.3068.10.6.3" codeSystemName="ObservationType-CA-Pending" />
+									<text>Shark cartiledge</text>
+									<value xsi:type="CD" nullFlavor="NA"/>
+									<!-- Reason Author -->
+									<author typeCode="AUT" contextControlCode="OP">
+										<templateId root="2.16.840.1.113883.3.1818.10.4.2"/>
+										<!-- Author Participation -->
+										<time value="20130926162437"/>
+										<assignedAuthor classCode="ASSIGNED">
+											<id use="BUS" extension="38809" root="2.16.840.1.113883.3.163.5.0.10.2"/>
+											<assignedPerson classCode="PSN" determinerCode="INSTANCE">
+												<name use="L">
+													<given>doctor</given>
+													<family>oscardoc</family>
+												</name>
+											</assignedPerson>
+										</assignedAuthor>
+									</author>
+								</observation>
+							</entryRelationship>
+						</encounter>
+					</entry>
+				</section>
+			</component>
       <!--
 ********************************************************
 Family History
