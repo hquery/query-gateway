@@ -27,3 +27,9 @@ class ImmunizationsImporterApiTest < ImporterApiTest
     assert_equal '113', @context.eval('patient.immunizations()[3].medicationInformation().codedProduct()[1].code()')
   end
 end
+
+class E2EImmunizationsImporterApiTest < E2EImporterApiTest
+  def test_e2e_imunizations_importing
+    assert_equal 3, @context.eval('e2e_patient.immunizations().length')
+  end
+end

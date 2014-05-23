@@ -39,3 +39,11 @@ class MedicationsImporterApiTest < ImporterApiTest
     assert_equal 4, @context.eval('patient.medications()[0].fulfillmentHistory()[0].fillNumber()')
   end
 end
+
+
+class E2EMedicationsImporterApiTest < E2EImporterApiTest
+  def test_e2e_medications_importing
+    #assert_equal 3, @context.eval('e2e_patient.medications().length')
+    #assert_equal "xyz", @context.eval('e2e_patient.medications()')
+  end
+end

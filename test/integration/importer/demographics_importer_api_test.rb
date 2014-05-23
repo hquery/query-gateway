@@ -12,3 +12,16 @@ class DemographicsImporterApiTest < ImporterApiTest
     assert_equal 25, @context.eval('Math.floor(patient.age(sampleDate))')
   end
 end
+
+class E2EDemographicsImporterApiTest < E2EImporterApiTest
+  def test_e2e_demographics_importing
+    assert_equal 'JOHN', @context.eval('e2e_patient.given()')
+    assert_equal 'CLEESE', @context.eval('e2e_patient.last()')
+    assert_equal 'M', @context.eval('e2e_patient.gender()')
+    assert_equal 1940, @context.eval('e2e_patient.birthtime().getUTCFullYear()')
+    # JS numbers months starting with 0, so 8 below is actually September as expected
+    assert_equal 8, @context.eval('e2e_patient.birthtime().getUTCMonth()')
+    assert_equal 25, @context.eval('e2e_patient.birthtime().getUTCDate()')
+    assert_equal 69, @context.eval('Math.floor(e2e_patient.age(sampleDate))')
+  end
+end
