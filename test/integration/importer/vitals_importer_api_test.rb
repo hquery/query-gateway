@@ -16,14 +16,14 @@ end
 
 class E2EVitalsImporterApiTest < E2EImporterApiTest
   def test_e2e_vitals_importing
+    #assert_equal 'theValue', @context.eval('e2e_patient.vitalSigns()')
     assert @context.eval('e2e_patient.vitalSigns().match({"LOINC": ["8480-6"]}).length != 0')
-    #assert @context.eval('e2e_patient.vitalSigns().match({"SNOMED-CT": ["50373000"]}).length != 0')
-    #assert_equal 'xyz', @context.eval('e2e_patient.vitalSigns()[0]')
+    assert @context.eval('e2e_patient.vitalSigns().match({"LOINC": ["3141-9"]}).length != 0')
     assert_nil @context.eval('e2e_patient.vitalSigns()[0].interpretation()')
     assert_equal 130, @context.eval('e2e_patient.vitalSigns()[0].values()[0].scalar()')
     assert_equal 'mm[Hg]', @context.eval('e2e_patient.vitalSigns()[0].values()[0].units()')
     assert_equal 2013, @context.eval('e2e_patient.vitalSigns()[0].date().getUTCFullYear()')
-    assert_equal 7, @context.eval('e2e_patient.vitalSigns()[0].date().getUTCMonth()')
-    assert_equal 14, @context.eval('e2e_patient.vitalSigns()[0].date().getUTCDate()')
+    assert_equal 8, @context.eval('e2e_patient.vitalSigns()[0].date().getUTCMonth()')
+    assert_equal 25, @context.eval('e2e_patient.vitalSigns()[0].date().getUTCDate()')
   end
 end
