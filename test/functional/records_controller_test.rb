@@ -25,7 +25,7 @@ class RecordsControllerTest < ActionController::TestCase
     assert_equal 501, db[:records].find.count
     #r = db['records'].where({:first => 'JOHN', :last => 'CLEESE'}).first
     r = db[:records].where({ _id: 'oqG3YBB7rJvxeUAmPu2Mv2Q/cUji905I9IoJ4w==' }).first
-    assert r
+    refute_nil r
     assert_equal "", r['medical_record_number']
     assert_equal "", r['first']
     assert_equal "", r['last']
@@ -34,7 +34,7 @@ class RecordsControllerTest < ActionController::TestCase
     performer = r['encounters'][0]['performer']
     assert_equal "doctor", performer['given_name']
     assert_equal "oscardoc", performer['family_name']
-    assert_equal "999998", performer['npi']
+    assert_equal "cpsid", performer['npi']
   end
 
 end

@@ -22,8 +22,8 @@ class E2EVitalsImporterApiTest < E2EImporterApiTest
     assert_nil @context.eval('e2e_patient.vitalSigns()[0].interpretation()')
     assert_equal 130, @context.eval('e2e_patient.vitalSigns()[0].values()[0].scalar()')
     assert_equal 'mm[Hg]', @context.eval('e2e_patient.vitalSigns()[0].values()[0].units()')
-    assert_equal 2013, @context.eval('e2e_patient.vitalSigns()[0].date().getUTCFullYear()')
-    assert_equal 8, @context.eval('e2e_patient.vitalSigns()[0].date().getUTCMonth()')
-    assert_equal 25, @context.eval('e2e_patient.vitalSigns()[0].date().getUTCDate()')
+    assert_equal 2013, @context.eval('e2e_patient.vitalSigns()[0].startDate().getUTCFullYear()')
+    assert_equal 8, @context.eval('e2e_patient.vitalSigns()[0].startDate().getUTCMonth()')
+    assert_equal 25, @context.eval('e2e_patient.vitalSigns()[0].startDate().getUTCDate()')
   end
 end
