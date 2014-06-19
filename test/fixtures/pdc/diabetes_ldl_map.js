@@ -3,7 +3,7 @@
 // TODO: Add freetext definition search
 function map(patient) {
     var targetLabCodes = {
-        "LOINC": ["39469-2"]
+        "pCLOCD": ["39469-2"]
     };
 
     var targetProblemCodes = {

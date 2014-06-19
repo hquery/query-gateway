@@ -8,11 +8,11 @@ function map(patient) {
     };
 
     var targetCreatinineCodes = {
-        "LOINC": ["45066-8", "14682-9", "2160-0", "33914-3", "50044-7", "48642-3", "48643-1"]
+        "pCLOCD": ["45066-8", "14682-9", "2160-0", "33914-3", "50044-7", "48642-3", "48643-1"]
     };
 
     var targetEGFRCodes = {
-        "LOINC": ["33914-3"]
+        "pCLOCD": ["33914-3"]
     };
 
     var ageLimit = 65;

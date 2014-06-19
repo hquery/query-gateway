@@ -3,7 +3,7 @@
 // TODO: Add freetext definition search
 function map(patient) {
     var targetLabCodes = {
-        "LOINC": ["14771-0"]
+        "pCLOCD": ["14771-0"]
     };
 
     var ageLimit = 45;
