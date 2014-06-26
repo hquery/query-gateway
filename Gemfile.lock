@@ -1,7 +1,7 @@
 GIT
   remote: http://github.com/scoophealth/health-data-standards.git
-  revision: 6433b748b4381aca112244498040a98dccbbdf23
-  branch: scoop-develop
+  revision: 527a062d343b0b4e2cf8a3e9ef056aaa9bbef64b
+  branch: scoop-e2e-1.35
   specs:
     health-data-standards (2.1.4)
       builder (~> 3.0.0)
@@ -35,7 +35,7 @@ GIT
 
 GIT
   remote: http://github.com/scoophealth/patientapi.git
-  revision: 35340bb11c26115bd5e350ad270cb59ac1c3f56b
+  revision: a22b9beb0aa68c3f4c828357c4b05b43c546ef4b
   branch: scoop-develop
   specs:
     hquery-patient-api (1.0.0)
@@ -119,8 +119,8 @@ GEM
     kramdown (1.1.0)
     libv8 (3.11.8.17)
     log4r (1.1.10)
-    macaddr (1.6.1)
-      systemu (~> 2.5.0)
+    macaddr (1.7.1)
+      systemu (~> 2.6.2)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -204,7 +204,7 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    systemu (2.5.2)
+    systemu (2.6.4)
     therubyracer (0.11.4)
       libv8 (~> 3.11.8.12)
       ref

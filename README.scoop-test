@@ -1,0 +1,11 @@
+When changes are made to the E2E export documents requiring modifications
+of the health-data-standards E2E importer code, the records stored in mongod
+are likely to change.  When this happens, the file
+test/fixtures/scoop-records.json will need to be updated.
+
+Use util/relay-service.rb to load the updated test patient records into
+the mongod.  Then export these mongod test patient records using:
+
+mongoexport -d query_gateway_development -c records > /tmp/scoop-records.json
+
+Use the export to update ./test/fixtures/scoop-records.json

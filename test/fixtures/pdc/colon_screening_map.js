@@ -4,14 +4,14 @@
 // TODO: Add Colon screening portion of query
 function map(patient) {
     var targetLabCodes = {
-        "LOINC": ["58453-2", "14563-1", "14564-9", "14565-6"]
+        "pCLOCD": ["58453-2", "14563-1", "14564-9", "14565-6"]
     };
 
     var ageLimitLow = 50;
     var ageLimitHigh = 74;
     var resultList = patient.results();
 
-    var now = new Date(2013, 10, 30);
+    var now = new Date(2014, 6, 18);
     var start = addDate(now, -2, 0, 0);
     var end = addDate(now, 0, 0, 0);
 

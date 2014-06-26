@@ -39,3 +39,31 @@ class MedicationsImporterApiTest < ImporterApiTest
     assert_equal 4, @context.eval('patient.medications()[0].fulfillmentHistory()[0].fillNumber()')
   end
 end
+
+
+class E2EMedicationsImporterApiTest < E2EImporterApiTest
+  def test_e2e_medications_importing
+    assert_equal 9, @context.eval('e2e_patient.medications().length')
+    assert @context.eval('e2e_patient.medications().match({"HC-DIN": ["00559407"]})')
+    assert @context.eval('e2e_patient.medications().match({"whoATC": ["N02BE01"]}).length != 0')
+    #assert_equal "xyz", @context.eval('e2e_patient.medications()')
+    #assert_equal 2, @context.eval('e2e_patient.medications()[0].dose().value()')
+    #assert_equal nil, @context.eval('e2e_patient.medications()[0].dose().unit()')
+    assert_equal 2013, @context.eval('e2e_patient.medications()[0].timeStamp().getUTCFullYear()')
+    assert_equal 8, @context.eval('e2e_patient.medications()[0].timeStamp().getUTCMonth()')
+    assert_equal 27, @context.eval('e2e_patient.medications()[0].timeStamp().getUTCDate()')
+    #TODO Provide patientapi with a frequency method
+    assert_equal 4, @context.eval('e2e_patient.medications()[0].administrationTiming()["json"]["frequency"]["numerator"]["value"]')
+    assert_equal nil, @context.eval('e2e_patient.medications()[0].administrationTiming()["json"]["frequency"]["numerator"]["unit"]')
+    assert_equal 1, @context.eval('e2e_patient.medications()[0].administrationTiming()["json"]["frequency"]["denominator"]["value"]')
+    assert_equal "d", @context.eval('e2e_patient.medications()[0].administrationTiming()["json"]["frequency"]["denominator"]["unit"]')
+    assert_equal nil, @context.eval('e2e_patient.medications()[0].administrationTiming().institutionSpecified()')
+    #TODO Determine why the code, codeSystemName, isPrescription, etc. are not available for E2E
+    assert_equal nil, @context.eval('e2e_patient.medications()[0].typeOfMedication().code()')
+    assert_equal nil, @context.eval('e2e_patient.medications()[0].typeOfMedication().codeSystemName()')
+    assert_equal false, @context.eval('e2e_patient.medications()[0].typeOfMedication().isPrescription()')
+    assert_equal false, @context.eval('e2e_patient.medications()[0].typeOfMedication().isOverTheCounter()')
+    #TODO Determine whether any of route, site, productForm, vehicle, deliveryMethod,
+    #TODO doseRestriction, or fulfillmentHistory can be supported
+  end
+end
