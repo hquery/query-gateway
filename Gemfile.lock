@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/scoophealth/health-data-standards.git
-  revision: f963084bf83a44f056016670931f9175242660a0
+  revision: 92a9461f383c6a404d6701d62c722d542532d63e
   branch: scoop-develop
   specs:
     health-data-standards (2.1.4)
