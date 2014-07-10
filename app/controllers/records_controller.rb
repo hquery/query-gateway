@@ -18,25 +18,35 @@ class RecordsController < ApplicationController
             # with the new document.  For details see
             # http://docs.mongodb.org/manual/reference/method/db.collection.save/
             patient_id = OpenSSL::Digest::SHA224.new
+            hin_id = OpenSSL::Digest::SHA224.new
+            first_id = OpenSSL::Digest::SHA224.new
+            last_id = OpenSSL::Digest::SHA224.new
             if !patient.medical_record_number.nil? && !patient.medical_record_number.empty?
-              patient_id << patient.medical_record_number
-              patient.medical_record_number = ""   # remove HIN
+              patient_id << patient.medical_record_number.upcase
+              #patient.medical_record_number = ""   # remove HIN
+              hin_id << patient.medical_record_number.upcase
+              patient.medical_record_number = Base64.strict_encode64(hin_id.digest)
             end
             if !patient.first.nil? && !patient.first.empty?
-              patient_id << patient.first
-              patient.first = ""                   # remove first name
+              patient_id << patient.first.upcase
+              #patient.first = ""                   # remove first name
+              first_id << patient.first.upcase
+              patient.first = Base64.strict_encode64(first_id.digest)
             end
             if !patient.last.nil? && !patient.last.empty?
-              patient_id << patient.last
-              patient.last = ""                    # remove last name
+              patient_id << patient.last.upcase
+              #patient.last = ""                    # remove last name
+              last_id << patient.last.upcase
+              patient.last = Base64.strict_encode64(last_id.digest)
             end
             if !patient.birthdate.nil? && !patient.birthdate.to_s.empty?
               patient_id << patient.birthdate.to_s
             end
             if !patient.gender.nil? && !patient.gender.empty?
-              patient_id << patient.gender
+              patient_id << patient.gender.upcase
             end
-            patient[:_id] = Base64.strict_encode64(patient_id.digest)
+            patient[:hash_id] = Base64.strict_encode64(patient_id.digest)
+            #patient[:hash_id] = patient[:_id]
             # patient.save! isn't working as documented, don't know why
             # appears that it should but upsert does what we need.  See
             #  http://mongoid.org/en/mongoid/docs/persistence.html

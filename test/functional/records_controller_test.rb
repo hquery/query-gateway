@@ -24,11 +24,11 @@ class RecordsControllerTest < ActionController::TestCase
     db = Mongoid.default_session
     assert_equal 501, db[:records].find.count
     #r = db['records'].where({:first => 'JOHN', :last => 'CLEESE'}).first
-    r = db[:records].where({ _id: 'oqG3YBB7rJvxeUAmPu2Mv2Q/cUji905I9IoJ4w==' }).first
+    r = db[:records].where({ hash_id: 'oqG3YBB7rJvxeUAmPu2Mv2Q/cUji905I9IoJ4w==' }).first
     refute_nil r
-    assert_equal "", r['medical_record_number']
-    assert_equal "", r['first']
-    assert_equal "", r['last']
+    assert_equal "m59ceyj+C/6mnU2V32L/0G5XHZ3folWFlz8NTg==", r['medical_record_number']
+    assert_equal "s/Q1SdAMY/S6mlao6erGW8sO1N0Z5XYXsSd2Ug==", r['first']
+    assert_equal "7ETUHfZcSQduD+JS3qauh9vPmWUp1xbe56I3Bw==", r['last']
     assert_equal -923616000, r['birthdate']
     assert_equal "M", r['gender']
     performer = r['encounters'][0]['performer']
