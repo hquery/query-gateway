@@ -2,8 +2,8 @@ function reduce(key, values) {
     var result;
     if (key.type == 'population') {
         result = new reducer.Value({        'target_pop': 0, 'filtered_pop': 0, 'unfound_pop': 0, 'total_pop': 0      }, rereduced = false);
-        while (values.hasNext()) {
-            var _val = values.next();
+        for (var i = 0; i < values.length; i++) {
+            var _val = values[i];
             result.sum('target_pop', _val);
             result.sum('filtered_pop', _val);
             result.sum('unfound_pop', _val);
@@ -13,8 +13,8 @@ function reduce(key, values) {
         }
     } else if (key.type == 'group') {
         result = new reducer.Value({      }, rereduced = false);
-        while (values.hasNext()) {
-            var _val = values.next();
+        for (var j = 0; j < values.length; j++) {
+            var _val = values[j];
             result.rereduced = true;
             _val.rereduced = true;
         }

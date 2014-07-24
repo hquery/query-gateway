@@ -41,6 +41,7 @@ class PmnControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal 'application/xml', @response.content_type
     r.reload
+    # TODO This test should be updated with an add_document.xml that doesn't use hasNext() in the reduce function
     assert_equal "-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"map\"; filename=\"local.path\"\r\nContent-Length: 56\r\nContent-Type: application/javascript\r\nContent-Transfer-Encoding: binary\r\n\r\nfunction map(patient) {\r\n  emit(patient.gender(), 1);\r\n}\r\n-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"reduce\"; filename=\"local.path\"\r\nContent-Length: 123\r\nContent-Type: application/javascript\r\nContent-Transfer-Encoding: binary\r\n\r\nfunction reduce(gender, iter) {\r\n  var sum = 0;\r\n  while(iter.hasNext()) {\r\n    sum += iter.next();\r\n  }\r\n  return sum;\r\n};\r\n-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"filter\"; filename=\"local.path\"\r\nContent-Length: 0\r\nContent-Type: application/json\r\nContent-Transfer-Encoding: binary\r\n\r\n\r\n-------------RubyMultipartPost\r\nContent-Disposition: form-data; name=\"functions\"; filename=\"local.path\"\r\nContent-Length: 0\r\nContent-Type: application/json\r\nContent-Transfer-Encoding: binary\r\n\r\n\r\n-------------RubyMultipartPost--\r\n\r\n", r.content
 
     @request.env['RAW_POST_DATA'] = nil

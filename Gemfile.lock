@@ -24,7 +24,7 @@ GIT
 
 GIT
   remote: http://github.com/scoophealth/hqmf2js.git
-  revision: 0fe2351dd04a61f39b1b05294f0a955e1a65daa5
+  revision: cfc4af98da3f516899c9614ecd673d7f23e9e461
   branch: scoop-develop
   specs:
     hqmf2js (0.1.0)
