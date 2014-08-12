@@ -65,5 +65,9 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal false, @context.eval('e2e_patient.medications()[0].typeOfMedication().isOverTheCounter()')
     #TODO Determine whether any of route, site, productForm, vehicle, deliveryMethod,
     #TODO doseRestriction, or fulfillmentHistory can be supported
+    assert_equal 1, @context.eval('e2e_patient.medications()[0].orderInformation().length')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal '', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["given_name"]')
+    assert_equal '', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["npi"]')
   end
 end

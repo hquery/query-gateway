@@ -23,7 +23,7 @@ class E2EEncounterImporterApiTest < E2EImporterApiTest
     #TODO provide a nicer way to get performer information
     #TODO consider reverting encounter provider to a hash field as it existed when patientapi was last maintained
     assert_equal '', @context.eval('e2e_patient.encounters()[0].performer()["json"]["given_name"]')
-    assert_equal 'fiBE1z+k3/bo0InO41DyBEJuDs+VEhX2e4SNJg==', @context.eval('e2e_patient.encounters()[0].performer()["json"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.encounters()[0].performer()["json"]["family_name"]')
     assert_equal '', @context.eval('e2e_patient.encounters()[0].performer()["json"]["npi"]')
     #assert_equal 'doctor', @context.eval('e2e_patient.encounters()[0].performer()["json"]["given_name"]')
     #assert_equal 'oscardoc', @context.eval('e2e_patient.encounters()[0].performer()["json"]["family_name"]')

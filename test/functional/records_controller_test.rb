@@ -33,7 +33,7 @@ class RecordsControllerTest < ActionController::TestCase
     assert_equal "M", r['gender']
     performer = r['encounters'][0]['performer']
     assert_equal "", performer['given_name']
-    assert_equal "fiBE1z+k3/bo0InO41DyBEJuDs+VEhX2e4SNJg==", performer['family_name']
+    assert_equal "qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==", performer['family_name']
     assert_equal "", performer['npi']
     #assert_equal "doctor", performer['given_name']
     #assert_equal "oscardoc", performer['family_name']
