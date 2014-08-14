@@ -69,5 +69,6 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["family_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[0].orderInformation()[0].orderDateTime()').to_i
   end
 end
