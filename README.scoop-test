@@ -1,3 +1,8 @@
+To run the unit, functional and integration tests, from the root directory
+of the repository execute
+
+   rake test
+
 When changes are made to the E2E export documents requiring modifications
 of the health-data-standards E2E importer code, the records stored in mongod
 are likely to change.  When this happens, the file
