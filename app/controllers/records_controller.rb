@@ -46,7 +46,8 @@ class RecordsController < ApplicationController
               patient_id << patient.gender.upcase
             end
             patient[:hash_id] = Base64.strict_encode64(patient_id.digest)
-            #patient[:hash_id] = patient[:_id]
+            # TODO - use Oscar instance demographic_no as primary mongodb key
+            patient[:_id] = patient[:hash_id]
             # patient.save! isn't working as documented, don't know why
             # appears that it should but upsert does what we need.  See
             #  http://mongoid.org/en/mongoid/docs/persistence.html
