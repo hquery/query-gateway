@@ -23,5 +23,7 @@ class E2EDemographicsImporterApiTest < E2EImporterApiTest
     assert_equal 8, @context.eval('e2e_patient.birthtime().getUTCMonth()')
     assert_equal 25, @context.eval('e2e_patient.birthtime().getUTCDate()')
     assert_equal 69, @context.eval('Math.floor(e2e_patient.age(sampleDate))')
+    # illustrate how to retrieve primary key of demographics table in EMR instance used to populate records collection
+    assert_equal "1", @context.eval('e2e_patient["json"]["emr_demographics_primary_key"]')
   end
 end

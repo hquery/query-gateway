@@ -26,6 +26,8 @@ class RecordsControllerTest < ActionController::TestCase
     #r = db['records'].where({:first => 'JOHN', :last => 'CLEESE'}).first
     r = db[:records].where({ hash_id: 'oqG3YBB7rJvxeUAmPu2Mv2Q/cUji905I9IoJ4w==' }).first
     refute_nil r
+    assert_equal '1', r['_id']
+    assert_equal '1', r['emr_demographics_primary_key']
     assert_equal "m59ceyj+C/6mnU2V32L/0G5XHZ3folWFlz8NTg==", r['medical_record_number']
     assert_equal "s/Q1SdAMY/S6mlao6erGW8sO1N0Z5XYXsSd2Ug==", r['first']
     assert_equal "7ETUHfZcSQduD+JS3qauh9vPmWUp1xbe56I3Bw==", r['last']
