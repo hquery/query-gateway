@@ -3,9 +3,13 @@
 // TODO: Factor in Clinical Encounters
 function map(patient) {
     var time = new Date(2013, 7, 19);
-    var age = Math.floor(patient.age(time));
+    var age = patient.age(time);
     var gender;
     var genderValue = patient.gender();
+
+    if (typeof age !== 'undefined') {
+        age = Math.floor(age);
+    }
 
     if (genderValue !== null && genderValue !== undefined) {
         if (patient.gender().toUpperCase() === "M") {
@@ -23,8 +27,9 @@ function map(patient) {
         emit("total_undifferentiated", 1);
     }
 
-
-    if(age <= 9) {
+    if(typeof age === 'undefined') {
+        emit("age_unspecified", 1);
+    } else if(age <= 9) {
         if(gender !== "undifferentiated") emit(gender + "_0-9", 1);
         emit("total_0-9", 1);
     } else if(age >= 10 && age <= 19) {
