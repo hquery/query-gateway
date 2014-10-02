@@ -58,3 +58,28 @@ class E2EImmunizationsImporterApiTest < E2EImporterApiTest
 
   end
 end
+
+
+class E2EImmunizationsImporterApiTest2 < E2EImporterApiTest2
+  def test_e2e_imunizations_importing_zarilla
+    assert_equal 3, @context.eval('e2e_patient2.immunizations().length')
+    assert @context.eval('e2e_patient2.immunizations().match({"Unknown": ["NA"]}).length != 0')
+    assert @context.eval('e2e_patient2.immunizations().match({"Unknown": ["NA"]}, null, null, true).length != 0')
+# TODO Need to update the patientapi to handle performer now that they are no longer embedded
+#    assert_equal 'FirstName', @context.eval('e2e_patient2.immunizations()[3].performer().person().given()')
+#    assert_equal 'LastName', @context.eval('e2e_patient2.immunizations()[3].performer().person().last()')
+#    assert_equal 1, @context.eval('e2e_patient2.immunizations()[3].performer().person().addresses().length')
+#    assert_equal '100 Bureau Drive', @context.eval('e2e_patient2.immunizations()[3].performer().person().addresses()[0].street()[0]')
+#    assert_equal 'Gaithersburg', @context.eval('e2e_patient2.immunizations()[3].performer().person().addresses()[0].city()')
+#    assert_equal 'MD', @context.eval('e2e_patient2.immunizations()[3].performer().person().addresses()[0].state()')
+#    assert_equal '20899', @context.eval('e2e_patient2.immunizations()[3].performer().person().addresses()[0].postalCode()')
+    assert_equal nil, @context.eval('e2e_patient2.immunizations()[2].refusalInd()')
+    assert_equal false, @context.eval('e2e_patient2.immunizations()[2].refusalReason().isPatObj()')
+    assert_equal 2012, @context.eval('e2e_patient2.immunizations()[0].date().getUTCFullYear()')
+    assert_equal 3, @context.eval('e2e_patient2.immunizations()[0].date().getUTCMonth()')
+    assert_equal 17, @context.eval('e2e_patient2.immunizations()[0].date().getUTCDate()')
+    assert @context.eval('e2e_patient2.immunizations()[0].includesCodeFrom({"Unknown": ["NA"]})')
+    assert_equal 'Varicella Zoster', @context.eval('e2e_patient2.immunizations()[2]["json"]["description"]')
+
+  end
+end
