@@ -104,6 +104,25 @@ class E2EImporterApiTest < ActiveSupport::TestCase
   end
 end
 
+class E2EImporterApiTest2 < ActiveSupport::TestCase
+  def setup
+    doc = Nokogiri::XML(File.new('test/fixtures/MZarilla.xml'))
+    doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
+    pi = HealthDataStandards::Import::E2E::PatientImporter.instance
+    e2e_patient2 = pi.parse_e2e(doc)
+    e2e_patient2.save!
+    db = Mongoid.default_session
+    patient_json = db['records'].find(_id: e2e_patient2.id).first.to_json
+    patient_api = QueryUtilities.patient_api_javascript.to_s
+    initialize_patient = 'var e2e_patient2 = new hQuery.Patient(melvin);'
+    date = Time.new(2014,10,2)
+    initialize_date = "var sampleDate = new Date(#{date.to_i*1000});"
+    #querystr = patient_api + "\nvar melvin = " + patient_json + ";\n" + initialize_patient + "\n" + initialize_date
+    #STDERR.puts "querystr: " + querystr
+    @context = ExecJS.compile(patient_api + "\nvar melvin = " + patient_json + ";\n" + initialize_patient + "\n" + initialize_date)
+  end
+end
+
 def dump_database
   db = Mongoid.default_session
 

@@ -27,3 +27,19 @@ class E2EDemographicsImporterApiTest < E2EImporterApiTest
     assert_equal "1", @context.eval('e2e_patient["json"]["emr_demographics_primary_key"]')
   end
 end
+
+class E2EDemographicsImporterApiTest2 < E2EImporterApiTest2
+  def test_e2e_demographics_importing_zarilla
+    assert_equal 'Melvin', @context.eval('e2e_patient2.given()')
+    assert_equal 'Zarilla', @context.eval('e2e_patient2.last()')
+    assert_equal 'F', @context.eval('e2e_patient2.gender()')
+    assert_equal 2011, @context.eval('e2e_patient2.birthtime().getUTCFullYear()')
+    # JS numbers months starting with 0, so 8 below is actually September as expected
+    assert_equal 3, @context.eval('e2e_patient2.birthtime().getUTCMonth()')
+    assert_equal 9, @context.eval('e2e_patient2.birthtime().getUTCDate()')
+    assert_equal 3, @context.eval('Math.floor(e2e_patient2.age(sampleDate))')
+    # illustrate how to retrieve primary key of demographics table in EMR instance used to populate records collection
+    # only works for Oscar E2E documents at moment so expect nil here
+    assert_equal nil, @context.eval('e2e_patient2["json"]["emr_demographics_primary_key"]')
+  end
+end
