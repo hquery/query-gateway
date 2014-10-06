@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/scoophealth/health-data-standards.git
-  revision: 86b0095bfdea0d05b0d8bd8b686dee0492fb97e8
+  revision: 4c0777f13cffa93e19524feafae888c8be2ac5d0
   branch: scoop-develop
   specs:
     health-data-standards (2.1.4)
@@ -180,8 +180,9 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
+    rest-client (1.6.8)
+      mime-types (~> 1.16)
+      rdoc (>= 2.4.2)
     roo (1.10.1)
       choice (>= 0.1.4)
       google-spreadsheet-ruby (>= 0.1.5)
