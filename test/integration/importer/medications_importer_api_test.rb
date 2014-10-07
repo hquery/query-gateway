@@ -215,7 +215,7 @@ end
 
 
 class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
-  def test_e2e_medications_importing
+  def test_e2e_medications_importing_zarilla
     assert_equal 7, @context.eval('e2e_patient2.medications().length')
     assert @context.eval('e2e_patient2.medications().match({"HC-DIN": ["2139324"]})')
     assert @context.eval('e2e_patient2.medications().match({"whoATC": ["N02BE01"]}).length == 0')
