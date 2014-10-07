@@ -44,6 +44,8 @@ def dump_database
   db['pmn_requests'].drop if db['pmn_requests']
 end
 
+#TODO Work out procedure so scoop-records.json can be recreated automatically when E2E documents or their parsing in hds changes
+#Currently, scoop-records.json needs to be built manually.
 def load_scoop_database
   # Deletes any existing records and loads in scoop records
   #`mongoimport -d #{Mongoid.master.name} -h #{Mongoid.master.connection.host_to_try[0]} --drop -c records test/fixtures/scoop-records.json`

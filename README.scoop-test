@@ -4,8 +4,9 @@ of the repository execute
    rake test
 
 When changes are made to the E2E export documents requiring modifications
-of the health-data-standards E2E importer code, the records stored in mongod
-are likely to change.  When this happens, the file
+of the health-data-standards E2E importer code, or the health-data-standards
+E2E importer code is changed for any other reason, the records stored in
+mongod are likely to change.  When this happens, the file
 test/fixtures/scoop-records.json will need to be updated.
 
 Use util/relay-service.rb to load the updated test patient records into
