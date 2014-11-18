@@ -25,6 +25,7 @@ class E2EDemographicsImporterApiTest < E2EImporterApiTest
     assert_equal 69, @context.eval('Math.floor(e2e_patient.age(sampleDate))')
     # illustrate how to retrieve primary key of demographics table in EMR instance used to populate records collection
     assert_equal "1", @context.eval('e2e_patient["json"]["emr_demographics_primary_key"]')
+    assert_equal "cpsid", @context.eval('e2e_patient["json"]["emr_primary_care_provider_id"]')
   end
 end
 
@@ -41,5 +42,6 @@ class E2EDemographicsImporterApiTest2 < E2EImporterApiTest2
     # illustrate how to retrieve primary key of demographics table in EMR instance used to populate records collection
     # only works for Oscar E2E documents at moment so expect nil here
     assert_equal nil, @context.eval('e2e_patient2["json"]["emr_demographics_primary_key"]')
+    assert_equal "91604", @context.eval('e2e_patient2["json"]["emr_primary_care_provider_id"]')
   end
 end
