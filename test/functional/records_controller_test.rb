@@ -28,7 +28,7 @@ class RecordsControllerTest < ActionController::TestCase
     refute_nil r
     assert_equal '1', r['_id']
     assert_equal '1', r['emr_demographics_primary_key']
-    assert_equal 'cpsid', r['emr_primary_care_provider_id']
+    assert_equal 'cpsid', r['primary_care_provider_id']
     assert_equal "m59ceyj+C/6mnU2V32L/0G5XHZ3folWFlz8NTg==", r['medical_record_number']
     assert_equal "s/Q1SdAMY/S6mlao6erGW8sO1N0Z5XYXsSd2Ug==", r['first']
     assert_equal "7ETUHfZcSQduD+JS3qauh9vPmWUp1xbe56I3Bw==", r['last']
@@ -54,7 +54,7 @@ class RecordsControllerTest < ActionController::TestCase
     refute_nil r
     assert_equal '1vw2LeZgjRXW1Z00Xi97WII5Tbh0ln3ZN5xvbA==', r['_id']
     assert_equal nil, r['emr_demographics_primary_key']
-    assert_equal '91604', r['emr_primary_care_provider_id']
+    assert_equal '91604', r['primary_care_provider_id']
     assert_equal "xwoDLIzZNOJEqsIyDZsEBKghaFCEBNJp8cHPBA==", r['medical_record_number']
     assert_equal "1Z7vtn07FWZ4ZF60j5gbmUm37T7YA1skM6ABwg==", r['first']
     assert_equal "55uSmm6sHs6+WtpNh8HLeESBMgT/e79yROoGyA==", r['last']
