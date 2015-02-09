@@ -1,0 +1,9 @@
+digraph models_diagram {
+	graph[overlap=false, splines=true]
+	"Query" [shape=Mrecord, label="{Query|_id :Moped::BSON::ObjectId\l_type :String\lcreated_at :Time\ldelayed_job_id :Object\lerror_message :String\lfilter :Hash\lformat :String\lfunctions :String\lmap :String\lreduce :String\lrequest_id :Object\lstatus :Symbol\lupdated_at :Time\l}"]
+	"Result" [shape=Mrecord, label="{Result|_id :Moped::BSON::ObjectId\l_type :String\lcreated_at :Time\lquery_id :Object\l}"]
+	"JobLog" [shape=Mrecord, label="{JobLog|_id :Moped::BSON::ObjectId\l_type :String\lcreated_at :Time\lmessage :String\l}"]
+	"Query" -> "JobLog" [arrowtail=odot, arrowhead=crow, dir=both color="#44E053"]
+	"Query" -> "Result" [arrowtail=odot, arrowhead=dot, dir=both color="#4C7944"]
+	"JobLog" -> "Query" [arrowtail=crow, arrowhead=crow, dir=both color="#4657DB"]
+}
