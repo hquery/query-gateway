@@ -1,5 +1,7 @@
 This server is used to load test files into query-gateway.  It can be
 started from this directory with the command './relay-service.rb'.
+Make sure the query-gateway software is running on localhost:3001 before
+running this server.
 
 The relay service uses port 3000.  Modify the ':Port => 3000' setting
 in the script if another port will be used.  The server can be

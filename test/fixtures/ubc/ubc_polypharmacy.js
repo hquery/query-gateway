@@ -51,7 +51,7 @@ function map(patient) {
             var repeat = false;
 
             // Check if drug is PRN or within the right time
-            if(drugs[i].freeTextSig().indexOf(" E2E_PRN flag") !== -1
+            if(drugs[i].freeTextSig().indexOf(" E2E_PRN_FLAG") !== -1
                 || isCurrentDrug(drugs[i])) {
                 // Check if this entry is a repeat of same drug (codesystem agnostic)
                 var codes = drugs[i].medicationInformation().codedProduct();
@@ -90,7 +90,7 @@ function map(patient) {
             if(isCurrentDrug(drugs[i])) {
 
                 // check whether drugs[i] is a PRN; if it is skip
-                if (drugs[i].freeTextSig().indexOf(" E2E_PRN flag") !== -1) {
+                if (drugs[i].freeTextSig().indexOf(" E2E_PRN_FLAG") !== -1) {
                     continue; // continue on to next drug immediately
                 }
 
@@ -126,7 +126,7 @@ function map(patient) {
             var repeat = false;
 
             // Check if drug is PRN or within the right time
-            if(drugs[i].freeTextSig().indexOf(" E2E_PRN flag") !== -1
+            if(drugs[i].freeTextSig().indexOf(" E2E_PRN_FLAG") !== -1
                 || isCurrentDrug(drugs[i])) {
                 count++;
             }
@@ -146,7 +146,7 @@ function map(patient) {
             // Check if drug is within the right time
             if(isCurrentDrug(drugs[i])) {
                 // check whether drugs[i] is a PRN; if it is skip
-                if (drugs[i].freeTextSig().indexOf(" E2E_PRN flag") !== -1) {
+                if (drugs[i].freeTextSig().indexOf(" E2E_PRN_FLAG") !== -1) {
                     continue; // continue on to next drug immediately
                 }
                 count++;

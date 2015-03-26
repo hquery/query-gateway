@@ -15,10 +15,10 @@ server = HTTPServer.new(config)
 
 # Mount servlets
 server.mount_proc('/') { |req, resp|
-  resp.body = '<a href="/records/destroy">Delete</a> test patient records<br><a href="/records/relay">Create</a> test patient records'
+  resp.body = '<a href="/records/destroy">Delete</a> test patient records<br><a href="/records/relay">Create</a> test patient records <br><br><b>IMPORTANT:  The query-gateway service must be running on localhost:3001 before invoking these services!!!</b>'
 }
 server.mount_proc('/records/destroy') { |req, resp|
-  uri = URI.parse("http://localhost:3001/records/destroy")
+  uri = URI.parse('http://localhost:3001/records/destroy')
   http = Net::HTTP.new(uri.host, uri.port)
   request = Net::HTTP::Delete.new(uri.request_uri)
   response = http.request(request)
@@ -30,7 +30,7 @@ class RecordRelayServlet < HTTPServlet::AbstractServlet
       url = URI.parse('http://localhost:3001/records/create')
       res = nil
       File.open(xml_file) do |xml|
-        req = Net::HTTP::Post::Multipart.new url.path, "content" => UploadIO.new(xml, "text/xml", "temp_scoop_document.xml")
+        req = Net::HTTP::Post::Multipart.new url.path, 'content' => UploadIO.new(xml, 'text/xml', 'temp_scoop_document.xml')
         res = Net::HTTP.start(url.host, url.port) do |http|
           http.request(req)
         end

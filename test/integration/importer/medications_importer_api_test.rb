@@ -53,7 +53,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     #1st
     assert_equal true, @context.eval('e2e_patient.medications()[0].includesCodeFrom({"HC-DIN": ["00559407"]})')
     assert_equal true, @context.eval('e2e_patient.medications()[0].includesCodeFrom({"whoATC": ["N02BE01"]})')
-    assert_equal ' E2E_PRN flag', @context.eval('e2e_patient.medications()[0].freeTextSig()')
+    assert_equal ' E2E_PRN_FLAG E2E_LONG_TERM_FLAG', @context.eval('e2e_patient.medications()[0].freeTextSig()')
     # test importing of medication strengths
     assert_equal 1, @context.eval('e2e_patient.medications()[0].values().length')
     assert_equal 500, @context.eval('e2e_patient.medications()[0].values()[0].scalar()')
@@ -86,7 +86,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     #2nd
     assert_equal true, @context.eval('e2e_patient.medications()[1].includesCodeFrom({"HC-DIN": ["00613215"]})')
     assert_equal true, @context.eval('e2e_patient.medications()[1].includesCodeFrom({"whoATC": ["C03DA01"]})')
-    assert_equal '', @context.eval('e2e_patient.medications()[1].freeTextSig()')
+    assert_equal ' E2E_LONG_TERM_FLAG', @context.eval('e2e_patient.medications()[1].freeTextSig()')
     assert_equal 1, @context.eval('e2e_patient.medications()[1].values().length')
     assert_equal 25.0, @context.eval('e2e_patient.medications()[1].values()[0].scalar()')
     assert_equal 'MG', @context.eval('e2e_patient.medications()[1].values()[0].units()')
@@ -103,7 +103,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     #3rd
     assert_equal true, @context.eval('e2e_patient.medications()[2].includesCodeFrom({"HC-DIN": ["00636533"]})')
     assert_equal true, @context.eval('e2e_patient.medications()[2].includesCodeFrom({"whoATC": ["M01AE01"]})')
-    assert_equal ' E2E_PRN flag', @context.eval('e2e_patient.medications()[2].freeTextSig()')
+    assert_equal ' E2E_PRN_FLAG E2E_LONG_TERM_FLAG', @context.eval('e2e_patient.medications()[2].freeTextSig()')
     assert_equal 1, @context.eval('e2e_patient.medications()[2].values().length')
     assert_equal 400.0, @context.eval('e2e_patient.medications()[2].values()[0].scalar()')
     assert_equal 'MG', @context.eval('e2e_patient.medications()[2].values()[0].units()')
@@ -120,7 +120,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     #4th
     assert_equal true, @context.eval('e2e_patient.medications()[3].includesCodeFrom({"HC-DIN": ["02041421"]})')
     assert_equal true, @context.eval('e2e_patient.medications()[3].includesCodeFrom({"whoATC": ["N05BA06"]})')
-    assert_equal ' E2E_PRN flag', @context.eval('e2e_patient.medications()[3].freeTextSig()')
+    assert_equal ' E2E_PRN_FLAG E2E_LONG_TERM_FLAG', @context.eval('e2e_patient.medications()[3].freeTextSig()')
     assert_equal 1, @context.eval('e2e_patient.medications()[3].values().length')
     assert_equal 1.0, @context.eval('e2e_patient.medications()[3].values()[0].scalar()')
     assert_equal 'MG', @context.eval('e2e_patient.medications()[3].values()[0].units()')
@@ -137,7 +137,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     #5th
     assert_equal true, @context.eval('e2e_patient.medications()[4].includesCodeFrom({"HC-DIN": ["02244993"]})')
     assert_equal true, @context.eval('e2e_patient.medications()[4].includesCodeFrom({"whoATC": ["B01AC06"]})')
-    assert_equal '', @context.eval('e2e_patient.medications()[4].freeTextSig()')
+    assert_equal ' E2E_LONG_TERM_FLAG', @context.eval('e2e_patient.medications()[4].freeTextSig()')
     assert_equal 1, @context.eval('e2e_patient.medications()[4].values().length')
     assert_equal 81.0, @context.eval('e2e_patient.medications()[4].values()[0].scalar()')
     assert_equal 'MG', @context.eval('e2e_patient.medications()[4].values()[0].units()')
@@ -154,7 +154,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     #6th
     assert_equal true, @context.eval('e2e_patient.medications()[5].includesCodeFrom({"HC-DIN": ["02351420"]})')
     assert_equal true, @context.eval('e2e_patient.medications()[5].includesCodeFrom({"whoATC": ["C03CA01"]})')
-    assert_equal '', @context.eval('e2e_patient.medications()[5].freeTextSig()')
+    assert_equal ' E2E_LONG_TERM_FLAG', @context.eval('e2e_patient.medications()[5].freeTextSig()')
     assert_equal 1, @context.eval('e2e_patient.medications()[5].values().length')
     assert_equal 20.0, @context.eval('e2e_patient.medications()[5].values()[0].scalar()')
     assert_equal 'MG', @context.eval('e2e_patient.medications()[5].values()[0].units()')
@@ -171,7 +171,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     #7th
     assert_equal true, @context.eval('e2e_patient.medications()[6].includesCodeFrom({"HC-DIN": ["02363283"]})')
     assert_equal true, @context.eval('e2e_patient.medications()[6].includesCodeFrom({"whoATC": ["C09AA05"]})')
-    assert_equal '', @context.eval('e2e_patient.medications()[6].freeTextSig()')
+    assert_equal ' E2E_LONG_TERM_FLAG', @context.eval('e2e_patient.medications()[6].freeTextSig()')
     assert_equal 1, @context.eval('e2e_patient.medications()[6].values().length')
     assert_equal 5.0, @context.eval('e2e_patient.medications()[6].values()[0].scalar()')
     assert_equal 'MG', @context.eval('e2e_patient.medications()[6].values()[0].units()')
@@ -188,7 +188,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     #8th
     assert_equal true, @context.eval('e2e_patient.medications()[7].includesCodeFrom({"HC-DIN": ["02364948"]})')
     assert_equal true, @context.eval('e2e_patient.medications()[7].includesCodeFrom({"whoATC": ["C07AG02"]})')
-    assert_equal '', @context.eval('e2e_patient.medications()[7].freeTextSig()')
+    assert_equal ' E2E_LONG_TERM_FLAG', @context.eval('e2e_patient.medications()[7].freeTextSig()')
     assert_equal 1, @context.eval('e2e_patient.medications()[7].values().length')
     assert_equal 12.5, @context.eval('e2e_patient.medications()[7].values()[0].scalar()')
     assert_equal 'MG', @context.eval('e2e_patient.medications()[7].values()[0].units()')
@@ -205,7 +205,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     #9th and last
     assert_equal true, @context.eval('e2e_patient.medications()[8].includesCodeFrom({"HC-DIN": ["02387913"]})')
     assert_equal true, @context.eval('e2e_patient.medications()[8].includesCodeFrom({"whoATC": ["C10AA05"]})')
-    assert_equal '', @context.eval('e2e_patient.medications()[8].freeTextSig()')
+    assert_equal ' E2E_LONG_TERM_FLAG', @context.eval('e2e_patient.medications()[8].freeTextSig()')
     assert_equal 1, @context.eval('e2e_patient.medications()[8].values().length')
     assert_equal 40, @context.eval('e2e_patient.medications()[8].values()[0].scalar()')
     assert_equal 'MG', @context.eval('e2e_patient.medications()[8].values()[0].units()')
@@ -270,7 +270,7 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
     assert_equal 'Mg', @context.eval('e2e_patient2.medications()[2].values()[0].units()')
     assert_equal 'active', @context.eval('e2e_patient2.medications()[2]["json"]["statusOfMedication"]["value"]')
     assert_equal 'One capsule daily at bedtime as needed
-. Take at bedtime E2E_PRN flag', @context.eval('e2e_patient2.medications()[2].freeTextSig()')
+. Take at bedtime E2E_PRN_FLAG', @context.eval('e2e_patient2.medications()[2].freeTextSig()')
     assert_equal Time.gm(2014,2,4), @context.eval('e2e_patient2.medications()[2].timeStamp()')
     assert_equal 2014, @context.eval('e2e_patient2.medications()[2].timeStamp().getUTCFullYear()')
     assert_equal 1, @context.eval('e2e_patient2.medications()[2].timeStamp().getUTCMonth()')

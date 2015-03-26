@@ -59,8 +59,8 @@ function map(patient) {
 
             var codes = drugs[i].medicationInformation().codedProduct();
 
-            if (drugs[i].freeTextSig().indexOf(" E2E_PRN flag") !== -1) {
-                emit("E2E_PRN flag", 1);
+            if (drugs[i].freeTextSig().indexOf(" E2E_PRN_FLAG") !== -1) {
+                emit("E2E_PRN_FLAG", 1);
             }
 
             if (codes === null || codes.length === 0) {
