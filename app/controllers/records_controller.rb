@@ -53,6 +53,10 @@ class RecordsController < ApplicationController
             else
               patient[:_id] = patient[:hash_id]
             end
+            ### Example of how to capture E2E document for debugging purposes
+            ### if patient[:_id] == '149'
+            ###   File.open("#{Rails.root}/log/149.xml", 'wb') { |file| file.write(xml_file) }
+            ### end
             # patient.save! isn't working as documented, don't know why
             # appears that it should but upsert does what we need.  See
             #  http://mongoid.org/en/mongoid/docs/persistence.html
