@@ -84,7 +84,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal '', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[0].orderInformation()[0].orderDateTime()').to_i
-
+    assert_equal true, @context.eval('e2e_patient.medications()[0].orderInformation()[0].isPRN()')
     #2nd
     assert_equal true, @context.eval('e2e_patient.medications()[1].includesCodeFrom({"HC-DIN": ["00613215"]})')
     assert_equal true, @context.eval('e2e_patient.medications()[1].includesCodeFrom({"whoATC": ["C03DA01"]})')
@@ -103,6 +103,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal '', @context.eval('e2e_patient.medications()[1].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[1].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[1].orderInformation()[0].orderDateTime()').to_i
+    assert_equal false, @context.eval('e2e_patient.medications()[1].orderInformation()[0].isPRN()')
 
     #3rd
     assert_equal true, @context.eval('e2e_patient.medications()[2].includesCodeFrom({"HC-DIN": ["00636533"]})')
@@ -122,6 +123,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal '', @context.eval('e2e_patient.medications()[2].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[2].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[2].orderInformation()[0].orderDateTime()').to_i
+    assert_equal true, @context.eval('e2e_patient.medications()[2].orderInformation()[0].isPRN()')
 
     #4th
     assert_equal true, @context.eval('e2e_patient.medications()[3].includesCodeFrom({"HC-DIN": ["02041421"]})')
@@ -141,6 +143,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal '', @context.eval('e2e_patient.medications()[3].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[3].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[3].orderInformation()[0].orderDateTime()').to_i
+    assert_equal true, @context.eval('e2e_patient.medications()[3].orderInformation()[0].isPRN()')
 
     #5th
     assert_equal true, @context.eval('e2e_patient.medications()[4].includesCodeFrom({"HC-DIN": ["02244993"]})')
@@ -160,6 +163,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal '', @context.eval('e2e_patient.medications()[4].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[4].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[4].orderInformation()[0].orderDateTime()').to_i
+    assert_equal false, @context.eval('e2e_patient.medications()[4].orderInformation()[0].isPRN()')
 
     #6th
     assert_equal true, @context.eval('e2e_patient.medications()[5].includesCodeFrom({"HC-DIN": ["02351420"]})')
@@ -179,6 +183,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal '', @context.eval('e2e_patient.medications()[5].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[5].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[5].orderInformation()[0].orderDateTime()').to_i
+    assert_equal false, @context.eval('e2e_patient.medications()[5].orderInformation()[0].isPRN()')
 
     #7th
     assert_equal true, @context.eval('e2e_patient.medications()[6].includesCodeFrom({"HC-DIN": ["02363283"]})')
@@ -198,6 +203,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal '', @context.eval('e2e_patient.medications()[6].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[6].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[6].orderInformation()[0].orderDateTime()').to_i
+    assert_equal false, @context.eval('e2e_patient.medications()[6].orderInformation()[0].isPRN()')
 
     #8th
     assert_equal true, @context.eval('e2e_patient.medications()[7].includesCodeFrom({"HC-DIN": ["02364948"]})')
@@ -217,6 +223,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal '', @context.eval('e2e_patient.medications()[7].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[7].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[7].orderInformation()[0].orderDateTime()').to_i
+    assert_equal false, @context.eval('e2e_patient.medications()[7].orderInformation()[0].isPRN()')
 
     #9th and last
     assert_equal true, @context.eval('e2e_patient.medications()[8].includesCodeFrom({"HC-DIN": ["02387913"]})')
@@ -236,6 +243,7 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal '', @context.eval('e2e_patient.medications()[8].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient.medications()[8].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[8].orderInformation()[0].orderDateTime()').to_i
+    assert_equal false, @context.eval('e2e_patient.medications()[8].orderInformation()[0].isPRN()')
 
   end
 end
@@ -263,12 +271,13 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
     assert_equal '[Frequency: Four times daily]', @context.eval('e2e_patient2.medications()[0].administrationTiming()["json"]["text"]')
     assert_equal '1-2 Puffs four times daily for 30 days. Use with Aerochamber', @context.eval('e2e_patient2.medications()[0].freeTextSig()')
     assert_equal false, @context.eval('e2e_patient2.medications()[0].isPRN()')
-    assert_equal false, @context.eval('e2e_patient2.medications()[0].isLongTerm()')
+    assert_equal nil, @context.eval('e2e_patient2.medications()[0].isLongTerm()')
     #No useful provider information in this document,  Family name is hash of empty string.
     assert_equal '0UoCjCo6K8lHYQK7KII0xBWisB+CjqYqxbPkLw==', @context.eval('e2e_patient2.medications()[0].orderInformation()[0]["json"]["performer"]["family_name"]')
     assert_equal '', @context.eval('e2e_patient2.medications()[0].orderInformation()[0]["json"]["performer"]["given_name"]')
     assert_equal '', @context.eval('e2e_patient2.medications()[0].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal nil, @context.eval('e2e_patient2.medications()[0].orderInformation()[0]["json"]["performer"]["start"]')
+    assert_equal false, @context.eval('e2e_patient2.medications()[0].orderInformation()[0].isPRN()')
 
     #2nd
     assert_equal true, @context.eval('e2e_patient2.medications()[1].includesCodeFrom({"HC-DIN": ["682020"]})')
@@ -278,12 +287,13 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
     assert_equal 'active', @context.eval('e2e_patient2.medications()[1]["json"]["statusOfMedication"]["value"]')
     assert_equal 'Take with Food', @context.eval('e2e_patient2.medications()[1].freeTextSig()')
     assert_equal false, @context.eval('e2e_patient2.medications()[1].isPRN()')
-    assert_equal false, @context.eval('e2e_patient2.medications()[1].isLongTerm()')
+    assert_equal nil, @context.eval('e2e_patient2.medications()[1].isLongTerm()')
     assert_equal Time.gm(2014,2,13), @context.eval('e2e_patient2.medications()[1].timeStamp()')
     assert_equal 2014, @context.eval('e2e_patient2.medications()[1].timeStamp().getUTCFullYear()')
     assert_equal 1, @context.eval('e2e_patient2.medications()[1].timeStamp().getUTCMonth()')
     assert_equal 13, @context.eval('e2e_patient2.medications()[1].timeStamp().getUTCDate()')
     assert_equal '[Frequency: Four times daily]', @context.eval('e2e_patient2.medications()[1].administrationTiming()["json"]["text"]')
+    assert_equal false, @context.eval('e2e_patient2.medications()[1].orderInformation()[0].isPRN()')
 
     #3rd
     assert_equal true, @context.eval('e2e_patient2.medications()[2].includesCodeFrom({"Unknown": ["NI"]})')
@@ -294,12 +304,13 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
     assert_equal 'One capsule daily at bedtime as needed
 . Take at bedtime E2E_PRN_FLAG', @context.eval('e2e_patient2.medications()[2].freeTextSig()')
     assert_equal true, @context.eval('e2e_patient2.medications()[2].isPRN()')
-    assert_equal false, @context.eval('e2e_patient2.medications()[2].isLongTerm()')
+    assert_equal nil, @context.eval('e2e_patient2.medications()[2].isLongTerm()')
     assert_equal Time.gm(2014,2,4), @context.eval('e2e_patient2.medications()[2].timeStamp()')
     assert_equal 2014, @context.eval('e2e_patient2.medications()[2].timeStamp().getUTCFullYear()')
     assert_equal 1, @context.eval('e2e_patient2.medications()[2].timeStamp().getUTCMonth()')
     assert_equal 4, @context.eval('e2e_patient2.medications()[2].timeStamp().getUTCDate()')
     assert_equal '[Frequency: Once daily]', @context.eval('e2e_patient2.medications()[2].administrationTiming()["json"]["text"]')
+    assert_equal true, @context.eval('e2e_patient2.medications()[2].orderInformation()[0].isPRN()')
 
     #4th
     assert_equal true, @context.eval('e2e_patient2.medications()[3].includesCodeFrom({"HC-DIN": ["2243224"]})')
@@ -310,12 +321,13 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
     assert_equal '125mg (5ml) three times daily
 . Shake well before use and take until finished', @context.eval('e2e_patient2.medications()[3].freeTextSig()')
     assert_equal false, @context.eval('e2e_patient2.medications()[3].isPRN()')
-    assert_equal false, @context.eval('e2e_patient2.medications()[3].isLongTerm()')
+    assert_equal nil, @context.eval('e2e_patient2.medications()[3].isLongTerm()')
     assert_equal Time.gm(2014,2,27), @context.eval('e2e_patient2.medications()[3].timeStamp()')
     assert_equal 2014, @context.eval('e2e_patient2.medications()[3].timeStamp().getUTCFullYear()')
     assert_equal 1, @context.eval('e2e_patient2.medications()[3].timeStamp().getUTCMonth()')
     assert_equal 27, @context.eval('e2e_patient2.medications()[3].timeStamp().getUTCDate()')
     assert_equal '[Frequency: Three times daily]', @context.eval('e2e_patient2.medications()[3].administrationTiming()["json"]["text"]')
+    assert_equal false, @context.eval('e2e_patient2.medications()[3].orderInformation()[0].isPRN()')
 
     #5th
     assert_equal true, @context.eval('e2e_patient2.medications()[4].includesCodeFrom({"HC-DIN": ["2139324"]})')
@@ -325,12 +337,13 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
     assert_equal 'active', @context.eval('e2e_patient2.medications()[4]["json"]["statusOfMedication"]["value"]')
     assert_equal '1ml with 5ml Normal saline by Nebulizer twice daily.', @context.eval('e2e_patient2.medications()[4].freeTextSig()')
     assert_equal false, @context.eval('e2e_patient2.medications()[4].isPRN()')
-    assert_equal false, @context.eval('e2e_patient2.medications()[4].isLongTerm()')
+    assert_equal nil, @context.eval('e2e_patient2.medications()[4].isLongTerm()')
     assert_equal Time.gm(2014,1,5), @context.eval('e2e_patient2.medications()[4].timeStamp()')
     assert_equal 2014, @context.eval('e2e_patient2.medications()[4].timeStamp().getUTCFullYear()')
     assert_equal 0, @context.eval('e2e_patient2.medications()[4].timeStamp().getUTCMonth()')
     assert_equal 5, @context.eval('e2e_patient2.medications()[4].timeStamp().getUTCDate()')
     assert_equal '[Frequency: Twice daily]', @context.eval('e2e_patient2.medications()[4].administrationTiming()["json"]["text"]')
+    assert_equal false, @context.eval('e2e_patient2.medications()[4].orderInformation()[0].isPRN()')
 
     #6th
     assert_equal true, @context.eval('e2e_patient2.medications()[5].includesCodeFrom({"HC-DIN": ["1999761"]})')
@@ -340,12 +353,13 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
     assert_equal 'active', @context.eval('e2e_patient2.medications()[5]["json"]["statusOfMedication"]["value"]')
     assert_equal '5mg administered intra-articularly to right foot monthly. Bring medication to Doctor\'s office for administration.', @context.eval('e2e_patient2.medications()[5].freeTextSig()')
     assert_equal false, @context.eval('e2e_patient2.medications()[5].isPRN()')
-    assert_equal false, @context.eval('e2e_patient2.medications()[5].isLongTerm()')
+    assert_equal nil, @context.eval('e2e_patient2.medications()[5].isLongTerm()')
     assert_equal Time.gm(2014,2,4), @context.eval('e2e_patient2.medications()[5].timeStamp()')
     assert_equal 2014, @context.eval('e2e_patient2.medications()[5].timeStamp().getUTCFullYear()')
     assert_equal 1, @context.eval('e2e_patient2.medications()[5].timeStamp().getUTCMonth()')
     assert_equal 4, @context.eval('e2e_patient2.medications()[5].timeStamp().getUTCDate()')
     assert_equal '[Frequency: Once a month]', @context.eval('e2e_patient2.medications()[5].administrationTiming()["json"]["text"]')
+    assert_equal false, @context.eval('e2e_patient2.medications()[5].orderInformation()[0].isPRN()')
 
     #7th
     assert_equal true, @context.eval('e2e_patient2.medications()[6].includesCodeFrom({"HC-DIN": ["2273950"]})')
@@ -355,12 +369,13 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
     assert_equal 'completed', @context.eval('e2e_patient2.medications()[6]["json"]["statusOfMedication"]["value"]')
     assert_equal '5mg twice daily.', @context.eval('e2e_patient2.medications()[6].freeTextSig()')
     assert_equal false, @context.eval('e2e_patient2.medications()[6].isPRN()')
-    assert_equal false, @context.eval('e2e_patient2.medications()[6].isLongTerm()')
+    assert_equal nil, @context.eval('e2e_patient2.medications()[6].isLongTerm()')
     assert_equal Time.gm(2013,12,6), @context.eval('e2e_patient2.medications()[6].timeStamp()')
     assert_equal 2013, @context.eval('e2e_patient2.medications()[6].timeStamp().getUTCFullYear()')
     assert_equal 11, @context.eval('e2e_patient2.medications()[6].timeStamp().getUTCMonth()')
     assert_equal 6, @context.eval('e2e_patient2.medications()[6].timeStamp().getUTCDate()')
     assert_equal '[Frequency: Twice daily]', @context.eval('e2e_patient2.medications()[6].administrationTiming()["json"]["text"]')
+    assert_equal false, @context.eval('e2e_patient2.medications()[6].orderInformation()[0].isPRN()')
 
   end
 end

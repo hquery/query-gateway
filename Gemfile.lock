@@ -1,6 +1,6 @@
 GIT
   remote: http://github.com/scoophealth/health-data-standards.git
-  revision: 5931f76a66a04eae75e7128356bc1e800c22bc72
+  revision: f0a7322023ceaa87e0a13fadcb31d0f276943c29
   branch: scoop-develop
   specs:
     health-data-standards (2.1.4)
@@ -35,7 +35,7 @@ GIT
 
 GIT
   remote: http://github.com/scoophealth/patientapi.git
-  revision: 8cfb50a53396180b652737f406d5cc2d9e5e3cb5
+  revision: c38c5f72e0ea4801d2e5cb86c20bd04b544cc67a
   branch: master
   specs:
     hquery-patient-api (1.0.5)
