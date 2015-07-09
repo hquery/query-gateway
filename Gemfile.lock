@@ -1,7 +1,7 @@
 GIT
   remote: http://github.com/scoophealth/health-data-standards.git
-  revision: 50b1411011385b5aa056656b03e347109c37c52b
-  branch: scoop-develop
+  revision: ef4601a891b0200b3e5703d4f73a41f688fd81dc
+  branch: master
   specs:
     health-data-standards (2.1.4)
       builder (~> 3.0.0)
@@ -180,9 +180,8 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
-    rest-client (1.6.8)
+    rest-client (1.6.9)
       mime-types (~> 1.16)
-      rdoc (>= 2.4.2)
     roo (1.10.1)
       choice (>= 0.1.4)
       google-spreadsheet-ruby (>= 0.1.5)
@@ -222,7 +221,7 @@ GEM
     uglifier (2.1.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
-    uuid (2.3.7)
+    uuid (2.3.8)
       macaddr (~> 1.0)
     yamler (0.1.0)
 
