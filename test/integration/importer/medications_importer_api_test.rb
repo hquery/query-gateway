@@ -259,6 +259,7 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
     # test importing of medication strengths, prescription date, instructions to patient
     #1st
     assert_equal true, @context.eval('e2e_patient2.medications()[0].includesCodeFrom({"HC-DIN": ["2241497"]})')
+    assert_equal true, @context.eval('e2e_patient2.medications()[0].includesCodeFrom({"whoATC": ["R03AC02"]})')
     assert_equal 1, @context.eval('e2e_patient2.medications()[0].values().length')
     assert_equal 100, @context.eval('e2e_patient2.medications()[0].values()[0].scalar()')
     assert_equal 'Mcg', @context.eval('e2e_patient2.medications()[0].values()[0].units()')
@@ -281,6 +282,7 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
 
     #2nd
     assert_equal true, @context.eval('e2e_patient2.medications()[1].includesCodeFrom({"HC-DIN": ["682020"]})')
+    assert_equal true, @context.eval('e2e_patient2.medications()[1].includesCodeFrom({"whoATC": ["J01FA01"]})')
     assert_equal 1, @context.eval('e2e_patient2.medications()[1].values().length')
     assert_equal 1, @context.eval('e2e_patient2.medications()[1].values()[0].scalar()')
     assert_equal 'Tablet(s)', @context.eval('e2e_patient2.medications()[1].values()[0].units()')
@@ -314,6 +316,7 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
 
     #4th
     assert_equal true, @context.eval('e2e_patient2.medications()[3].includesCodeFrom({"HC-DIN": ["2243224"]})')
+    assert_equal true, @context.eval('e2e_patient2.medications()[3].includesCodeFrom({"whoATC": ["Unknown"]})')
     assert_equal 1, @context.eval('e2e_patient2.medications()[3].values().length')
     assert_equal 125, @context.eval('e2e_patient2.medications()[3].values()[0].scalar()')
     assert_equal 'Mg', @context.eval('e2e_patient2.medications()[3].values()[0].units()')
@@ -331,6 +334,7 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
 
     #5th
     assert_equal true, @context.eval('e2e_patient2.medications()[4].includesCodeFrom({"HC-DIN": ["2139324"]})')
+    assert_equal true, @context.eval('e2e_patient2.medications()[4].includesCodeFrom({"whoATC": ["Unknown"]})')
     assert_equal 1, @context.eval('e2e_patient2.medications()[4].values().length')
     assert_equal 1, @context.eval('e2e_patient2.medications()[4].values()[0].scalar()')
     assert_equal 'Millilitres', @context.eval('e2e_patient2.medications()[4].values()[0].units()')
@@ -347,6 +351,7 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
 
     #6th
     assert_equal true, @context.eval('e2e_patient2.medications()[5].includesCodeFrom({"HC-DIN": ["1999761"]})')
+    assert_equal true, @context.eval('e2e_patient2.medications()[5].includesCodeFrom({"whoATC": ["H02AB08"]})')
     assert_equal 1, @context.eval('e2e_patient2.medications()[5].values().length')
     assert_equal 5, @context.eval('e2e_patient2.medications()[5].values()[0].scalar()')
     assert_equal 'Mg', @context.eval('e2e_patient2.medications()[5].values()[0].units()')
@@ -363,6 +368,7 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
 
     #7th
     assert_equal true, @context.eval('e2e_patient2.medications()[6].includesCodeFrom({"HC-DIN": ["2273950"]})')
+    assert_equal true, @context.eval('e2e_patient2.medications()[6].includesCodeFrom({"whoATC": ["N06BA04"]})')
     assert_equal 1, @context.eval('e2e_patient2.medications()[6].values().length')
     assert_equal 5, @context.eval('e2e_patient2.medications()[6].values()[0].scalar()')
     assert_equal 'Mg', @context.eval('e2e_patient2.medications()[6].values()[0].units()')
