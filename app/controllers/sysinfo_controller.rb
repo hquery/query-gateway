@@ -25,6 +25,7 @@ class SysinfoController < ApplicationController
   end
 
   def mongo
+    # do nothing
   end
 
   def totalprocesses
