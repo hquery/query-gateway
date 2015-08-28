@@ -1,5 +1,17 @@
 QueryGateway::Application.routes.draw do
 
+  get "sysinfo/currentload"
+
+  get "sysinfo/currentusers"
+
+  get "sysinfo/diskspace"
+
+  get "sysinfo/mongo"
+
+  get "sysinfo/totalprocesses"
+
+  get "sysinfo/swap"
+
   resources :results, :only => [:index, :show]
   
   resources :queries
