@@ -18,6 +18,8 @@ class Query
   
   validates_presence_of :map
   validates_presence_of :reduce
+
+  index({ updated_at: -1})
   
   def status_change(new_status, message)
     self.status = new_status

@@ -1,6 +1,7 @@
 class QueriesController < ApplicationController
   def index   
     if stale?(:last_modified => Query.last_query_update.utc)
+      Query.create_indexes  # ensures the indexes are created, does nothing if they already exist
       @queries = Query.desc(:updated_at)
       respond_to do |format|
         format.atom
