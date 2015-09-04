@@ -23,8 +23,9 @@ class E2EEncounterImporterApiTest < E2EImporterApiTest
     #TODO provide a nicer way to get performer information
     #TODO consider reverting encounter provider to a hash field as it existed when patientapi was last maintained
     assert_equal '', @context.eval('e2e_patient.encounters()[0].performer()["json"]["given_name"]')
-    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.encounters()[0].performer()["json"]["family_name"]')
-    assert_equal '', @context.eval('e2e_patient.encounters()[0].performer()["json"]["npi"]')
+    family_name=@context.eval('e2e_patient.encounters()[0].performer()["json"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', family_name
+    assert_equal family_name, @context.eval('e2e_patient.encounters()[0].performer()["json"]["npi"]')
     #assert_equal 'doctor', @context.eval('e2e_patient.encounters()[0].performer()["json"]["given_name"]')
     #assert_equal 'oscardoc', @context.eval('e2e_patient.encounters()[0].performer()["json"]["family_name"]')
     #assert_equal 'cpsid', @context.eval('e2e_patient.encounters()[0].performer()["json"]["npi"]')
@@ -49,10 +50,13 @@ class E2EEncounterImporterApiTest2 < E2EImporterApiTest2
     #TODO provide a nicer way to get performer information
     #TODO consider reverting encounter provider to a hash field as it existed when patientapi was last maintained
     assert_equal '', @context.eval('e2e_patient2.encounters()[0].performer()["json"]["given_name"]')
-    assert_equal '723CDj1qKtsyu1RWPnBZZ4xV+24qZMoEYh/BuQ==', @context.eval('e2e_patient2.encounters()[0].performer()["json"]["family_name"]')
-    assert_equal '723CDj1qKtsyu1RWPnBZZ4xV+24qZMoEYh/BuQ==', @context.eval('e2e_patient2.encounters()[1].performer()["json"]["family_name"]')
-    assert_equal 'uEFPPUFw3c7CDbHqEc96WJlAffuarPOnsUFbnw==', @context.eval('e2e_patient2.encounters()[2].performer()["json"]["family_name"]')
-    assert_equal '', @context.eval('e2e_patient2.encounters()[0].performer()["json"]["npi"]')
+    family_name0=@context.eval('e2e_patient2.encounters()[0].performer()["json"]["family_name"]')
+    family_name1=@context.eval('e2e_patient2.encounters()[1].performer()["json"]["family_name"]')
+    family_name2=@context.eval('e2e_patient2.encounters()[2].performer()["json"]["family_name"]')
+    assert_equal '723CDj1qKtsyu1RWPnBZZ4xV+24qZMoEYh/BuQ==', family_name0
+    assert_equal '723CDj1qKtsyu1RWPnBZZ4xV+24qZMoEYh/BuQ==', family_name1
+    assert_equal 'uEFPPUFw3c7CDbHqEc96WJlAffuarPOnsUFbnw==', family_name2
+    assert_equal family_name0, @context.eval('e2e_patient2.encounters()[0].performer()["json"]["npi"]')
     #Note that provider time resolved to midnight plus 7 hours (i.e., UTC midnight) before DateTime was substituted for Date in HDS E2E provider importer
     #assert_equal 'xyz', @context.eval('e2e_patient2.encounters()[0]')
     assert_equal Time.gm(2012,6,12,10,0,0).to_i, @context.eval('e2e_patient2.encounters()[0].performer()["json"]["start"]')

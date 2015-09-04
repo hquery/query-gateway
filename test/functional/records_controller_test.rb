@@ -37,7 +37,7 @@ class RecordsControllerTest < ActionController::TestCase
     performer = r['encounters'][0]['performer']
     assert_equal "", performer['given_name']
     assert_equal "qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==", performer['family_name']
-    assert_equal "", performer['npi']
+    assert_equal performer['family_name'], performer['npi']
     #assert_equal "doctor", performer['given_name']
     #assert_equal "oscardoc", performer['family_name']
     #assert_equal "cpsid", performer['npi']
@@ -64,7 +64,7 @@ class RecordsControllerTest < ActionController::TestCase
     assert_equal "", performer['given_name']
     # performer is anonymized
     assert_equal "723CDj1qKtsyu1RWPnBZZ4xV+24qZMoEYh/BuQ==", performer['family_name']
-    assert_equal "", performer['npi']
+    assert_equal performer['family_name'], performer['npi']
   end
 
 end

@@ -80,9 +80,10 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     #TODO Determine whether any of route, site, productForm, vehicle, deliveryMethod,
     #TODO doseRestriction, or fulfillmentHistory can be supported
     assert_equal 1, @context.eval('e2e_patient.medications()[0].orderInformation().length')
-    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["family_name"]')
+    family_name = @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', family_name
     assert_equal '', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["given_name"]')
-    assert_equal '', @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal family_name, @context.eval('e2e_patient.medications()[0].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[0].orderInformation()[0].orderDateTime()').to_i
     assert_equal true, @context.eval('e2e_patient.medications()[0].orderInformation()[0].isPRN()')
     #2nd
@@ -99,9 +100,10 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal 8, @context.eval('e2e_patient.medications()[1].timeStamp().getUTCMonth()')
     assert_equal 27, @context.eval('e2e_patient.medications()[1].timeStamp().getUTCDate()')
     assert_equal 1, @context.eval('e2e_patient.medications()[1].orderInformation().length')
-    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[1].orderInformation()[0]["json"]["performer"]["family_name"]')
+    family_name=@context.eval('e2e_patient.medications()[1].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', family_name
     assert_equal '', @context.eval('e2e_patient.medications()[1].orderInformation()[0]["json"]["performer"]["given_name"]')
-    assert_equal '', @context.eval('e2e_patient.medications()[1].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal family_name, @context.eval('e2e_patient.medications()[1].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[1].orderInformation()[0].orderDateTime()').to_i
     assert_equal false, @context.eval('e2e_patient.medications()[1].orderInformation()[0].isPRN()')
 
@@ -119,9 +121,10 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal 8, @context.eval('e2e_patient.medications()[2].timeStamp().getUTCMonth()')
     assert_equal 27, @context.eval('e2e_patient.medications()[2].timeStamp().getUTCDate()')
     assert_equal 1, @context.eval('e2e_patient.medications()[2].orderInformation().length')
-    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[2].orderInformation()[0]["json"]["performer"]["family_name"]')
+    family_name=@context.eval('e2e_patient.medications()[2].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', family_name
     assert_equal '', @context.eval('e2e_patient.medications()[2].orderInformation()[0]["json"]["performer"]["given_name"]')
-    assert_equal '', @context.eval('e2e_patient.medications()[2].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal family_name, @context.eval('e2e_patient.medications()[2].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[2].orderInformation()[0].orderDateTime()').to_i
     assert_equal true, @context.eval('e2e_patient.medications()[2].orderInformation()[0].isPRN()')
 
@@ -139,9 +142,10 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal 8, @context.eval('e2e_patient.medications()[3].timeStamp().getUTCMonth()')
     assert_equal 27, @context.eval('e2e_patient.medications()[3].timeStamp().getUTCDate()')
     assert_equal 1, @context.eval('e2e_patient.medications()[3].orderInformation().length')
-    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[3].orderInformation()[0]["json"]["performer"]["family_name"]')
+    family_name=@context.eval('e2e_patient.medications()[3].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', family_name
     assert_equal '', @context.eval('e2e_patient.medications()[3].orderInformation()[0]["json"]["performer"]["given_name"]')
-    assert_equal '', @context.eval('e2e_patient.medications()[3].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal family_name, @context.eval('e2e_patient.medications()[3].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[3].orderInformation()[0].orderDateTime()').to_i
     assert_equal true, @context.eval('e2e_patient.medications()[3].orderInformation()[0].isPRN()')
 
@@ -159,9 +163,10 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal 8, @context.eval('e2e_patient.medications()[4].timeStamp().getUTCMonth()')
     assert_equal 27, @context.eval('e2e_patient.medications()[4].timeStamp().getUTCDate()')
     assert_equal 1, @context.eval('e2e_patient.medications()[4].orderInformation().length')
-    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[4].orderInformation()[0]["json"]["performer"]["family_name"]')
+    family_name=@context.eval('e2e_patient.medications()[4].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', family_name
     assert_equal '', @context.eval('e2e_patient.medications()[4].orderInformation()[0]["json"]["performer"]["given_name"]')
-    assert_equal '', @context.eval('e2e_patient.medications()[4].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal family_name, @context.eval('e2e_patient.medications()[4].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[4].orderInformation()[0].orderDateTime()').to_i
     assert_equal false, @context.eval('e2e_patient.medications()[4].orderInformation()[0].isPRN()')
 
@@ -179,9 +184,10 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal 8, @context.eval('e2e_patient.medications()[5].timeStamp().getUTCMonth()')
     assert_equal 27, @context.eval('e2e_patient.medications()[5].timeStamp().getUTCDate()')
     assert_equal 1, @context.eval('e2e_patient.medications()[5].orderInformation().length')
-    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[5].orderInformation()[0]["json"]["performer"]["family_name"]')
+    family_name=@context.eval('e2e_patient.medications()[5].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', family_name
     assert_equal '', @context.eval('e2e_patient.medications()[5].orderInformation()[0]["json"]["performer"]["given_name"]')
-    assert_equal '', @context.eval('e2e_patient.medications()[5].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal family_name, @context.eval('e2e_patient.medications()[5].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[5].orderInformation()[0].orderDateTime()').to_i
     assert_equal false, @context.eval('e2e_patient.medications()[5].orderInformation()[0].isPRN()')
 
@@ -199,9 +205,10 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal 8, @context.eval('e2e_patient.medications()[6].timeStamp().getUTCMonth()')
     assert_equal 27, @context.eval('e2e_patient.medications()[6].timeStamp().getUTCDate()')
     assert_equal 1, @context.eval('e2e_patient.medications()[6].orderInformation().length')
-    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[6].orderInformation()[0]["json"]["performer"]["family_name"]')
+    family_name=@context.eval('e2e_patient.medications()[6].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', family_name
     assert_equal '', @context.eval('e2e_patient.medications()[6].orderInformation()[0]["json"]["performer"]["given_name"]')
-    assert_equal '', @context.eval('e2e_patient.medications()[6].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal family_name, @context.eval('e2e_patient.medications()[6].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[6].orderInformation()[0].orderDateTime()').to_i
     assert_equal false, @context.eval('e2e_patient.medications()[6].orderInformation()[0].isPRN()')
 
@@ -219,9 +226,10 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal 8, @context.eval('e2e_patient.medications()[7].timeStamp().getUTCMonth()')
     assert_equal 27, @context.eval('e2e_patient.medications()[7].timeStamp().getUTCDate()')
     assert_equal 1, @context.eval('e2e_patient.medications()[7].orderInformation().length')
-    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[7].orderInformation()[0]["json"]["performer"]["family_name"]')
+    family_name=@context.eval('e2e_patient.medications()[7].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', family_name
     assert_equal '', @context.eval('e2e_patient.medications()[7].orderInformation()[0]["json"]["performer"]["given_name"]')
-    assert_equal '', @context.eval('e2e_patient.medications()[7].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal family_name, @context.eval('e2e_patient.medications()[7].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[7].orderInformation()[0].orderDateTime()').to_i
     assert_equal false, @context.eval('e2e_patient.medications()[7].orderInformation()[0].isPRN()')
 
@@ -239,9 +247,10 @@ class E2EMedicationsImporterApiTest < E2EImporterApiTest
     assert_equal 8, @context.eval('e2e_patient.medications()[8].timeStamp().getUTCMonth()')
     assert_equal 27, @context.eval('e2e_patient.medications()[8].timeStamp().getUTCDate()')
     assert_equal 1, @context.eval('e2e_patient.medications()[8].orderInformation().length')
-    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', @context.eval('e2e_patient.medications()[8].orderInformation()[0]["json"]["performer"]["family_name"]')
+    family_name= @context.eval('e2e_patient.medications()[8].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal 'qbGJGxVjhsCx/JR42Bd7tX4nbBYNgR/TehN7gQ==', family_name
     assert_equal '', @context.eval('e2e_patient.medications()[8].orderInformation()[0]["json"]["performer"]["given_name"]')
-    assert_equal '', @context.eval('e2e_patient.medications()[8].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal family_name, @context.eval('e2e_patient.medications()[8].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal Time.gm(2013,9,27).to_i, @context.eval('e2e_patient.medications()[8].orderInformation()[0].orderDateTime()').to_i
     assert_equal false, @context.eval('e2e_patient.medications()[8].orderInformation()[0].isPRN()')
 
@@ -274,9 +283,10 @@ class E2EMedicationsImporterApiTest2 < E2EImporterApiTest2
     assert_equal false, @context.eval('e2e_patient2.medications()[0].isPRN()')
     assert_equal nil, @context.eval('e2e_patient2.medications()[0].isLongTerm()')
     #No useful provider information in this document,  Family name is hash of empty string.
-    assert_equal '0UoCjCo6K8lHYQK7KII0xBWisB+CjqYqxbPkLw==', @context.eval('e2e_patient2.medications()[0].orderInformation()[0]["json"]["performer"]["family_name"]')
+    family_name = @context.eval('e2e_patient2.medications()[0].orderInformation()[0]["json"]["performer"]["family_name"]')
+    assert_equal '0UoCjCo6K8lHYQK7KII0xBWisB+CjqYqxbPkLw==', family_name
     assert_equal '', @context.eval('e2e_patient2.medications()[0].orderInformation()[0]["json"]["performer"]["given_name"]')
-    assert_equal '', @context.eval('e2e_patient2.medications()[0].orderInformation()[0]["json"]["performer"]["npi"]')
+    assert_equal family_name, @context.eval('e2e_patient2.medications()[0].orderInformation()[0]["json"]["performer"]["npi"]')
     assert_equal nil, @context.eval('e2e_patient2.medications()[0].orderInformation()[0]["json"]["performer"]["start"]')
     assert_equal false, @context.eval('e2e_patient2.medications()[0].orderInformation()[0].isPRN()')
 
