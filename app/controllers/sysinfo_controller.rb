@@ -39,4 +39,11 @@ class SysinfoController < ApplicationController
     textstr += 'Status Code: ' + $?.exitstatus.to_s + "\n"
     render :text => textstr, :status =>201
   end
+
+
+  def currentimport
+    textstr = `#{NAGIOS_PLUGINS}/check_import.sh`
+    textstr += 'Status Code: ' + $?.exitstatus.to_s + "\n"
+    render :text => textstr, :status =>201
+  end
 end
