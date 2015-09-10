@@ -11,6 +11,8 @@ QueryGateway::Application.routes.draw do
 
   get 'sysinfo/swap', :constraints => {:ip => /127.0.0.1/}
 
+  get 'sysinfo/currentimport', :constraints => {:ip => /127.0.0.1/}
+
   resources :results, :only => [:index, :show]
   
   resources :queries
