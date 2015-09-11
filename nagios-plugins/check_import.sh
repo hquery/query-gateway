@@ -22,16 +22,23 @@ if [ $STATUS1 -ge 2 ]; then
 fi
 COUNT=`grep "$DATE" $TMPFILE | wc -l`
 if [ $COUNT -ge 2 ]; then
-  echo "OK - 'records p' has $COUNT matches on $DATE"
-  /bin/rm $TMPFILE
-  exit 0
+  COUNTP=`grep "$DATE" $TMPFILE | grep "records processed" | wc -l`
+  if [ $COUNTP -ge 1 ]; then
+    echo "OK - 'records processed' has $COUNTP matches on $DATE"
+    /bin/rm $TMPFILE
+    exit 0
+  else
+    echo "WARNING - 'records processed' has 0 matches on $DATE"
+    /bin/rm $TMPFILE
+    exit 1
+  fi
 fi
 if [ $COUNT -eq 1 ]; then
-  echo "WARNING - 'records p' has only 1 match on $DATE" # in $(/usr/bin/head -3 $TMPFILE)"
+  echo "WARNING - 'records p' has only 1 match on $DATE"
   /bin/rm $TMPFILE
   exit 1
 else
-  echo "CRITICAL - 'records p' has 0 matches on $DATE" # in $(/usr/bin/head -3 $TMPFILE)"
+  echo "CRITICAL - 'records p' has 0 matches on $DATE"
   /bin/rm $TMPFILE
   exit 2
 fi
