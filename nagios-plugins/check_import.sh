@@ -23,6 +23,7 @@ fi
 COUNT=`grep "$DATE" $TMPFILE | wc -l`
 if [ $COUNT -ge 2 ]; then
   echo "OK - 'records p' has $COUNT matches on $DATE"
+  /bin/rm $TMPFILE
   exit 0
 fi
 if [ $COUNT -eq 1 ]; then
