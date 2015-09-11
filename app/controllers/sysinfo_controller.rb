@@ -46,4 +46,11 @@ class SysinfoController < ApplicationController
     textstr += 'Status Code: ' + $?.exitstatus.to_s + "\n"
     render :text => textstr, :status =>201
   end
+
+  def tomcat
+    textstr = `#{NAGIOS_PLUGINS}/check_procs  -w 1:1 -c 1:1 -u tomcat6 -a tomcat6`
+    textstr += 'Status Code: ' + $?.exitstatus.to_s + "\n"
+    render :text => textstr, :status =>201
+  end
+
 end
