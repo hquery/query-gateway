@@ -1,12 +1,12 @@
 QueryGateway::Application.routes.draw do
 
-  get 'sysinfo/currentload', :constraints => {:ip => /127.0.0.1/}
-  get 'sysinfo/currentusers', :constraints => {:ip => /127.0.0.1/}
+  get 'sysinfo/load', :constraints => {:ip => /127.0.0.1/}
+  get 'sysinfo/users', :constraints => {:ip => /127.0.0.1/}
   get 'sysinfo/diskspace', :constraints => {:ip => /127.0.0.1/}
   get 'sysinfo/mongo', :constraints => {:ip => /127.0.0.1/}
-  get 'sysinfo/totalprocesses', :constraints => {:ip => /127.0.0.1/}
+  get 'sysinfo/processes', :constraints => {:ip => /127.0.0.1/}
   get 'sysinfo/swap', :constraints => {:ip => /127.0.0.1/}
-  get 'sysinfo/currentimport', :constraints => {:ip => /127.0.0.1/}
+  get 'sysinfo/import', :constraints => {:ip => /127.0.0.1/}
   get 'sysinfo/tomcat', :constraints => {:ip => /127.0.0.1/}
 
   resources :results, :only => [:index, :show]
