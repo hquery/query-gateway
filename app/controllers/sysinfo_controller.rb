@@ -6,13 +6,13 @@ class SysinfoController < ApplicationController
     NAGIOS_PLUGINS = File.dirname(__FILE__)+'/../../nagios-plugins'
   end
 
-  def currentload
+  def load
     textstr = `#{NAGIOS_PLUGINS}/check_load --warning='5.0,4.0,3.0' --critical='10.0,6.0,4.0'`
     textstr += 'Status Code: ' + $?.exitstatus.to_s + "\n"
     render :text => textstr, :status =>201
   end
 
-  def currentusers
+  def users
     textstr = `#{NAGIOS_PLUGINS}/check_users -w '5' -c '10'`
     textstr += 'Status Code: ' + $?.exitstatus.to_s + "\n"
     render :text => textstr, :status =>201
@@ -28,7 +28,7 @@ class SysinfoController < ApplicationController
     # do nothing
   end
 
-  def totalprocesses
+  def processes
     textstr = `#{NAGIOS_PLUGINS}/check_procs -w '250' -c '400'`
     textstr += 'Status Code: ' + $?.exitstatus.to_s + "\n"
     render :text => textstr, :status =>201
@@ -41,7 +41,7 @@ class SysinfoController < ApplicationController
   end
 
 
-  def currentimport
+  def import
     textstr = `#{NAGIOS_PLUGINS}/check_import.sh`
     textstr += 'Status Code: ' + $?.exitstatus.to_s + "\n"
     render :text => textstr, :status =>201
