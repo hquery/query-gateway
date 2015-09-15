@@ -10,3 +10,4 @@ coverage/
 .idea
 util/files/
 Provider_Hash.txt
+nagios-nrpe-support/tmp/
